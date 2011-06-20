@@ -7,9 +7,9 @@ The editor is already in production use on "XING.com":https://www.xing.com - a s
 h2. Features:
 
 * Auto linking of urls as-you-type
-* Generates valid and semantic HTML5 markup (no _<font>_)
+* Generates valid and semantic HTML5 markup (no <code><font></code>)
 * Uses class-names instead of inline styles
-* Unifies line-break handling across browsers (hitting enter will create _<br>_ instead of _<p>_ or _<div>_)
+* Unifies line-break handling across browsers (hitting enter will create <code><br></code> instead of <code><p></code> or <code><div></code>)
 * Auto-parses content inserted via copy & paste (from Word, Powerpoint, PDF, other web pages, ...)
 * Converts invalid or unknown html tags into valid/similar tags
 * Source code view for users with HTML skills
@@ -26,7 +26,8 @@ h2. Configuration
 
 Following is a list of all configuration options with their corresponding default values:
 
-bc. new wysihtml5.Editor("textarea-id", {
+<pre>
+  new wysihtml5.Editor("textarea-id", {
     // Give the editor a name, the name will also be set as class name on the iframe and on the iframe's body
     name:                 null,
     // Whether the editor should look like the textarea (by adopting styles)
@@ -50,12 +51,14 @@ bc. new wysihtml5.Editor("textarea-id", {
     // Whether the composer should allow the user to manually resize images, tables etc.
     allowObjectResizing:  true
   });
+</pre>
 
 h2. Events
 
 The editor comes with a simple event handling:
 
-bc. var editor = new wyishtml5.Editor("textarea-id", { ... });
+<pre>
+  var editor = new wyishtml5.Editor("textarea-id", { ... });
   editor.observe("change", function() {
     alert("The content of the editor has changed")
   });
@@ -63,6 +66,7 @@ bc. var editor = new wyishtml5.Editor("textarea-id", { ... });
   editor.observe("load", function() {
     alert("wysihtml5 is ready for take off!");
   });
+</pre>
 
 List of supported events:
 * _load_ - when the editor is fully loaded
@@ -85,23 +89,23 @@ List of supported events:
 
 h2. Progressive-Enhancement/Initialization Step By Step
 
-# Takes a _<textarea>_
+# Takes a <code><textarea></code>
 # Checks whether the browser supports rich text editing properly (stops here if not)
-# Sets a class "wysihtml5-supported" on the _<body>_ of the page (can be used to toggle text hints on the page via CSS)
-# Creates an inline _<iframe>_ with _<body contenteditable="true">_
+# Sets a class "wysihtml5-supported" on the <code><body></code> of the page (can be used to toggle text hints on the page via CSS)
+# Creates an inline <code><iframe></code> with <code><body contenteditable="true"></code>
 # Copies textarea box styles (float, border, position, box-shadow, ...) to the 
-_<iframe>_
+<code><iframe></code>
 # Copies textarea text styles (color, font-size, font-family, text-indent, ...) to 
-the iframe's _<body>_
+the iframe's <code><body></code>
 # Copies several attributes (spellcheck, autofocus, placeholder, className, title, ...) 
-from the _<textarea>_ to the iframe's _<body>_
+from the <code><textarea></code> to the iframe's <code><body></code>
 # Checks whether HTMl5 autofocus and placeholder attributes are set and 
-simulates their logic on the iframe's _<body>_
-# Hides the _<textarea>_
-# Initializes sync logic (text you typed into the iframe's _<body>_ is automatically
-copied to the hidden _<textarea>_)
+simulates their logic on the iframe's <code><body></code>
+# Hides the <code><textarea></code>
+# Initializes sync logic (text you typed into the iframe's <code><body></code> is automatically
+copied to the hidden <code><textarea></code>)
 # Observes the form's "onsubmit" and "onreset" events and simulates their
-behavior on the iframe's _<body>_
+behavior on the iframe's <code><body></code>
 # Checks whether a toolbar is given and sets event listeners on it's link
 
 h2. Research Material
