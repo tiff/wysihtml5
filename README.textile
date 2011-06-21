@@ -22,6 +22,11 @@ The rich text editing interface is supported in IE8+, FF 3.5+, Safari 4+, Opera 
 *Graceful Degradation:* Users with other browsers will see the textarea and are still able write plain HTML by themselves.
 As of now iOS and Android don’t support rich text editing properly. For now they are treated like IE 6+7.
 
+h2. Demos
+
+* "Simple Editor with italic and bold buttons":http://tifftiff.de/wysihtml5/examples/simple.html
+* "Editor with advanced functionality":http://tifftiff.de/wysihtml5/examples/advanced.html
+
 h2. Configuration
 
 Following is a list of all configuration options with their corresponding default values:
