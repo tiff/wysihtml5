@@ -7,7 +7,6 @@
 
 <style>
   body {
-    background: #ccc;
     font-family: Verdana;
     font-size: 11px;
   }
@@ -68,6 +67,11 @@
 
 <h1>wysihtml5 - Simple Editor Example</h1>
 
+<p>
+  Uses a custom rule set that allows the following elements: <em>strong, b, em, i, a, span</em><br>
+  Links will automatically receive <i>target="_blank"</i> and <i>rel="nofollow"</i>. Check the source code of this page.
+</p>
+
 <form>
   <div id="toolbar" style="display: none;">
     <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |
@@ -88,7 +92,17 @@
 <script>
   var editor = new wysihtml5.Editor("textarea", {
     toolbar:      "toolbar",
-    parserRules:  { tags: { br: {}, strong: {}, b: {}, i: {}, em: {}, span: {}, a: {} } }
+    parserRules:  {
+      tags: {
+        br:     true,
+        strong: true,
+        b:      true,
+        i:      true,
+        em:     true,
+        span:   true,
+        a:      { check_attributes: { href: "url" }, set_attributes: { rel: "nofollow", target: "_blank" } }
+      }
+    }
   });
   
   editor
