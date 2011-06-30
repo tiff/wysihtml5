@@ -297,6 +297,17 @@ wysihtml5.utils.sanitizeHTML = (function() {
         newNode.setAttribute(attributeName, attributes[attributeName]);
       } catch(e) {}
     }
+    
+    // IE8 sometimes loses the width/height attributes when those are set before the "src"
+    // so we make sure to set them again
+    if (attributes.src) {
+      if (typeof(attributes.width) !== "undefined") {
+        newNode.setAttribute("width", attributes.width);
+      }
+      if (typeof(attributes.height) !== "undefined") {
+        newNode.setAttribute("height", attributes.height);
+      }
+    }
   }
   
   /**
