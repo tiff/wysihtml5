@@ -1,9 +1,9 @@
 /**
  * TODO: the following methods still need unit test coverage
  */
-wysihtml5.views.View = Class.create(
+wysihtml5.views.View = Base.extend(
   /** @scope wysihtml5.views.View.prototype */ {
-  initialize: function(parent, textareaElement, config) {
+  constructor: function(parent, textareaElement, config) {
     this.parent   = parent;
     this.element  = textareaElement;
     this.config   = config;
@@ -12,19 +12,19 @@ wysihtml5.views.View = Class.create(
   },
   
   _observeViewChange: function() {
+    var that = this;
     this.parent.observe("beforeload", function() {
-      this.parent.observe("change_view", function(event) {
-        var view = event.memo;
-        if (view === this.name) {
-          this.parent.currentView = this;
-          this.show();
-          // Using defer() here to make sure that the placeholder is set before focusing
-          this.focus.bind(this).defer();
+      that.parent.observe("change_view", function(view) {
+        if (view === that.name) {
+          that.parent.currentView = that;
+          that.show();
+          // Using tiny delay here to make sure that the placeholder is set before focusing
+          setTimeout(function() { that.focus(); }, 0);
         } else {
-          this.hide();
+          that.hide();
         }
-      }.bind(this));
-    }.bind(this));
+      });
+    });
   },
   
   focus: function() {
@@ -36,11 +36,11 @@ wysihtml5.views.View = Class.create(
   },
   
   hide: function() {
-    this.element.hide();
+    this.element.style.display = "none";
   },
   
   show: function() {
-    this.element.show();
+    this.element.style.display = "";
   },
   
   disable: function() {

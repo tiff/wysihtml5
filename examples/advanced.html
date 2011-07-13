@@ -38,7 +38,7 @@
   
   #toolbar,
   textarea {
-    width: 600px;
+    width: 800px;
     padding: 5px;
     box-sizing: boder-box;
     -webkit-box-sizing: border-box;
@@ -47,7 +47,6 @@
   }
   
   textarea {
-    width: 600px;
     height: 280px;
     border: 2px solid green;
     font-family: Verdana;
@@ -92,6 +91,8 @@
     <a data-wysihtml5-command="insertImage">insert image</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1">h1</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2">h2</a> |
+    <a data-wysihtml5-command="insertUnorderedList">insertUnorderedList</a> |
+    <a data-wysihtml5-command="insertOrderedList">insertUnorderedList</a> |
     <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a> |
     <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">green</a> |
     <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">blue</a>
@@ -131,32 +132,34 @@
 
 <small>powered by <a href="https://github.com/xing/wysihtml5" target="_blank">wysihtml5</a>.</small>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js"></script>
-<script type="text/javascript" src="../dist/wysihtml5-0.1.0.js"></script>
+<script src="../parser_rules/advanced.js"></script>
+<script src="../dist/wysihtml5-0.2.0.js"></script>
 <script>
   var editor = new wysihtml5.Editor("textarea", {
     toolbar:      "toolbar",
-    parserRules:  "rules/spec.json",
-    stylesheets:  "css/stylesheet.css"
+    stylesheets:  "css/stylesheet.css",
+    parserRules:  wysihtml5ParserRules
   });
+  
+  var log = document.getElementById("log");
   
   editor
     .observe("load", function() {
-      $("log").insert("<div>load</div>");
+      log.innerHTML += "<div>load</div>";
     })
     .observe("focus", function() {
-      $("log").insert("<div>focus</div>");
+      log.innerHTML += "<div>focus</div>";
     })
     .observe("blur", function() {
-      $("log").insert("<div>blur</div>");
+      log.innerHTML += "<div>blur</div>";
     })
     .observe("change", function() {
-      $("log").insert("<div>change</div>");
+      log.innerHTML += "<div>change</div>";
     })
     .observe("paste", function() {
-      $("log").insert("<div>paste</div>");
+      log.innerHTML += "<div>paste</div>";
     })
     .observe("newword:composer", function() {
-      $("log").insert("<div>newword:composer</div>");
+      log.innerHTML += "<div>newword:composer</div>";
     });
 </script>

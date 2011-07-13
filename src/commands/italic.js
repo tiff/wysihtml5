@@ -1,26 +1,22 @@
-wysihtml5.commands.italic = (function() {
+(function(wysihtml5) {
   var undef;
   
-  function exec(element, command) {
-    return wysihtml5.commands.formatInline.exec(element, command, "i");
-  }
-  
-  function state(element, command, color) {
-    // element.ownerDocument.queryCommandState("italic") results:
-    // firefox: only <i>
-    // chrome:  <i>, <em>, <blockquote>, ...
-    // ie:      <i>, <em>
-    // opera:   only <i>
-    return wysihtml5.commands.formatInline.state(element, command, "i");
-  }
-  
-  function value() {
-    return undef;
-  }
-  
-  return {
-    exec:   exec,
-    state:  state,
-    value:  value
+  wysihtml5.commands.italic = {
+    exec: function(element, command) {
+      return wysihtml5.commands.formatInline.exec(element, command, "i");
+    },
+
+    state: function(element, command, color) {
+      // element.ownerDocument.queryCommandState("italic") results:
+      // firefox: only <i>
+      // chrome:  <i>, <em>, <blockquote>, ...
+      // ie:      <i>, <em>
+      // opera:   only <i>
+      return wysihtml5.commands.formatInline.state(element, command, "i");
+    },
+
+    value: function() {
+      return undef;
+    }
   };
-})();
+})(wysihtml5);

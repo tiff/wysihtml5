@@ -1,8 +1,9 @@
-h1. wysihtml5 0.1.0
+h1. wysihtml5 0.2.0
 
 wysihtml5 is an open source rich text editor based on HTML5 technology and the progressive-enhancement approach.
-It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag-soups and inline-styles.
-The editor is already in production use on "XING.com":https://www.xing.com - a social network with more than 10 million members.
+It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.
+The code is completely library agnostic: No jQuery, Prototype or similar is required.
+The editor is already in use on "XING.com":https://www.xing.com - a social network with more than 10 million members.
 
 h2. Features:
 
@@ -15,6 +16,7 @@ h2. Features:
 * Source code view for users with HTML skills
 * Uses sandboxed iframes in order to prevent identity theft through XSS
 * Editor inherits styles and attributes (placeholder, autofocus, ...) from original textarea (you only have to style one element)
+* Speech-input for Chrome 11+
 
 h2. Browser Support
 
@@ -44,7 +46,7 @@ Following is a list of all configuration options with their corresponding defaul
     // Object which includes parser rules (set this to examples/rules/spec.json or your own spec, otherwise only span tags are allowed!)
     parserRules:          null,
     // Parser method to use when the user inserts content via copy & paste
-    parser:               wysihtml5.utils.sanitizeHTML || Prototype.K,
+    parser:               wysihtml5.dom.parse || Prototype.K,
     // Class name which should be set on the contentEditable element in the created sandbox iframe, can be styled via the 'stylesheets' option
     composerClassName:    "wysihtml5-editor",
     // Class name to add to the body when the wysihtml5 editor is supported
@@ -112,6 +114,20 @@ copied to the hidden <code><textarea></code>)
 # Observes the form's "onsubmit" and "onreset" events and simulates their
 behavior on the iframe's <code><body></code>
 # Checks whether a toolbar is given and sets event listeners on it's link
+
+h2. How to build your own wysihtml5 files
+
+Clone and build the js file:
+<code>
+  git clone git://github.com/xing/wysihtml5.git
+  cd wysihtml5
+  make
+</code>
+
+Run the unit tests:
+<code>
+  make unittest
+</code>
 
 h2. Research Material
 

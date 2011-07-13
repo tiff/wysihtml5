@@ -1,29 +1,25 @@
-wysihtml5.commands.insertLineBreak = (function() {
+(function(wysihtml5) {
   var undef,
-      LINE_BREAK = "<br>" + (Prototype.Browser.Opera ? " " : "");
+      LINE_BREAK = "<br>" + (wysihtml5.browser.needsSpaceAfterLineBreak() ? " " : "");
   
-  function exec(element, command) {
-    if (wysihtml5.commands.support(element, command)) {
-      element.ownerDocument.execCommand(command, false, null);
-      if (!wysihtml5.browserSupports.autoScrollIntoViewOfCaret()) {
-        wysihtml5.utils.caret.scrollIntoView(element);
+  wysihtml5.commands.insertLineBreak = {
+    exec: function(element, command) {
+      if (wysihtml5.commands.support(element, command)) {
+        element.ownerDocument.execCommand(command, false, null);
+        if (!wysihtml5.browser.autoScrollsToCaret()) {
+          wysihtml5.selection.scrollIntoView(element);
+        }
+      } else {
+        wysihtml5.commands.exec(element, "insertHTML", LINE_BREAK);
       }
-    } else {
-      wysihtml5.commands.exec(element, "insertHTML", LINE_BREAK);
+    },
+
+    state: function() {
+      return false;
+    },
+
+    value: function() {
+      return undef;
     }
-  }
-  
-  function state() {
-    return false;
-  }
-  
-  function value() {
-    return undef;
-  }
-  
-  return {
-    exec:   exec,
-    state:  state,
-    value:  value
   };
-})();
+})(wysihtml5);

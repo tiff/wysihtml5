@@ -31,7 +31,7 @@
  *   output:
  *      <span>ab|c</span> de|<b>fgh</b>
  */
-wysihtml5.commands.formatInline = (function() {
+(function(wysihtml5) {
   var undef,
       // Treat <b> as <strong> and vice versa
       ALIAS_MAPPING = {
@@ -40,7 +40,7 @@ wysihtml5.commands.formatInline = (function() {
         "b":      "strong",
         "i":      "em"
       },
-      cssClassApplier = {};
+      htmlApplier = {};
   
   function _getTagNames(tagName) {
     var alias = ALIAS_MAPPING[tagName];
@@ -49,53 +49,48 @@ wysihtml5.commands.formatInline = (function() {
   
   function _getApplier(tagName, className, classRegExp) {
     var identifier = tagName + ":" + className;
-    if (!cssClassApplier[identifier]) {
-      cssClassApplier[identifier] = rangy.createCssClassApplier(_getTagNames(tagName), className, classRegExp, true);
+    if (!htmlApplier[identifier]) {
+      htmlApplier[identifier] = new wysihtml5.selection.HTMLApplier(_getTagNames(tagName), className, classRegExp, true);
     }
-    return cssClassApplier[identifier];
+    return htmlApplier[identifier];
   }
   
-  function exec(element, command, tagName, className, classRegExp) {
-    var range = wysihtml5.utils.caret.getRange(element.ownerDocument);
-    if (!range) {
-      return false;
+  wysihtml5.commands.formatInline = {
+    exec: function(element, command, tagName, className, classRegExp) {
+      var range = wysihtml5.selection.getRange(element.ownerDocument);
+      if (!range) {
+        return false;
+      }
+      _getApplier(tagName, className, classRegExp).toggleRange(range);
+      wysihtml5.selection.setSelection(range);
+    },
+
+    state: function(element, command, tagName, className, classRegExp) {
+      var doc           = element.ownerDocument,
+          aliasTagName  = ALIAS_MAPPING[tagName] || tagName,
+          range;
+
+      // Check whether the document contains a node with the desired tagName
+      if (!wysihtml5.dom.hasElementWithTagName(doc, tagName) &&
+          !wysihtml5.dom.hasElementWithTagName(doc, aliasTagName)) {
+        return false;
+      }
+
+       // Check whether the document contains a node with the desired className
+      if (className && !wysihtml5.dom.hasElementWithClassName(doc, className)) {
+         return false;
+      }
+
+      range = wysihtml5.selection.getRange(doc);
+      if (!range) {
+        return false;
+      }
+
+      return _getApplier(tagName, className, classRegExp).isAppliedToRange(range);
+    },
+
+    value: function() {
+      return undef;
     }
-    _getApplier(tagName, className, classRegExp).toggleRange(range);
-    wysihtml5.utils.caret.setSelection(range);
-  }
-  
-  function state(element, command, tagName, className, classRegExp) {
-    var doc           = element.ownerDocument,
-        aliasTagName  = ALIAS_MAPPING[tagName] || tagName,
-        range;
-    
-    // Check whether the document contains a node with the desired tagName
-    if (!wysihtml5.utils.hasElementWithTagName(doc, tagName) &&
-        !wysihtml5.utils.hasElementWithTagName(doc, aliasTagName)) {
-      return false;
-    }
-     
-     // Check whether the document contains a node with the desired className
-    if (className && !wysihtml5.utils.hasElementWithClassName(doc, className)) {
-       return false;
-    }
-    
-    range = wysihtml5.utils.caret.getRange(doc);
-    if (!range) {
-      return false;
-    }
-    
-    return _getApplier(tagName, className, classRegExp).isAppliedToRange(range);
-  }
-  
-  function value(element, command) {
-    // TODO
-    return undef;
-  }
-  
-  return {
-    exec:   exec,
-    state:  state,
-    value:  value
   };
-})();
+})(wysihtml5);

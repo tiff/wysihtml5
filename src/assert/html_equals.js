@@ -57,7 +57,7 @@ wysihtml5.assert.htmlEquals = (function() {
   })();
   
   /**
-   * As stated above, firefox doesn't preserve original attribute order
+   * Browsers don't preserve original attribute order
    * In order to be able to compare html we simply split both, the expected and actual html at spaces and element-ends,
    * sort them alphabetically and put them back together
    * TODO: This solution is a bit crappy. Maybe there's a smarter way. However it works for now.
@@ -97,15 +97,15 @@ wysihtml5.assert.htmlEquals = (function() {
   var removeWhiteSpace = (function() {
     var REG_EXP = /(>)(\s*?)(<)/gm;
     return function(html) {
-      return html.replace(REG_EXP, "$1$3").strip();
+      return wysihtml5.lang.string(html.replace(REG_EXP, "$1$3")).trim();
     };
   })();
   
   return function(actual, expected, message, config) {
     config = config || {};
     if (NEEDS_TO_BE_PREPARSED) {
-      actual = wysihtml5.utils.getInDomElement(actual).innerHTML;
-      expected = wysihtml5.utils.getInDomElement(expected).innerHTML;
+      actual = wysihtml5.dom.getAsDom(actual).innerHTML;
+      expected = wysihtml5.dom.getAsDom(expected).innerHTML;
     }
     
     if (config.normalizeWhiteSpace || DOESNT_PRESERVE_WHITE_SPACE) {
@@ -118,12 +118,8 @@ wysihtml5.assert.htmlEquals = (function() {
       expected = removeWhiteSpace(expected);
     }
     
-    if (REORDERS_ATTRIBUTES) {
-      actual = tokenizeHTML(actual);
-      expected = tokenizeHTML(expected);
-      ok(actual == expected, message);
-      return;
-    }
-    equals(actual, expected, message);
+    actual = tokenizeHTML(actual);
+    expected = tokenizeHTML(expected);
+    ok(actual == expected, message);
   };
 })();

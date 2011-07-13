@@ -1,25 +1,21 @@
-wysihtml5.commands.insertHTML = (function() {
+(function(wysihtml5) {
   var undef;
   
-  function exec(element, command, html) {
-    if (wysihtml5.commands.support(element, command)) {
-      element.ownerDocument.execCommand(command, false, html);
-    } else {
-      wysihtml5.utils.caret.insertHTML(element.ownerDocument, html);
+  wysihtml5.commands.insertHTML = {
+    exec: function(element, command, html) {
+      if (wysihtml5.commands.support(element, command)) {
+        element.ownerDocument.execCommand(command, false, html);
+      } else {
+        wysihtml5.selection.insertHTML(element.ownerDocument, html);
+      }
+    },
+
+    state: function() {
+      return false;
+    },
+
+    value: function() {
+      return undef;
     }
-  }
-  
-  function state() {
-    return false;
-  }
-  
-  function value() {
-    return undef;
-  }
-  
-  return {
-    exec:   exec,
-    state:  state,
-    value:  value
   };
-})();
+})(wysihtml5);

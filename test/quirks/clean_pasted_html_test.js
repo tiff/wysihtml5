@@ -1,4 +1,4 @@
-if (wysihtml5.browserSupports.contentEditable()) {
+if (wysihtml5.browser.supported()) {
   module("wysihtml5.quirks.cleanPastedHTML");
 
   test("Basic test", function() {

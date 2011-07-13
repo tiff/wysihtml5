@@ -7,31 +7,45 @@
 
 <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-git.css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js"></script>
 <script src="http://code.jquery.com/qunit/qunit-git.js"></script>
 
-<script src="../dist/wysihtml5-0.1.0.js"></script>
+<script src="../dist/wysihtml5-0.2.0.js"></script>
 <script src="../src/assert/html_equals.js"></script>
 
-<script src="assert/html_equals_test.js"></script>
-<script src="utils/sanitize_html_test.js"></script>
-<script src="utils/sandbox_test.js"></script>
-<script src="utils/copy_styles_test.js"></script>
-<script src="utils/copy_attributes_test.js"></script>
-<script src="utils/observe_test.js"></script>
-<script src="utils/get_in_dom_element_test.js"></script>
-<script src="utils/get_parent_element_test.js"></script>
-<script src="utils/get_style_test.js"></script>
-<script src="utils/has_element_with_tag_name_test.js"></script>
-<script src="utils/has_element_with_class_name_test.js"></script>
-<script src="utils/insert_rules_test.js"></script>
-<script src="utils/auto_link_test.js"></script>
-<script src="utils/convert_into_list_test.js"></script>
-<script src="utils/resolve_list_test.js"></script>
-<script src="utils/rename_element_test.js"></script>
-<script src="quirks/clean_pasted_html_test.js"></script>
-<script src="browser_support_test.js"></script>
-<script src="editor_test.js"></script>
+<script src="browser_test.js"></script>
+<script src="incompatible_test.js"></script>
+
+<script>
+  if (wysihtml5.browser.supported()) {
+    document.write(
+      '<script src="assert/html_equals_test.js"><\/script>'               +
+      '<script src="lang/array_test.js"><\/script>'                       +
+      '<script src="lang/object_test.js"><\/script>'                      +
+      '<script src="lang/string_test.js"><\/script>'                      +
+      '<script src="dom/auto_link_test.js"><\/script>'                    +
+      '<script src="dom/contains_test.js"><\/script>'                     +
+      '<script src="dom/convert_to_list_test.js"><\/script>'              +
+      '<script src="dom/copy_styles_test.js"><\/script>'                  +
+      '<script src="dom/copy_attributes_test.js"><\/script>'              +
+      '<script src="dom/delegate_test.js"><\/script>'                     +
+      '<script src="dom/sandbox_test.js"><\/script>'                      +
+      '<script src="dom/observe_test.js"><\/script>'                      +
+      '<script src="dom/get_as_dom_test.js"><\/script>'                   +
+      '<script src="dom/get_parent_element_test.js"><\/script>'           +
+      '<script src="dom/get_style_test.js"><\/script>'                    +
+      '<script src="dom/has_element_with_tag_name_test.js"><\/script>'    +
+      '<script src="dom/has_element_with_class_name_test.js"><\/script>'  +
+      '<script src="dom/insert_css_test.js"><\/script>'                   +
+      '<script src="dom/resolve_list_test.js"><\/script>'                 +
+      '<script src="dom/rename_element_test.js"><\/script>'               +
+      '<script src="dom/set_styles_test.js"><\/script>'                   +
+      '<script src="dom/set_attributes_test.js"><\/script>'               +
+      '<script src="dom/parse_test.js"><\/script>'                        +
+      '<script src="quirks/clean_pasted_html_test.js"><\/script>'         +
+      '<script src="editor_test.js"><\/script>'
+    );
+  }
+</script>
 
 <h1 id="qunit-header">wysihtml5 - Test Suite</h1>
 <h2 id="qunit-banner"></h2>

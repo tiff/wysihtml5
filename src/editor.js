@@ -24,20 +24,23 @@
  *    destroy:composer
  *    change_view
  */
-wysihtml5.Editor = (function() {
+(function(wysihtml5) {
+  var undef;
+  
   var defaultConfig = {
     // Give the editor a name, the name will also be set as class name on the iframe and on the iframe's body 
-    name:                 null,
+    name:                 undef,
     // Whether the editor should look like the textarea (by adopting styles)
     style:                true,
     // Id of the toolbar element, pass falsey value if you don't want any toolbar logic
-    toolbar:              null,
+    toolbar:              undef,
     // Whether urls, entered by the user should automatically become clickable-links
     autoLink:             true,
     // Object which includes parser rules to apply when html gets inserted via copy & paste
-    parserRules:          null,
+    // See parser_rules/*.js for examples
+    parserRules:          { tags: { br: {}, span: {}, div: {}, p: {} }, classes: {} },
     // Parser method to use when the user inserts content via copy & paste
-    parser:               wysihtml5.utils.sanitizeHTML || Prototype.K,
+    parser:               wysihtml5.dom.parse,
     // Class name which should be set on the contentEditable element in the created sandbox iframe, can be styled via the 'stylesheets' option
     composerClassName:    "wysihtml5-editor",
     // Class name to add to the body when the wysihtml5 editor is supported
@@ -45,46 +48,43 @@ wysihtml5.Editor = (function() {
     // Array (or single string) of stylesheet urls to be loaded in the editor's iframe
     stylesheets:          [],
     // Placeholder text to use, defaults to the placeholder attribute on the textarea element
-    placeholderText:      null,
+    placeholderText:      undef,
     // Whether the composer should allow the user to manually resize images, tables etc.
     allowObjectResizing:  true
   };
   
-  // Incremental instance id
-  var instanceId = new Date().getTime();
-  
-  return Class.create(
+  wysihtml5.Editor = wysihtml5.lang.Dispatcher.extend(
     /** @scope wysihtml5.Editor.prototype */ {
-    initialize: function(textareaElement, config) {
-      this._instanceId      = ++instanceId;
-      this.textareaElement  = $(textareaElement);
-      this.config           = Object.extend(Object.clone(defaultConfig), config);
+    constructor: function(textareaElement, config) {
+      this.textareaElement  = typeof(textareaElement) === "string" ? document.getElementById(textareaElement) : textareaElement;
+      this.config           = wysihtml5.lang.object({}).merge(defaultConfig).merge(config).get();
       this.textarea         = new wysihtml5.views.Textarea(this, this.textareaElement, this.config);
       this.currentView      = this.textarea;
-      this._isCompatible    = wysihtml5.browserSupports.contentEditable();
+      this._isCompatible    = wysihtml5.browser.supported();
       
       // Sort out unsupported browsers here
       if (!this._isCompatible) {
-        (function() { this.fire("beforeload").fire("load"); }).bind(this).defer();
+        var that = this;
+        setTimeout(function() { that.fire("beforeload").fire("load"); }, 0);
         return;
       }
       
       // Add class name to body, to indicate that the editor is supported
-      $(document.body).addClassName(this.config.bodyClassName);
+      wysihtml5.dom.addClass(document.body, this.config.bodyClassName);
       
       this.composer = new wysihtml5.views.Composer(this, this.textareaElement, this.config);
       this.currentView = this.composer;
       
-      if (Object.isFunction(this.config.parser)) {
+      if (typeof(this.config.parser) === "function") {
         this._initParser();
       }
       
       this.observe("beforeload", function() {
-        this.synchronizer = new wysihtml5.utils.Synchronizer(this, this.textarea, this.composer);
+        this.synchronizer = new wysihtml5.views.Synchronizer(this, this.textarea, this.composer);
         if (this.config.toolbar) {
           this.toolbar = new wysihtml5.toolbar.Toolbar(this, this.config.toolbar);
         }
-      }.bind(this));
+      });
       
       try {
         console.log("Heya! This page is using wysihtml5 for rich text editing. Check out https://github.com/xing/wysihtml5");
@@ -93,33 +93,6 @@ wysihtml5.Editor = (function() {
     
     isCompatible: function() {
       return this._isCompatible;
-    },
-    
-    observe: function() {
-      Element.observe.apply(Element, this._getEventArguments(arguments));
-      return this;
-    },
-
-    fire: function() {
-      Element.fire.apply(Element, this._getEventArguments(arguments));
-      return this;
-    },
-
-    stopObserving: function() {
-      Element.stopObserving.apply(Element, this._getEventArguments(arguments));
-      return this;
-    },
-
-    /**
-     * Builds an array that can be passed into Function.prototyope.apply
-     * when called on Element.observe, Element.stopObserving, Element.fire
-     */
-    _getEventArguments: function(args) {
-      args = $A(args);
-      if (args[0]) {
-        args[0] = "wysihtml5:" + this._instanceId + ":" + args[0];
-      }
-      return [document.documentElement, args].flatten();
     },
 
     clear: function() {
@@ -178,36 +151,24 @@ wysihtml5.Editor = (function() {
     
     /**
      * Prepare html parser logic
-     *  - Loads parser rules if config.parserRules is a string
      *  - Observes for paste and drop
      */
     _initParser: function() {
-      if (typeof(this.config.parserRules) === "string") {
-        new Ajax.Request(this.config.parserRules, {
-          method:   "get",
-          onCreate: function() {
-            this.config.parserRules = defaultConfig.parserRules;
-          }.bind(this),
-          onSuccess: function(transport) {
-            this.config.parserRules = transport.responseJSON || transport.responseText.evalJSON();
-          }.bind(this)
-        });
-      }
-      
       this.observe("paste:composer", function() {
-        var keepScrollPosition = true;
-        wysihtml5.utils.caret.executeAndRestore(this.composer.sandbox.getDocument(), function() {
-          wysihtml5.quirks.cleanPastedHTML(this.composer.element);
-          this.parse(this.composer.element);
-        }.bind(this), keepScrollPosition);
-      }.bind(this));
+        var keepScrollPosition  = true,
+            that                = this;
+        wysihtml5.selection.executeAndRestore(this.composer.sandbox.getDocument(), function() {
+          wysihtml5.quirks.cleanPastedHTML(that.composer.element);
+          that.parse(that.composer.element);
+        }, keepScrollPosition);
+      });
       
       this.observe("paste:textarea", function() {
         var value   = this.textarea.getValue(),
             newValue;
         newValue = this.parse(value);
         this.textarea.setValue(newValue);
-      }.bind(this));
+      });
     }
   });
-})();
+})(wysihtml5);

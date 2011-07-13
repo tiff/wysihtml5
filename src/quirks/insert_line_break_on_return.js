@@ -11,34 +11,35 @@
  * @example
  *    wysihtml5.quirks.insertLineBreakOnReturn(element);
  */
-wysihtml5.quirks.insertLineBreakOnReturn = (function() {
-  var USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS  = ["LI", "DIV", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
-      LIST_TAGS                                     = ["UL", "OL", "MENU"],
-      BACKSPACE_KEY                                 = 8,
-      RETURN_KEY                                    = 13;
+(function(wysihtml5) {
+  var dom                                           = wysihtml5.dom,
+      USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS  = ["LI", "DIV", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
+      LIST_TAGS                                     = ["UL", "OL", "MENU"];
   
-  var keyPress = function(event) {
-    if (event.shiftKey || (event.keyCode !== RETURN_KEY && event.keyCode !== BACKSPACE_KEY)) {
+  function keyPress(event) {
+    var keyCode = event.keyCode;
+    
+    if (event.shiftKey || (keyCode !== wysihtml5.ENTER_KEY && keyCode !== wysihtml5.BACKSPACE_KEY)) {
       return;
     }
     
     var element         = event.target,
-        selectedNode    = wysihtml5.utils.caret.getSelectedNode(element.ownerDocument),
-        blockElement    = wysihtml5.utils.getParentElement(selectedNode, { nodeName: USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS }, 4);
+        selectedNode    = wysihtml5.selection.getSelectedNode(element.ownerDocument),
+        blockElement    = dom.getParentElement(selectedNode, { nodeName: USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS }, 4);
     
     if (blockElement) {
       // IE and Opera create <p> elements after leaving a list
       // check after keypress of backspace and return whether a <p> got inserted and unwrap it
-      if (blockElement.nodeName === "LI" && (event.keyCode === RETURN_KEY || event.keyCode === BACKSPACE_KEY)) {
+      if (blockElement.nodeName === "LI" && (keyCode === wysihtml5.ENTER_KEY || keyCode === wysihtml5.BACKSPACE_KEY)) {
         setTimeout(function() {
-          var selectedNode = wysihtml5.utils.caret.getSelectedNode(element.ownerDocument),
+          var selectedNode = wysihtml5.selection.getSelectedNode(element.ownerDocument),
               list,
               div;
           if (!selectedNode) {
             return;
           }
           
-          list = wysihtml5.utils.getParentElement(selectedNode, {
+          list = dom.getParentElement(selectedNode, {
             nodeName: LIST_TAGS
           }, 2);
           
@@ -46,22 +47,22 @@ wysihtml5.quirks.insertLineBreakOnReturn = (function() {
             return;
           }
           if (selectedNode.parentNode.nodeName === "P") {
-            div = wysihtml5.utils.renameElement(selectedNode.parentNode, "div");
-            wysihtml5.utils.caret.selectNode(div);
+            div = dom.renameElement(selectedNode.parentNode, "div");
+            wysihtml5.selection.selectNode(div);
           }
         }, 0);
       }
       return;
     }
     
-    if (event.keyCode === RETURN_KEY) {
+    if (keyCode === wysihtml5.ENTER_KEY) {
       wysihtml5.commands.exec(element, "insertLineBreak");
       event.preventDefault();
     }
-  };
+  }
   
-  return function(element) {
+  wysihtml5.quirks.insertLineBreakOnReturn = function(element) {
     // keypress doesn't fire when you hit backspace
-    wysihtml5.utils.observe(element.ownerDocument, "keydown", keyPress);
+    dom.observe(element.ownerDocument, "keydown", keyPress);
   };
-})();
+})(wysihtml5);

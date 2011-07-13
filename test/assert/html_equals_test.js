@@ -1,25 +1,25 @@
-module("wysihtml5.utils.htmlEquals");
+module("wysihtml5.assert.htmlEquals");
 
 test("Basic tests", function() {
   wysihtml5.assert.htmlEquals("<span>foo</span>", "<span>foo</span>");
   wysihtml5.assert.htmlEquals("<SPAN>foo</SPAN>", "<span>foo</span>");
   wysihtml5.assert.htmlEquals("<IMG SRC=foo.gif>", '<img src="foo.gif">');
   
-  var container = new Element("div"),
-      image     = new Element("img");
+  var container = document.createElement("div"),
+      image     = document.createElement("img");
   image.setAttribute("alt", "foo");
   image.setAttribute("border", 0);
   image.setAttribute("src", "foo.gif");
   image.setAttribute("width", 25);
   image.setAttribute("height", 25);
-  container.insert(image);
+  container.appendChild(image);
   
   wysihtml5.assert.htmlEquals(container.innerHTML, '<img alt="foo" border="0" src="foo.gif" width="25" height="25">');
   
-  var inlineElement = new Element("span");
+  var inlineElement = document.createElement("span");
   inlineElement.innerHTML = "<p>foo</p>";
   container.innerHTML = "";
-  container.insert(inlineElement);
+  container.appendChild(inlineElement);
   wysihtml5.assert.htmlEquals(container.innerHTML, '<span><p>foo</p></span>');
   
   wysihtml5.assert.htmlEquals("<p>foo     bar</p>", '<p>foo bar</p>', "", {
