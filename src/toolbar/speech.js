@@ -39,7 +39,7 @@
     outline:    0,
     padding:    0,
     position:   "absolute",
-    right:      "-12px",
+    right:      "-4px",
     top:        "50%"
   };
   
