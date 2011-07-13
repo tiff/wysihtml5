@@ -118,16 +118,12 @@ behavior on the iframe's <code><body></code>
 h2. How to build your own wysihtml5 files
 
 Clone and build the js file:
-<pre>
-  git clone git://github.com/xing/wysihtml5.git
-  cd wysihtml5
-  make
-</pre>
+<pre>git clone git://github.com/xing/wysihtml5.git
+cd wysihtml5
+make</pre>
 
 Run the unit tests:
-<pre>
-  make unittest
-</pre>
+<pre>make unittest</pre>
 
 h2. Research Material
 
