@@ -10,7 +10,7 @@ if ("querySelector" in document || wysihtml5.browser.supportsNativeGetElementsBy
 
 
   test("Basic test", function() {
-    stop(4000);
+    stop();
     expect(3);
     
     new wysihtml5.dom.Sandbox(function(sandbox) {

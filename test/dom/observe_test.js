@@ -65,7 +65,7 @@ test("Test detaching events", function() {
 
 test("Advanced test observing within a sandboxed iframe", function() {
   expect(2);
-  stop(2000);
+  stop();
   
   var sandbox = new wysihtml5.dom.Sandbox(function() {
     var element = sandbox.getDocument().createElement("div");
