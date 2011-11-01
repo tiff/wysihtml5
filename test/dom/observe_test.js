@@ -63,9 +63,8 @@ test("Test detaching events", function() {
   QUnit.triggerEvent(this.element, "click");
 });
 
-test("Advanced test observing within a sandboxed iframe", function() {
+asyncTest("Advanced test observing within a sandboxed iframe", function() {
   expect(2);
-  stop(2000);
   
   var sandbox = new wysihtml5.dom.Sandbox(function() {
     var element = sandbox.getDocument().createElement("div");

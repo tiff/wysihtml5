@@ -29,9 +29,8 @@ module("wysihtml5.dom.Sandbox", {
 });
 
 
-test("Basic Test", function() {
+asyncTest("Basic Test", function() {
   expect(8);
-  stop(5000);
   
   var sandbox = new wysihtml5.dom.Sandbox(function(param) {
     equals(param, sandbox, "The parameter passed into the readyCallback is the sandbox instance");
@@ -62,9 +61,8 @@ test("Basic Test", function() {
 });
 
 
-test("Security test #1", function() {
+asyncTest("Security test #1", function() {
   expect(14);
-  stop(5000);
   
   var that = this;
   
@@ -101,9 +99,8 @@ test("Security test #1", function() {
 });
 
 
-test("Security test #2", function() {
+asyncTest("Security test #2", function() {
   expect(2);
-  stop(5000);
   
   var sandbox = new wysihtml5.dom.Sandbox(function() {
     var html = '<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" onerror="#{script}" onload="try { window.parent._hackedCookie=document.cookie; } catch(e){}; try { window.parent._hackedVariable=1; } catch(e) {}">';
@@ -121,9 +118,8 @@ test("Security test #2", function() {
 });
 
 
-test("Check charset & doctype", function() {
+asyncTest("Check charset & doctype", function() {
   expect(3);
-  stop(5000);
   
   var that = this;
   
@@ -146,8 +142,7 @@ test("Check charset & doctype", function() {
 });
 
 
-test("Check insertion of single stylesheet", function() {
-  stop(5000);
+asyncTest("Check insertion of single stylesheet", function() {
   expect(1);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
@@ -160,8 +155,7 @@ test("Check insertion of single stylesheet", function() {
 });
 
 
-test("Check insertion of multiple stylesheets", function() {
-  stop(5000);
+asyncTest("Check insertion of multiple stylesheets", function() {
   expect(1);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
@@ -177,8 +171,7 @@ test("Check insertion of multiple stylesheets", function() {
 });
 
 
-test("Check X-UA-Compatible meta tag #1", function() {
-  stop(5000);
+asyncTest("Check X-UA-Compatible meta tag #1", function() {
   expect(2);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
@@ -193,8 +186,7 @@ test("Check X-UA-Compatible meta tag #1", function() {
 });
 
 
-test("Check X-UA-Compatible meta tag #2", function() {
-  stop(5000);
+asyncTest("Check X-UA-Compatible meta tag #2", function() {
   expect(3);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {

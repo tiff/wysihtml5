@@ -14,9 +14,8 @@ module("wysihtml5 - Incompatible", {
 });
 
 
-test("Basic test", function() {
+asyncTest("Basic test", function() {
   expect(12);
-  stop(2000);
   
   var that = this;
   

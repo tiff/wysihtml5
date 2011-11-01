@@ -38,9 +38,8 @@ test("HTML5 elements", function() {
 });
 
 
-test("Different document context", function() {
+asyncTest("Different document context", function() {
   expect(2);
-  stop(5000);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var result;

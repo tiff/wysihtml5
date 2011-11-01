@@ -69,9 +69,8 @@ test("Advanced tests", function() {
 });
 
 
-test("Test copying styles from one element to another element which is in an iframe", function() {
+asyncTest("Test copying styles from one element to another element which is in an iframe", function() {
   expect(1);
-  stop(2000);
   
   var that = this;
   

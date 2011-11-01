@@ -7,9 +7,8 @@ module("wysihtml5.dom.insertCSS", {
   }
 });
 
-test("Basic Tests with IE=Edge", function() {
+asyncTest("Basic Tests with IE=Edge", function() {
   expect(3);
-  stop();
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var doc     = sandbox.getDocument(),
@@ -31,9 +30,8 @@ test("Basic Tests with IE=Edge", function() {
   }, { uaCompatible: "IE=Edge" }).insertInto(document.body);
 });
 
-test("Basic Tests with IE=7", function() {
+asyncTest("Basic Tests with IE=7", function() {
   expect(3);
-  stop();
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var doc     = sandbox.getDocument(),

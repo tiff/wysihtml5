@@ -39,9 +39,8 @@ if (wysihtml5.browser.supported()) {
     }
   });
   
-  test("Basic test", function() {
+  asyncTest("Basic test", function() {
     expect(16);
-    stop(2000);
     
     var that = this;
     
@@ -82,9 +81,8 @@ if (wysihtml5.browser.supported()) {
   });
 
 
-  test("Check setting of name as class name on iframe and iframe's body", function() {
+  asyncTest("Check setting of name as class name on iframe and iframe's body", function() {
     expect(4);
-    stop(2000);
     
     this.textareaElement.className = "death-star";
     
@@ -105,9 +103,8 @@ if (wysihtml5.browser.supported()) {
   });
 
 
-  test("Check textarea with box-sizing: border-box;", function() {
+  asyncTest("Check textarea with box-sizing: border-box;", function() {
     expect(1);
-    stop(2000);
     
     var that = this;
     
@@ -134,9 +131,8 @@ if (wysihtml5.browser.supported()) {
   });
 
 
-  test("Check whether attributes are copied", function() {
+  asyncTest("Check whether attributes are copied", function() {
     expect(1);
-    stop(2000);
     
     var that = this;
     
@@ -148,9 +144,8 @@ if (wysihtml5.browser.supported()) {
   });
 
 
-  test("Check events", function() {
+  asyncTest("Check events", function() {
     expect(8);
-    stop(2000);
     
     var that = this;
     
@@ -206,9 +201,8 @@ if (wysihtml5.browser.supported()) {
   });
 
 
-  test("Check sync (basic)", function() {
+  asyncTest("Check sync (basic)", function() {
     expect(1);
-    stop(2500);
     
     var that = this;
     
@@ -225,9 +219,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Check sync (advanced)", function() {
+  asyncTest("Check sync (advanced)", function() {
     expect(5);
-    stop(4000);
     
     var that = this;
     
@@ -272,9 +265,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Check placeholder", function() {
+  asyncTest("Check placeholder", function() {
     expect(13);
-    stop(3000);
     
     var that = this;
     
@@ -322,9 +314,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Check public api", function() {
+  asyncTest("Check public api", function() {
     expect(14);
-    stop(2000);
     
     var that = this;
     
@@ -372,9 +363,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Parser (default parser method with parserRules as object", function() {
+  asyncTest("Parser (default parser method with parserRules as object", function() {
     expect(2);
-    stop(3000);
     
     var parserRules = {
       tags: {
@@ -402,9 +392,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Parser (custom parser method with parserRules as object", function() {
+  asyncTest("Parser (custom parser method with parserRules as object", function() {
     expect(7);
-    stop(3000);
     
     var that        = this,
         parserRules = { script: undefined },
@@ -434,9 +423,8 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Inserting an element which causes the textContent/innerText of the contentEditable element to be empty works correctly", function() {
+  asyncTest("Inserting an element which causes the textContent/innerText of the contentEditable element to be empty works correctly", function() {
     expect(2);
-    stop(2000);
     
     var that = this;
     
@@ -462,8 +450,7 @@ if (wysihtml5.browser.supported()) {
   });
   
   
-  test("Check for stylesheets", function() {
-    stop(2000);
+  asyncTest("Check for stylesheets", function() {
     expect(5);
     
     var that = this;
