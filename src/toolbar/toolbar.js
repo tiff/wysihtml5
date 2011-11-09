@@ -78,6 +78,7 @@
 
         dialog.observe("show", function() {
           caretBookmark = wysihtml5.selection.getBookmark(sandboxDoc);
+          that.editor.fire("dialog:show");
         });
 
         dialog.observe("save", function(attributes) {
@@ -87,10 +88,13 @@
             wysihtml5.selection.setBookmark(caretBookmark);
           }
           that._execCommand(command, attributes);
+          
+          that.editor.fire("dialog:save");
         });
 
         dialog.observe("cancel", function() {
           that.editor.focus(false);
+          that.editor.fire("dialog:cancel");
         });
       }
       return dialog;
