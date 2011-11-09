@@ -93,6 +93,9 @@ List of supported events:
 * _newword:composer_ - when the user wrote a new word in the rich text view
 * _destroy:composer_ - when the rich text view gets removed
 * _change_view_ - when switched between source and rich text view
+* _show:dialog_ - when a toolbar dialog is shown
+* _save:dialog_ - when save in a toolbar dialog is clicked
+* _cancel:dialog_ - when cancel in a toolbar dialog is clicked
 
 h2. Progressive-Enhancement/Initialization Step By Step
 
