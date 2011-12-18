@@ -13,10 +13,10 @@
  */
 (function(wysihtml5) {
   var dom                                           = wysihtml5.dom,
-      USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS  = ["LI", "DIV", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
+      USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS  = ["LI", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
       LIST_TAGS                                     = ["UL", "OL", "MENU"];
   
-  function keyPress(event) {
+  function keyDown(event) {
     var keyCode = event.keyCode;
     
     if (event.shiftKey || (keyCode !== wysihtml5.ENTER_KEY && keyCode !== wysihtml5.BACKSPACE_KEY)) {
@@ -34,6 +34,7 @@
         setTimeout(function() {
           var selectedNode = wysihtml5.selection.getSelectedNode(element.ownerDocument),
               list,
+              invisibleSpace,
               div;
           if (!selectedNode) {
             return;
@@ -46,10 +47,16 @@
           if (list) {
             return;
           }
-          if (selectedNode.parentNode.nodeName === "P") {
-            div = dom.renameElement(selectedNode.parentNode, "div");
-            wysihtml5.selection.selectNode(div);
+          
+          var parentElement = dom.getParentElement(selectedNode, { nodeName: ["P", "DIV"] }, 2);
+          if (!parentElement) {
+            return;
           }
+          
+          invisibleSpace = document.createTextNode(wysihtml5.INVISIBLE_SPACE);
+          dom.insert(invisibleSpace).before(parentElement);
+          dom.replaceWithChildNodes(parentElement);
+          wysihtml5.selection.selectNode(invisibleSpace);
         }, 0);
       }
       return;
@@ -63,6 +70,6 @@
   
   wysihtml5.quirks.insertLineBreakOnReturn = function(element) {
     // keypress doesn't fire when you hit backspace
-    dom.observe(element.ownerDocument, "keydown", keyPress);
+    dom.observe(element.ownerDocument, "keydown", keyDown);
   };
 })(wysihtml5);

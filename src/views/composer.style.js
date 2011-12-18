@@ -62,7 +62,7 @@
    */
   var focusWithoutScrolling = function(element) {
     if (element.setActive) {
-      // Following line could cause a js error when the editor is invisible
+      // Following line could cause a js error when the textarea is invisible
       // See https://github.com/xing/wysihtml5/issues/9
       try { element.setActive(); } catch(e) {}
     } else {
