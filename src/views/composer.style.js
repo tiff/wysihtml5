@@ -58,11 +58,13 @@
    *
    * Other browsers need a more hacky way: (pssst don't tell my mama)
    * In order to prevent the element being scrolled into view when focusing it, we simply
-   * Move it out of the scrollable area, focus it, and reset it's position
+   * move it out of the scrollable area, focus it, and reset it's position
    */
   var focusWithoutScrolling = function(element) {
     if (element.setActive) {
-      element.setActive();
+      // Following line could cause a js error when the editor is invisible
+      // See https://github.com/xing/wysihtml5/issues/9
+      try { element.setActive(); } catch(e) {}
     } else {
       var elementStyle = element.style,
           originalScrollTop = doc.documentElement.scrollTop || doc.body.scrollTop,
