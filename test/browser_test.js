@@ -1,7 +1,8 @@
 module("wysihtml5.browser", {
   userAgents: {
-    iPad:         "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10",
-    iPhone:       "Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3",
+    iPad_iOS3:    "Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.10",
+    iPhone_iOS3:  "Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3",
+    iPad_iOS5:    "Mozilla/5.0 (iPad; CPU OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
     Android:      "Mozilla/5.0 (Linux; U; Android 2.1; en-us; Nexus One Build/ERD62) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17",
     Chrome:       "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.44 Safari/534.7",
     OperaMobile:  "Opera/9.80 (S60; SymbOS; Opera Mobi/498; U; en-GB) Presto/2.4.18 Version/10.00",
@@ -28,11 +29,14 @@ module("wysihtml5.browser", {
 
 
 test("Check mobile contentEditable support", function() {
-  wysihtml5.browser.USER_AGENT = this.userAgents.iPad;
+  wysihtml5.browser.USER_AGENT = this.userAgents.iPad_iOS3;
   ok(!wysihtml5.browser.supported(), "iPad is correctly unsupported");
   
-  wysihtml5.browser.USER_AGENT = this.userAgents.iPhone;
+  wysihtml5.browser.USER_AGENT = this.userAgents.iPhone_iOS3;
   ok(!wysihtml5.browser.supported(), "iPhone is correctly unsupported");
+  
+  wysihtml5.browser.USER_AGENT = this.userAgents.iPad_iOS5;
+  ok(wysihtml5.browser.supported(), "iOS 5 is correctly supported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.Android;
   ok(!wysihtml5.browser.supported(), "Android is correctly unsupported");

@@ -12,6 +12,10 @@ wysihtml5.browser = (function() {
       isWebKit    = userAgent.indexOf("AppleWebKit/") !== -1,
       isOpera     = userAgent.indexOf("Opera/")       !== -1;
   
+  function iOsVersion(userAgent) {
+    return ((/ipad|iphone|ipod/.test(userAgent) && userAgent.match(/ os (\d+).+? like mac os x/)) || [, 0])[1];
+  }
+  
   return {
     // Static variable needed, publicly accessible, to be able override it in unit tests
     USER_AGENT: userAgent,
@@ -33,8 +37,8 @@ wysihtml5.browser = (function() {
           // document selector apis are only supported by IE 8+, Safari 4+, Chrome and Firefox 3.5+
           hasQuerySelectorSupport     = document.querySelector && document.querySelectorAll,
           // contentEditable is unusable in mobile browsers (tested iOS 4.2.2, Android 2.2, Opera Mobile)
-          isIncompatibleMobileBrowser = (userAgent.indexOf("webkit") !== -1 && userAgent.indexOf("mobile") !== -1) || userAgent.indexOf("opera mobi") !== -1;
-
+          isIncompatibleMobileBrowser = (userAgent.indexOf("webkit") !== -1 && userAgent.indexOf("mobile") !== -1 && iOsVersion(userAgent) < 5) || userAgent.indexOf("opera mobi") !== -1;
+      
       return hasContentEditableSupport
         && hasEditingApiSupport
         && hasQuerySelectorSupport
