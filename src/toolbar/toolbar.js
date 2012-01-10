@@ -164,7 +164,7 @@
       dom.delegate(container, "[data-wysihtml5-command]", "mousedown", function(event) { event.preventDefault(); });
       
       dom.delegate(container, "[data-wysihtml5-command]", "click", function(event) {
-        var link          = event.target,
+        var link          = this,
             command       = link.getAttribute("data-wysihtml5-command"),
             commandValue  = link.getAttribute("data-wysihtml5-command-value");
         that.execCommand(command, commandValue);
@@ -172,7 +172,7 @@
       });
 
       dom.delegate(container, "[data-wysihtml5-action]", "click", function(event) {
-        var action = event.target.getAttribute("data-wysihtml5-action");
+        var action = this.getAttribute("data-wysihtml5-action");
         that.execAction(action);
         event.preventDefault();
       });
