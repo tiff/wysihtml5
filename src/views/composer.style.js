@@ -32,6 +32,10 @@
         "vertical-align", "text-align",
         "-webkit-box-sizing", "-moz-box-sizing", "-ms-box-sizing", "box-sizing",
         "-webkit-box-shadow", "-moz-box-shadow", "-ms-box-shadow","box-shadow",
+        "-webkit-border-top-right-radius", "-moz-border-radius-topright", "border-top-right-radius",
+        "-webkit-border-bottom-right-radius", "-moz-border-radius-bottomright", "border-bottom-right-radius",
+        "-webkit-border-bottom-left-radius", "-moz-border-radius-bottomleft", "border-bottom-left-radius",
+        "-webkit-border-top-left-radius", "-moz-border-radius-topleft", "border-top-left-radius",
         "width", "height"
       ],
       /**

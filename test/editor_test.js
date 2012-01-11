@@ -2,7 +2,7 @@ if (wysihtml5.browser.supported()) {
   module("wysihtml5.Editor", {
     setup: function() {
       wysihtml5.dom.insertCSS([
-        "#wysihtml5-test-textarea { width: 200px; height: 100px; margin-top: 5px; font-style: italic; border: 2px solid red; }",
+        "#wysihtml5-test-textarea { width: 200px; height: 100px; margin-top: 5px; font-style: italic; border: 2px solid red; border-radius: 2px; }",
         "#wysihtml5-test-textarea:focus { margin-top: 10px; }"
       ]).into(document);
 
@@ -73,6 +73,12 @@ if (wysihtml5.browser.supported()) {
       equals(editor.textarea.element, textareaElement, "Textarea correctly available on editor instance");
       equals(editor.composer.element, composerElement, "contentEditable element available on editor instance");
       equals(wysihtml5.dom.getStyle("font-style").from(composerElement), "italic", "Correct font-style applied to editor element");
+      
+      if ("borderRadius" in document.createElement("div").style) {
+        expect(17);
+        ok(wysihtml5.dom.getStyle("border-top-right-radius").from(iframeElement).indexOf("2px") !== -1, "border-radius correctly copied");
+      }
+      
       equals(composerElement.innerHTML.toLowerCase(), "hey tiff, what's up?", "Copied the initial textarea value to the editor");
       ok(wysihtml5.dom.hasClass(composerElement, "wysihtml5-editor"), "Editor element has correct class name");
       
