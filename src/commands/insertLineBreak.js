@@ -4,13 +4,13 @@
   
   wysihtml5.commands.insertLineBreak = {
     exec: function(element, command) {
-      if (wysihtml5.commands.support(element, command)) {
+      if (wysihtml5.commands.support(command)) {
         element.ownerDocument.execCommand(command, false, null);
         if (!wysihtml5.browser.autoScrollsToCaret()) {
           wysihtml5.selection.scrollIntoView(element);
         }
       } else {
-        wysihtml5.commands.exec(element, "insertHTML", LINE_BREAK);
+        wysihtml5.commands.exec("insertHTML", LINE_BREAK);
       }
     },
 

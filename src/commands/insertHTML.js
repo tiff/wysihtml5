@@ -3,10 +3,10 @@
   
   wysihtml5.commands.insertHTML = {
     exec: function(element, command, html) {
-      if (wysihtml5.commands.support(element, command)) {
+      if (wysihtml5.commands.support(command)) {
         element.ownerDocument.execCommand(command, false, html);
       } else {
-        wysihtml5.selection.insertHTML(element.ownerDocument, html);
+        wysihtml5.selection.insertHTML(html);
       }
     },
 

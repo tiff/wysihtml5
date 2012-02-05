@@ -73,7 +73,7 @@
           return;
         }
 
-        var element = wysihtml5.selection.getSelectedNode(contentEditableElement.ownerDocument);
+        var element = wysihtml5.selection.getSelectedNode();
         clearIfNecessary(element, contentEditableElement);
       });
     };

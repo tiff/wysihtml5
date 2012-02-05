@@ -22,6 +22,10 @@
  *    paste:textarea
  *    newword:composer
  *    destroy:composer
+ *    undo:composer
+ *    redo:composer
+ *    beforecommand:composer
+ *    aftercommand:composer
  *    change_view
  */
 (function(wysihtml5) {
@@ -157,7 +161,7 @@
       this.observe("paste:composer", function() {
         var keepScrollPosition  = true,
             that                = this;
-        wysihtml5.selection.executeAndRestore(this.composer.sandbox.getDocument(), function() {
+        wysihtml5.selection.executeAndRestore(function() {
           wysihtml5.quirks.cleanPastedHTML(that.composer.element);
           that.parse(that.composer.element);
         }, keepScrollPosition);

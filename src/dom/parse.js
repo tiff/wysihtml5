@@ -157,6 +157,9 @@ wysihtml5.dom.parse = (function() {
     }
     oldNode._wysihtml5 = 1;
     
+    if (oldNode.className === "wysihtml5-temp") {
+      return null;
+    }
     
     /**
      * IE is the only browser who doesn't include the namespace in the

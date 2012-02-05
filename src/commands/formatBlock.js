@@ -139,7 +139,7 @@
   }
 
   function _selectLineAndWrap(element) {
-    selection.selectLine(element.ownerDocument);
+    selection.selectLine();
     selection.surround(element);
     _removeLineBreakBeforeAndAfter(element);
     _removeLastChildIfLineBreak(element);
@@ -159,7 +159,7 @@
       nodeName = typeof(nodeName) === "string" ? nodeName.toUpperCase() : nodeName;
 
       if (blockElement) {
-        selection.executeAndRestoreSimple(doc, function() {
+        selection.executeAndRestoreSimple(function() {
           if (classRegExp) {
             _removeClass(blockElement, classRegExp);
           }
@@ -179,13 +179,13 @@
 
       // Find similiar block element and rename it (<h2 class="foo"></h2>  =>  <h1 class="foo"></h1>)
       if (nodeName === null || wysihtml5.lang.array(BLOCK_ELEMENTS_GROUP).contains(nodeName)) {
-        selectedNode = selection.getSelectedNode(doc);
+        selectedNode = selection.getSelectedNode();
         blockElement = dom.getParentElement(selectedNode, {
           nodeName:     BLOCK_ELEMENTS_GROUP
         });
 
         if (blockElement) {
-          selection.executeAndRestoreSimple(doc, function() {
+          selection.executeAndRestoreSimple(function() {
             // Rename current block element to new block element and add class
             if (nodeName) {
               blockElement = dom.renameElement(blockElement, nodeName);
@@ -198,7 +198,7 @@
         }
       }
 
-      if (wysihtml5.commands.support(element, command)) {
+      if (wysihtml5.commands.support(command)) {
         _execCommand(doc, command, nodeName || DEFAULT_NODE_NAME, className);
         return;
       }
@@ -212,7 +212,7 @@
 
     state: function(element, command, nodeName, className, classRegExp) {
       nodeName = typeof(nodeName) === "string" ? nodeName.toUpperCase() : nodeName;
-      var selectedNode = selection.getSelectedNode(element.ownerDocument);
+      var selectedNode = selection.getSelectedNode();
       return dom.getParentElement(selectedNode, {
         nodeName:     nodeName,
         className:    className,

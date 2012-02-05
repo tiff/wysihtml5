@@ -42,15 +42,6 @@ JS_FILES = src/wysihtml5.js \
   src/quirks/redraw.js \
   src/selection/selection.js \
   src/selection/html_applier.js \
-  src/views/view.js \
-  src/views/composer.js \
-  src/views/composer.style.js \
-  src/views/composer.observe.js \
-  src/views/synchronizer.js \
-  src/views/textarea.js \
-  src/toolbar/dialog.js \
-  src/toolbar/speech.js \
-  src/toolbar/toolbar.js \
   src/commands.js \
   src/commands/bold.js \
   src/commands/createLink.js \
@@ -68,6 +59,16 @@ JS_FILES = src/wysihtml5.js \
   src/commands/justifyLeft.js \
   src/commands/justifyRight.js \
   src/commands/underline.js \
+  src/undo_manager.js \
+  src/views/view.js \
+  src/views/composer.js \
+  src/views/composer.style.js \
+  src/views/composer.observe.js \
+  src/views/synchronizer.js \
+  src/views/textarea.js \
+  src/toolbar/dialog.js \
+  src/toolbar/speech.js \
+  src/toolbar/toolbar.js \
   src/editor.js
 
 all: bundle minify
@@ -85,5 +86,8 @@ minify:
 	@@node build/minify.js ${JS_OUTPUT}
 	@@echo "Done."
 
-unittest:
+unittest: bundle
 	@@open test/index.html
+
+clean:
+	@@git co ${JS_OUTPUT}

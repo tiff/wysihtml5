@@ -169,6 +169,11 @@ wysihtml5.browser = (function() {
         "insertUnorderedList":  isIE || isOpera,
         "insertOrderedList":    isIE || isOpera
       };
+      
+      // Firefox throws errors for queryCommandSupported, so we have to build up our own object of supported commands
+      var supported = {
+        "insertHTML": isGecko
+      };
 
       return function(doc, command) {
         var isBuggy = buggyCommands[command];
@@ -180,7 +185,9 @@ wysihtml5.browser = (function() {
 
           try {
             return doc.queryCommandEnabled(command);
-          } catch(e2) {}
+          } catch(e2) {
+            return !!supported[command];
+          }
         }
         return false;
       };

@@ -70,14 +70,13 @@
     _getDialog: function(link, command) {
       var that          = this,
           dialogElement = this.container.querySelector("[data-wysihtml5-dialog='" + command + "']"),
-          sandboxDoc    = this.composer.sandbox.getDocument(),
           dialog,
           caretBookmark;
       if (dialogElement) {
         dialog = new wysihtml5.toolbar.Dialog(link, dialogElement);
 
         dialog.observe("show", function() {
-          caretBookmark = wysihtml5.selection.getBookmark(sandboxDoc);
+          caretBookmark = wysihtml5.selection.getBookmark();
 
           that.editor.fire("show:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
         });
@@ -126,7 +125,7 @@
       // Make sure that composer is focussed (false => don't move caret to the end)
       this.editor.focus(false);
 
-      wysihtml5.commands.exec(this.composer.element, command, commandValue);
+      wysihtml5.commands.exec(command, commandValue);
       this._updateLinkStates();
     },
 
@@ -221,7 +220,7 @@
             command.dialog.hide();
           }
         } else {
-          state = wysihtml5.commands.state(element, command.name, command.value);
+          state = wysihtml5.commands.state(command.name, command.value);
           if (wysihtml5.lang.object(state).isArray()) {
             // Grab first and only object/element in state array, otherwise convert state into boolean
             // to avoid showing a dialog for multiple selected elements which may have different attributes

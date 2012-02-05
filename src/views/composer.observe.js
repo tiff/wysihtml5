@@ -80,7 +80,7 @@
       }
       if (data) {
         element.focus();
-        wysihtml5.commands.exec(element, "insertHTML", data);
+        wysihtml5.commands.exec("insertHTML", data);
         that.parent.fire("paste").fire("paste:composer");
         event.stopPropagation();
         event.preventDefault();
@@ -119,14 +119,14 @@
       var keyCode  = event.keyCode,
           command  = shortcuts[keyCode];
       if ((event.ctrlKey || event.metaKey) && command) {
-        wysihtml5.commands.exec(element, command);
+        wysihtml5.commands.exec(command);
         event.preventDefault();
       }
     });
 
     // --------- Make sure that when pressing backspace/delete on selected images deletes the image and it's anchor ---------
     dom.observe(element, "keydown", function(event) {
-      var target  = wysihtml5.selection.getSelectedNode(element.ownerDocument, true),
+      var target  = wysihtml5.selection.getSelectedNode(true),
           keyCode = event.keyCode,
           parent;
       if (target && target.nodeName === "IMG" && (keyCode === wysihtml5.BACKSPACE_KEY || keyCode === wysihtml5.DELETE_KEY)) { // 8 => backspace, 46 => delete

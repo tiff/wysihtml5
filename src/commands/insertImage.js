@@ -58,7 +58,7 @@
         return false;
       }
 
-      selectedNode = wysihtml5.selection.getSelectedNode(doc);
+      selectedNode = wysihtml5.selection.getSelectedNode();
       if (!selectedNode) {
         return false;
       }
@@ -72,13 +72,13 @@
         return false;
       }
 
-      text = wysihtml5.selection.getText(doc);
+      text = wysihtml5.selection.getText();
       text = wysihtml5.lang.string(text).trim();
       if (text) {
         return false;
       }
 
-      imagesInSelection = wysihtml5.selection.getNodes(doc, wysihtml5.ELEMENT_NODE, function(node) {
+      imagesInSelection = wysihtml5.selection.getNodes(wysihtml5.ELEMENT_NODE, function(node) {
         return node.nodeName === "IMG";
       });
 

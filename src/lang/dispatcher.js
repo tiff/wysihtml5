@@ -7,6 +7,10 @@ wysihtml5.lang.Dispatcher = Base.extend(
     return this;
   },
 
+  on: function() {
+    return this.observe.apply(this, wysihtml5.lang.array(arguments).get());
+  },
+
   fire: function(eventName, payload) {
     this.events = this.events || {};
     var handlers = this.events[eventName] || [],

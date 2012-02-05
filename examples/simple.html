@@ -97,22 +97,28 @@
   var log = document.getElementById("log");
   
   editor
-    .observe("load", function() {
+    .on("load", function() {
       log.innerHTML += "<div>load</div>";
     })
-    .observe("focus", function() {
+    .on("focus", function() {
       log.innerHTML += "<div>focus</div>";
     })
-    .observe("blur", function() {
+    .on("blur", function() {
       log.innerHTML += "<div>blur</div>";
     })
-    .observe("change", function() {
+    .on("change", function() {
       log.innerHTML += "<div>change</div>";
     })
-    .observe("paste", function() {
+    .on("paste", function() {
       log.innerHTML += "<div>paste</div>";
     })
-    .observe("newword:composer", function() {
+    .on("newword:composer", function() {
       log.innerHTML += "<div>newword:composer</div>";
+    })
+    .on("undo:composer", function() {
+      log.innerHTML += "<div>undo:composer</div>";
+    })
+    .on("redo:composer", function() {
+      log.innerHTML += "<div>redo:composer</div>";
     });
 </script>

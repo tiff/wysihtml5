@@ -4,16 +4,22 @@
  * @author Christopher Blum <christopher.blum@xing.com>
  */
 wysihtml5.commands = {
+  initialize: function(editor) {
+    this.editor   = editor;
+    this.element  = editor.composer.element;
+    this.doc      = this.element.ownerDocument;
+  },
+  
   /**
    * Check whether the browser supports the given command
    *
    * @param {Object} element The element which has contentEditable=true
    * @param {String} command The command string which to check (eg. "bold", "italic", "insertUnorderedList")
    * @example
-   *    wysihtml5.commands.supports(element, "createLink");
+   *    wysihtml5.commands.supports("createLink");
    */
-  support: function(element, command) {
-    return wysihtml5.browser.supportsCommand(element.ownerDocument, command);
+  support: function(command) {
+    return wysihtml5.browser.supportsCommand(this.doc, command);
   },
   
   /**
@@ -23,19 +29,24 @@ wysihtml5.commands = {
    * @param {String} command The command string which to execute (eg. "bold", "italic", "insertUnorderedList")
    * @param {String} [value] The command value parameter, needed for some commands ("createLink", "insertImage", ...), optional for commands that don't require one ("bold", "underline", ...)
    * @example
-   *    wysihtml5.commands.exec(element, "insertImage", "http://a1.twimg.com/profile_images/113868655/schrei_twitter_reasonably_small.jpg");
+   *    wysihtml5.commands.exec("insertImage", "http://a1.twimg.com/profile_images/113868655/schrei_twitter_reasonably_small.jpg");
    */
-  exec: function(element, command, value) {
+  exec: function(command, value) {
     var obj     = this[command],
         method  = obj && obj.exec;
+    
+    this.editor.fire("beforecommand:composer");
+    
     if (method) {
-      return method.call(obj, element, command, value);
+      return method.call(obj, this.element, command, value);
     } else {
       try {
         // try/catch for buggy firefox
-        return element.ownerDocument.execCommand(command, false, value);
+        return this.doc.execCommand(command, false, value);
       } catch(e) {}
     }
+    
+    this.editor.fire("aftercommand:composer");
   },
   
   /**
@@ -47,17 +58,17 @@ wysihtml5.commands = {
    * @param {String} [commandValue] The command value parameter (eg. for "insertImage" the image src)
    * @return {Boolean} Whether the command is active
    * @example
-   *    var isCurrentSelectionBold = wysihtml5.commands.state(element, "bold");
+   *    var isCurrentSelectionBold = wysihtml5.commands.state("bold");
    */
-  state: function(element, command, commandValue) {
+  state: function(command, commandValue) {
     var obj     = this[command],
         method  = obj && obj.state;
     if (method) {
-      return method.call(obj, element, command, commandValue);
+      return method.call(obj, this.element, command, commandValue);
     } else {
       try {
         // try/catch for buggy firefox
-        return element.ownerDocument.queryCommandState(command);
+        return this.doc.queryCommandState(command);
       } catch(e) {
         return false;
       }
@@ -71,17 +82,17 @@ wysihtml5.commands = {
    * @param {String} command The command string which to check (eg. "formatBlock")
    * @return {String} The command value
    * @example
-   *    var currentBlockElement = wysihtml5.commands.value(element, "formatBlock");
+   *    var currentBlockElement = wysihtml5.commands.value("formatBlock");
    */
-  value: function(element, command) {
+  value: function(command) {
     var obj     = this[command],
         method  = obj && obj.value;
     if (method) {
-      method(element, command);
+      method(this.element, command);
     } else {
       try {
         // try/catch for buggy firefox
-        return element.ownerDocument.queryCommandValue(command);
+        return this.doc.queryCommandValue(command);
       } catch(e) {
         return null;
       }

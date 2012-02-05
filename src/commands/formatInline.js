@@ -57,7 +57,7 @@
   
   wysihtml5.commands.formatInline = {
     exec: function(element, command, tagName, className, classRegExp) {
-      var range = wysihtml5.selection.getRange(element.ownerDocument);
+      var range = wysihtml5.selection.getRange();
       if (!range) {
         return false;
       }
@@ -81,7 +81,7 @@
          return false;
       }
 
-      range = wysihtml5.selection.getRange(doc);
+      range = wysihtml5.selection.getRange();
       if (!range) {
         return false;
       }

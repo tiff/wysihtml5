@@ -24,7 +24,7 @@
     }
     
     var element         = event.target,
-        selectedNode    = wysihtml5.selection.getSelectedNode(element.ownerDocument),
+        selectedNode    = wysihtml5.selection.getSelectedNode(),
         blockElement    = dom.getParentElement(selectedNode, { nodeName: USE_NATIVE_LINE_BREAK_WHEN_CARET_INSIDE_TAGS }, 4);
     
     if (blockElement) {
@@ -32,7 +32,7 @@
       // check after keypress of backspace and return whether a <p> got inserted and unwrap it
       if (blockElement.nodeName === "LI" && (keyCode === wysihtml5.ENTER_KEY || keyCode === wysihtml5.BACKSPACE_KEY)) {
         setTimeout(function() {
-          var selectedNode = wysihtml5.selection.getSelectedNode(element.ownerDocument),
+          var selectedNode = wysihtml5.selection.getSelectedNode(),
               list,
               invisibleSpace,
               div;
@@ -63,7 +63,7 @@
     }
     
     if (keyCode === wysihtml5.ENTER_KEY) {
-      wysihtml5.commands.exec(element, "insertLineBreak");
+      wysihtml5.commands.exec("insertLineBreak");
       event.preventDefault();
     }
   }

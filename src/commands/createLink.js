@@ -27,7 +27,7 @@
 
   function _format(element, attributes) {
     var doc             = element.ownerDocument,
-        tempClass       = "_wysihtml5-temp-" + new Date().getTime(),
+        tempClass       = "_wysihtml5-temp-" + (+new Date()),
         tempClassRegExp = /non-matching-class/g,
         i               = 0,
         length,
@@ -86,7 +86,7 @@
 
       if (anchors) {
         // Selection contains links
-        wysihtml5.selection.executeAndRestore(doc, function() {
+        wysihtml5.selection.executeAndRestore(function() {
           _removeFormat(element, anchors);
         });
       } else {

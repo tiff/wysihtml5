@@ -1,7 +1,8 @@
 (function(wysihtml5) {
   var dom       = wysihtml5.dom,
       browser   = wysihtml5.browser,
-      selection = wysihtml5.selection;
+      selection = wysihtml5.selection,
+      commands  = wysihtml5.commands;
   
   wysihtml5.views.Composer = wysihtml5.views.View.extend(
     /** @scope wysihtml5.views.Composer.prototype */ {
@@ -68,6 +69,19 @@
       this.base();
     },
 
+    focus: function(setToEnd) {
+      this.base();
+      
+      var lastChild = this.element.lastChild;
+      if (setToEnd && lastChild) {
+        if (lastChild.nodeName === "BR") {
+          selection.setBefore(this.element.lastChild);
+        } else {
+          selection.setAfter(this.element.lastChild);
+        }
+      }
+    },
+
     getTextContent: function() {
       return dom.getTextContent(this.element);
     },
@@ -115,9 +129,12 @@
       this.textarea           = this.parent.textarea;
       this.element.innerHTML  = this.textarea.getValue(true);
       this.enable();
-
-      // Make sure that our external range library is initialized
-      window.rangy.init();
+      
+      // Make sure our selection handler is ready
+      selection.initialize(this.sandbox.getDocument());
+      
+      // Make sure commands are ready
+      commands.initialize(this.parent);
 
       dom.copyAttributes([
         "className", "spellcheck", "title", "lang", "dir", "accessKey"
@@ -145,12 +162,13 @@
       if (placeholderText) {
         dom.simulatePlaceholder(this.parent, this, placeholderText);
       }
-
+      
       // Make sure that the browser avoids using inline styles whenever possible
-      wysihtml5.commands.exec(this.element, "styleWithCSS", false);
+      commands.exec("styleWithCSS", false);
 
       this._initAutoLinking();
       this._initObjectResizing();
+      this._initUndoManager();
 
       // Simulate html5 autofocus on contentEditable element
       if (this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) {
@@ -187,20 +205,18 @@
       var supportsDisablingOfAutoLinking = browser.canDisableAutoLinking(),
           supportsAutoLinking            = browser.doesAutoLinkingInContentEditable();
       if (supportsDisablingOfAutoLinking) {
-        wysihtml5.commands.exec(this.element, "autoUrlDetect", false);
+        commands.exec("autoUrlDetect", false);
       }
 
       if (!this.config.autoLink) {
         return;
       }
 
-      var sandboxDoc = this.sandbox.getDocument();
-
       // Only do the auto linking by ourselves when the browser doesn't support auto linking
       // OR when he supports auto linking but we were able to turn it off (IE9+)
       if (!supportsAutoLinking || (supportsAutoLinking && supportsDisablingOfAutoLinking)) {
         this.parent.observe("newword:composer", function() {
-          selection.executeAndRestore(sandboxDoc, function(startContainer, endContainer) {
+          selection.executeAndRestore(function(startContainer, endContainer) {
             dom.autoLink(endContainer.parentNode);
           });
         });
@@ -211,7 +227,7 @@
       // If a user now changes the url in the innerHTML we want to make sure that
       // it's synchronized with the href attribute (as long as the innerHTML is still a url)
       var // Use a live NodeList to check whether there are any links in the document
-          links           = sandboxDoc.getElementsByTagName("a"),
+          links           = this.sandbox.getDocument().getElementsByTagName("a"),
           // The autoLink helper method reveals a reg exp to detect correct urls
           urlRegExp       = dom.autoLink.URL_REG_EXP,
           getTextContent  = function(element) {
@@ -257,7 +273,7 @@
           propertiesLength  = properties.length,
           element           = this.element;
       
-      wysihtml5.commands.exec(element, "enableObjectResizing", this.config.allowObjectResizing);
+      commands.exec("enableObjectResizing", this.config.allowObjectResizing);
 
       if (this.config.allowObjectResizing) {
          // IE sets inline styles after resizing objects
@@ -285,6 +301,10 @@
           dom.observe(element, "resizestart", function(event) { event.preventDefault(); });
         }
       }
+    },
+    
+    _initUndoManager: function() {
+      new wysihtml5.UndoManager(this.parent);
     }
   });
 })(wysihtml5);
