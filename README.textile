@@ -1,4 +1,4 @@
-h1. wysihtml5 0.2.0
+h1. wysihtml5 0.3.0 RC 1
 
 wysihtml5 is an open source rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.
@@ -102,6 +102,12 @@ List of supported events:
 * _redo:composer_ - when the user invokes a redo action (CMD + Y, CMD + SHIFT + Z or via context menu)
 * _beforecommand:composer_ - when the user is about to format something via a rich text command
 * _aftercommand:composer_ - when the user formatted something via a rich text command
+
+h2. Neat features
+
+* When the browser supports rich text formatting the <code><body></code> of the page receives a css class "wysihtml5-supported". This can be useful if you want to display some hints or activate certain UI elements.
+* When the browser supports rich text formatting a hidden <code><input></code> with name "_wysihtml5_mode" and value "1" is inserted after the textarea. This can be used on the server side to specially treat wysihtml5 output after form submit.
+* If within a <code><form></code> the editor hooks into the "reset" and "submit" events and makes sure that the rich text element is in sync with the original <code><textarea></code>
 
 h2. Progressive-Enhancement/Initialization Step By Step
 

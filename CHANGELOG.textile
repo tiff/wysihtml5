@@ -1,0 +1,14 @@
+*wysihtml5 0.3.0* (February 5, 2012)
+
+* Basic iOS support (thx @javan for bearing with me)
+* Proper undo/redo support for all browsers except IE
+* Added more events: beforecommand:composer, aftercommand:composer, undo:composer, redo:composer, show:dialog, save:dialog, cancel:dialog (thx to @martinnormark)
+* Fixed an annoying text pasting behavior
+* Allow nested toolbar buttons (thx to @kagd)
+* Updated rangy library to version 1.2.2
+* Improve handling of line breaks in list elements for even cleaner HTML output
+* The editor now also copies border-radius styles from the textarea to the rich text element (thx to @henningthies)
+
+*wysihtml5 0.2.0* (July 13, 2011)
+
+* Library agnostic (no Prototype library needed anymore)
