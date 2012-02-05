@@ -96,6 +96,8 @@ List of supported events:
 * _show:dialog_ - when a toolbar dialog is shown
 * _save:dialog_ - when save in a toolbar dialog is clicked
 * _cancel:dialog_ - when cancel in a toolbar dialog is clicked
+* _undo:composer_ - when the user invokes an undo action (CMD + Z or via context menu)
+* _redo:composer_ - when the user invokes a redo action (CMD + Y, CMD + SHIFT + Z or via context menu)
 
 h2. Progressive-Enhancement/Initialization Step By Step
 
