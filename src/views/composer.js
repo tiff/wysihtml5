@@ -31,7 +31,6 @@
       // which are used as hacks to enable some functionalities
       // Also remove all CARET hacks that somehow got left
       value = wysihtml5.lang.string(value).replace(wysihtml5.INVISIBLE_SPACE).by("");
-      value = wysihtml5.lang.string(value).replace(selection.PLACEHOLDER_TEXT).by("");
 
       return value;
     },

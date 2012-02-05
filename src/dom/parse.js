@@ -133,7 +133,6 @@ wysihtml5.dom.parse = (function() {
     if (cleanUp &&
         newNode.childNodes.length <= 1 &&
         newNode.nodeName.toLowerCase() === DEFAULT_NODE_NAME &&
-        newNode.innerHTML !== wysihtml5.selection.PLACEHOLDER_TEXT && 
         !newNode.attributes.length) {
       return newNode.firstChild;
     }
@@ -256,6 +255,9 @@ wysihtml5.dom.parse = (function() {
         }
       }
     }
+    
+    // make sure that wysihtml5 temp class doesn't get stripped out
+    allowedClasses["_wysihtml5-temp-placeholder"] = 1;
     
     // add old classes last
     oldClasses = oldNode.getAttribute("class");

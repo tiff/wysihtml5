@@ -1,41 +1,5 @@
 (function(wysihtml5) {
-  var PLACEHOLDER_TEXT = "--_CARET_--",
-      dom              = wysihtml5.dom;
-  
-      // ----------------- private -------------- \\
-  function _createPlaceholderNode(doc) {
-    // Important: placeholder element needs to be an inline element
-    // otherwise chrome will cause trouble when interacting with the text
-    var element       = doc._wysihtml5CaretPlaceholder = (doc._wysihtml5CaretPlaceholder || doc.createElement("span"));
-    element.innerHTML = PLACEHOLDER_TEXT;
-    return element;
-  }
-
-  function _findPlaceholderNode(doc) {
-    var placeholderElement      = _createPlaceholderNode(doc),
-        // Using placeholderElement.innerHTML causes problems in firefox who sometimes mangles the innerHTML
-        placeholderElementText  = dom.getTextContent(placeholderElement),
-        placeholderElementById  = doc.getElementById(placeholderElement.id),
-        i                       = 0,
-        element,
-        elements,
-        elementsLength;
-    if (dom.contains(doc.body, placeholderElement)) {
-      return placeholderElement;
-    } else if (placeholderElementById) {
-      return placeholderElementById;
-    } else {
-      elements = doc.getElementsByTagName("*");
-      elementsLength = elements.length;
-      for (; i<elementsLength; i++) {
-        element = elements[i];
-        if (element.innerHTML === placeholderElementText) {
-          return element;
-        }
-      }
-      return null;
-    }
-  }
+  var dom = wysihtml5.dom;
   
   function _getCumulativeOffsetTop(element) {
     var top = 0;
@@ -49,7 +13,6 @@
   }
   
   wysihtml5.selection = {
-    PLACEHOLDER_TEXT: PLACEHOLDER_TEXT,
 
     /**
      * Get the current selection as a bookmark to be able to later restore it
@@ -170,42 +133,39 @@
     },
 
     executeAndRestore: function(doc, method, restoreScrollPosition) {
-      if (!window.getSelection) {
-        return this.executeAndRestoreSimple(doc, method);
-      }
-
-      var body                = doc.body,
-          oldScrollTop        = body.scrollTop,
-          oldScrollLeft       = body.scrollLeft,
-          range               = this.getRange(doc),
-          caretPlaceholder    = _createPlaceholderNode(doc),
-          newCaretPlaceholder,
+      var body                  = doc.body,
+          oldScrollTop          = restoreScrollPosition && body.scrollTop,
+          oldScrollLeft         = restoreScrollPosition && body.scrollLeft,
+          className             = "_wysihtml5-temp-placeholder",
+          placeholderHTML       = '<span class="' + className + '">' + wysihtml5.INVISIBLE_SPACE + '</span>',
+          range                 = this.getRange(doc),
           newRange;
-
+      
       // Nothing selected, execute and say goodbye
       if (!range) {
         method(body, body);
         return;
       }
-
-      range.insertNode(caretPlaceholder);
-
+      
+      var node = range.createContextualFragment(placeholderHTML);
+      range.insertNode(node);
+      
       // Make sure that a potential error doesn't cause our placeholder element to be left as a placeholder
       try {
         method(range.startContainer, range.endContainer);
-      } catch(e1) {
-        setTimeout(function() { throw e1; }, 0);
+      } catch(e3) {
+        setTimeout(function() { throw e3; }, 0);
       }
-
-      // range.detach();
-
-      newCaretPlaceholder = _findPlaceholderNode(doc);
-
-      if (newCaretPlaceholder) {
+      
+      caretPlaceholder = doc.querySelector("." + className);
+      if (caretPlaceholder) {
         newRange = rangy.createRange(doc);
-        newRange.selectNode(newCaretPlaceholder);
+        newRange.selectNode(caretPlaceholder);
         newRange.deleteContents();
         this.setSelection(newRange);
+      } else {
+        // fallback for when all hell breaks loose
+        body.focus();
       }
 
       if (restoreScrollPosition) {
@@ -215,8 +175,8 @@
 
       // Remove it again, just to make sure that the placeholder is definitely out of the dom tree
       try {
-        newCaretPlaceholder.parentNode.removeChild(newCaretPlaceholder);
-      } catch(e2) {}
+        caretPlaceholder.parentNode.removeChild(caretPlaceholder);
+      } catch(e4) {}
     },
 
     /**
@@ -280,7 +240,7 @@
     },
 
     /**
-     * Insert a node at the caret position and move the cursor after it
+     * Insert a node at the caret position and move the cursor behind it
      *
      * @param {Object} node HTML string to insert
      * @example
@@ -290,8 +250,6 @@
       var range = this.getRange(node.ownerDocument);
       if (range) {
         range.insertNode(node);
-      } else {
-        return false;
       }
     },
 
