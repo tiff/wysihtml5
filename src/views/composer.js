@@ -175,10 +175,7 @@
         setTimeout(function() { that.focus(); }, 100);
       }
 
-      // IE and Opera insert paragraphs on return instead of line breaks
-      if (!browser.insertsLineBreaksOnReturn()) {
-        wysihtml5.quirks.insertLineBreakOnReturn(this.element);
-      }
+      wysihtml5.quirks.insertLineBreakOnReturn(this.element);
 
       // IE sometimes leaves a single paragraph, which can't be removed by the user
       if (!browser.clearsContentEditableCorrectly()) {
