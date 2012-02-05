@@ -54,7 +54,9 @@
     // Placeholder text to use, defaults to the placeholder attribute on the textarea element
     placeholderText:      undef,
     // Whether the composer should allow the user to manually resize images, tables etc.
-    allowObjectResizing:  true
+    allowObjectResizing:  true,
+    // Whether the rich text editor should be rendered on touch devices (wysihtml5 >= 0.3.0 comes with basic support for iOS 5)
+    supportTouchDevices:  true
   };
   
   wysihtml5.Editor = wysihtml5.lang.Dispatcher.extend(
@@ -66,8 +68,8 @@
       this.currentView      = this.textarea;
       this._isCompatible    = wysihtml5.browser.supported();
       
-      // Sort out unsupported browsers here
-      if (!this._isCompatible) {
+      // Sort out unsupported/unwanted browsers here
+      if (!this._isCompatible || (!this.config.supportTouchDevices && wysihtml5.browser.isTouchDevice())) {
         var that = this;
         setTimeout(function() { that.fire("beforeload").fire("load"); }, 0);
         return;

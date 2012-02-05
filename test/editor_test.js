@@ -484,4 +484,27 @@ if (wysihtml5.browser.supported()) {
       start();
     });
   });
+  
+  
+  asyncTest("Check config.supportTouchDevices = false", function() {
+    expect(2);
+    
+    var that = this;
+    
+    var originalIsTouchDevice = wysihtml5.browser.isTouchDevice;
+    wysihtml5.browser.isTouchDevice = function() { return true; };
+    
+    var editor = new wysihtml5.Editor(this.textareaElement, {
+      supportTouchDevices: false
+    });
+    
+    editor.observe("load", function() {
+      ok(!that.getIframeElement(), "No editor iframe has been inserted");
+      equals(that.textareaElement.style.display, "", "Textarea is visible");
+      
+      wysihtml5.browser.isTouchDevice = originalIsTouchDevice;
+      
+      start();
+    });
+  });
 }

@@ -45,6 +45,10 @@ wysihtml5.browser = (function() {
         && !isIncompatibleMobileBrowser;
     },
     
+    isTouchDevice: function() {
+      return this.supportsEvent("touchmove");
+    },
+    
     isIos: function() {
       var userAgent = this.USER_AGENT.toLowerCase();
       return userAgent.indexOf("webkit") !== -1 && userAgent.indexOf("mobile") !== -1;
