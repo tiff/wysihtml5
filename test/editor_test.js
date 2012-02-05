@@ -190,6 +190,8 @@ if (wysihtml5.browser.supported()) {
       });
       
       QUnit.triggerEvent(composerElement, "focus");
+      editor.stopObserving("focus");
+      
       // Modify innerHTML in order to force 'change' event to trigger onblur
       composerElement.innerHTML = "foobar";
       QUnit.triggerEvent(composerElement, "blur");

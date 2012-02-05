@@ -30,7 +30,7 @@ wysihtml5.lang.Dispatcher = Base.extend(
       handlers    = this.events[eventName] || [],
       newHandlers = [];
       for (; i<handlers.length; i++) {
-        if (handlers[i] !== handler) {
+        if (handlers[i] !== handler && handler) {
           newHandlers.push(handlers[i]);
         }
       }
