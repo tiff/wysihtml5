@@ -25,6 +25,7 @@
  *    undo:composer
  *    redo:composer
  *    beforecommand:composer
+ *    aftercommand:composer
  *    change_view
  */
 (function(wysihtml5) {
