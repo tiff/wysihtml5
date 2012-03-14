@@ -34,13 +34,13 @@
     },
     
     _observe: function() {
-      var that = this,
-          doc = this.editor.composer.sandbox.getDocument(),
+      var that      = this,
+          doc       = this.editor.composer.sandbox.getDocument(),
           lastKey;
           
       // Catch CTRL+Z and CTRL+Y
       dom.observe(this.composerElement, "keydown", function(event) {
-        if (!event.ctrlKey && !event.metaKey) {
+        if (!event.ctrlKey && !(event.metaKey && wysihtml5.browser.isMac())) {
           return;
         }
         

@@ -333,6 +333,10 @@ wysihtml5.browser = (function() {
      */
     crashesWhenDefineProperty: function(property) {
       return isIE && (property === "XMLHttpRequest" || property === "XDomainRequest");
+    },
+    
+    isMac: function() {
+      return navigator.platform.substr(0, 3).toLowerCase() === "mac";
     }
   };
 })();
