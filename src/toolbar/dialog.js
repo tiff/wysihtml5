@@ -131,7 +131,7 @@
      * Basically it adopted the attribute values into the corresponding input fields
      *
      */
-    _interpolate: function() {
+    _interpolate: function(avoidHiddenFields) {
       var field,
           fieldName,
           newValue,
@@ -141,10 +141,18 @@
           i              = 0;
       for (; i<length; i++) {
         field = fields[i];
+        
         // Never change elements where the user is currently typing in
         if (field === focusedElement) {
           continue;
         }
+        
+        // Don't update hidden fields
+        // See https://github.com/xing/wysihtml5/pull/14
+        if (avoidHiddenFields && field.type === "hidden") {
+          continue;
+        }
+        
         fieldName = field.getAttribute(ATTRIBUTE_FIELDS);
         newValue  = this.elementToChange ? (this.elementToChange[fieldName] || "") : field.defaultValue;
         field.value = newValue;
@@ -161,7 +169,7 @@
       this._observe();
       this._interpolate();
       if (elementToChange) {
-        this.interval = setInterval(function() { that._interpolate(); }, 500);
+        this.interval = setInterval(function() { that._interpolate(true); }, 500);
       }
       dom.addClass(this.link, CLASS_NAME_OPENED);
       this.container.style.display = "";
