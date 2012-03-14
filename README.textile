@@ -3,7 +3,6 @@ h1. wysihtml5 0.3.0 RC 1
 wysihtml5 is an open source rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.
 The code is completely library agnostic: No jQuery, Prototype or similar is required.
-The editor is already in use on "XING.com":https://www.xing.com - a social network with more than 10 million members.
 
 h2. Features:
 
@@ -21,13 +20,19 @@ h2. Features:
 h2. Browser Support
 
 The rich text editing interface is supported in IE8+, FF 3.5+, Safari 4+, Opera 11+ and Chrome.
-*Graceful Degradation:* Users with other browsers will see the textarea and are still able write plain HTML by themselves.
+*Graceful Degradation:* Users with other browsers will see the textarea and are still able to write plain HTML by themselves.
 As of now iOS and Android don’t support rich text editing properly. For now they are treated like IE 6+7.
 
 h2. Demos
 
 * "Simple Editor with italic and bold buttons":http://tifftiff.de/wysihtml5/examples/simple.html
 * "Editor with advanced functionality":http://tifftiff.de/wysihtml5/examples/advanced.html
+
+h2. Companies using wysihtml5
+
+* "Basecamp":http://basecamp.com - Leading web-based project management and collaboration tool
+* "XING":https://www.xing.com - Business Social Network with more than 12 million members
+* any many more ...
 
 h2. Configuration
 
@@ -103,11 +108,11 @@ List of supported events:
 * _beforecommand:composer_ - when the user is about to format something via a rich text command
 * _aftercommand:composer_ - when the user formatted something via a rich text command
 
-h2. Neat features
+h2. Useful helpers
 
 * When the browser supports rich text formatting the <code><body></code> of the page receives a css class "wysihtml5-supported". This can be useful if you want to display some hints or activate certain UI elements.
 * When the browser supports rich text formatting a hidden <code><input></code> with name "_wysihtml5_mode" and value "1" is inserted after the textarea. This can be used on the server side to specially treat wysihtml5 output after form submit.
-* If within a <code><form></code> the editor hooks into the "reset" and "submit" events and makes sure that the rich text element is in sync with the original <code><textarea></code>
+* If within a <code><form></code> the editor hooks into the "reset" and "submit" events and ensures that the rich text element is in sync with the original <code><textarea></code>
 
 h2. Progressive-Enhancement/Initialization Step By Step
 
@@ -130,7 +135,7 @@ copied to the hidden <code><textarea></code>)
 behavior on the iframe's <code><body></code>
 # Checks whether a toolbar is given and sets event listeners on it's link
 
-h2. How to build your own wysihtml5 files
+h2. How to compile your own wysihtml5
 
 Clone and build the js file:
 <pre>git clone git://github.com/xing/wysihtml5.git
