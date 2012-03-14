@@ -5,8 +5,8 @@ if (wysihtml5.browser.supported()) {
       return wysihtml5.dom.parse(html, rules, context, cleanUp);
     },
 
-    equals: function(actual, expected, message) {
-      return wysihtml5.assert.htmlEquals(actual, expected, message);
+    equal: function(actual, expected, message) {
+      return wysihtml5.assert.htmlEqual(actual, expected, message);
     }
   });
 
@@ -19,55 +19,55 @@ if (wysihtml5.browser.supported()) {
       }
     };
 
-    this.equals(
+    this.equal(
       this.sanitize("<i id=\"foo\">bar</i>", rules),
       "<span>bar</span>",
       "Unknown tag gets renamed to span"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("<p>foo</p>", rules),
       "<div>foo</div>",
       "Known tag gets renamed to it's corresponding conversion"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("<script>window;</script>", rules),
       "",
       "Forbidden tag gets correctly removed"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("foobar", rules),
       "foobar",
       "Plain text is kept"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("<table><tbody><tr><td>I'm a table!</td></tr></tbody></table>"),
       "<span><span><span><span>I'm a table!</span></span></span></span>",
       "Passing no conversion renames all into <span> elements"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("<p>foobar<br></p>", { tags: { p: true, br: true } }),
       "<p>foobar<br></p>",
       "Didn't rewrite the HTML"
     );
 
-    this.equals(
+    this.equal(
       this.sanitize("<div><!-- COMMENT -->foo</div>"),
       "<span>foo</span>",
       "Stripped out comments"
     );
     
-    this.equals(
+    this.equal(
       this.sanitize("<article>foo</article>", { tags: { article: true } }),
       "<article>foo</article>",
       "Check html5 tags"
     );
     
-    this.equals(
+    this.equal(
       this.sanitize("<!DOCTYPE html><p>html5 doctype</p>", { tags: { p: true } }),
       "<p>html5 doctype</p>",
       "Stripped out doctype"
@@ -93,7 +93,7 @@ if (wysihtml5.browser.supported()) {
       }
     };
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<h1 id="main-headline" >take this you snorty little sanitizer</h1>' +
         '<h2>yes, you!</h2>' +
@@ -129,13 +129,13 @@ if (wysihtml5.browser.supported()) {
     var secondResult = this.sanitize(firstResult, rules);
     
     ok(secondResult.indexOf("foo") !== -1);
-    this.equals(firstResult, secondResult);
+    this.equal(firstResult, secondResult);
     
     firstResult = this.sanitize('<SPAN><DIV><SPAN>foo<DIV></DIV>', rules);
     secondResult = this.sanitize(firstResult, rules);
     
     ok(secondResult.indexOf("foo") !== -1);
-    this.equals(firstResult, secondResult);
+    this.equal(firstResult, secondResult);
   });
   
   test("Test cleanup mode", function() {
@@ -143,12 +143,12 @@ if (wysihtml5.browser.supported()) {
       tags: { span: true, div: true }
     };
     
-    this.equals(
+    this.equal(
       this.sanitize("<div><span>foo</span></div>", rules, null, true),
       "<div>foo</div>"
     );
     
-    this.equals(
+    this.equal(
       this.sanitize("<span><p>foo</p></span>", rules, null, true),
       "foo"
     );
@@ -176,7 +176,7 @@ if (wysihtml5.browser.supported()) {
       }
     };
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" alt="Christopher Blum" width="57" height="75" class="wysiwyg-float-right">',
         rules
@@ -184,7 +184,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" class="wysiwyg-float-right" height="75" src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" alt="Christopher Blum" width="57" height="75" ALIGN="RIGHT">',
         rules
@@ -192,7 +192,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" class="wysiwyg-float-right" height="75" src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" alt="Christopher Blum" width="57" height="75" align="left">',
         rules
@@ -200,7 +200,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" class="wysiwyg-float-left" height="75" src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" alt="Christopher Blum" width="57" height="75" align="">',
         rules
@@ -208,7 +208,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" height="75" src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="/img/users/1/2/7/f98db1f73.6149675_s4.jpg" alt="Christopher Blum" width="57" height="75">',
         rules
@@ -216,7 +216,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" height="75" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="file://foobar.jpg" alt="Christopher Blum" width="57" height="75">',
         rules
@@ -224,7 +224,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="Christopher Blum" height="75" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57" height="75">',
         rules
@@ -232,7 +232,7 @@ if (wysihtml5.browser.supported()) {
       '<img alt="" height="75" src="https://www.xing.com/img/users/1/2/7/f98db1f73.6149675_s4.jpg" width="57">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<img>',
         rules
@@ -259,7 +259,7 @@ if (wysihtml5.browser.supported()) {
       }
     };
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<div>foo<br clear="both">bar</div>',
         rules
@@ -267,7 +267,7 @@ if (wysihtml5.browser.supported()) {
       '<div>foo<br class="wysiwyg-clear-both">bar</div>'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<div>foo<br clear="all">bar</div>',
         rules
@@ -275,7 +275,7 @@ if (wysihtml5.browser.supported()) {
       '<div>foo<br class="wysiwyg-clear-both">bar</div>'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<div>foo<br clear="left" id="foo">bar</div>',
         rules
@@ -283,7 +283,7 @@ if (wysihtml5.browser.supported()) {
       '<div>foo<br class="wysiwyg-clear-left">bar</div>'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="right">',
         rules
@@ -291,7 +291,7 @@ if (wysihtml5.browser.supported()) {
       '<br class="wysiwyg-clear-right">'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="">',
         rules
@@ -299,7 +299,7 @@ if (wysihtml5.browser.supported()) {
       '<br>'
     );
 
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="LEFT">',
         rules
@@ -307,7 +307,7 @@ if (wysihtml5.browser.supported()) {
       '<br class="wysiwyg-clear-left">'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br class="wysiwyg-clear-left">',
         rules
@@ -315,7 +315,7 @@ if (wysihtml5.browser.supported()) {
       '<br class="wysiwyg-clear-left">'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="left" class="wysiwyg-clear-left">',
         rules
@@ -323,7 +323,7 @@ if (wysihtml5.browser.supported()) {
       '<br class="wysiwyg-clear-left">'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="left" class="wysiwyg-clear-left wysiwyg-clear-right">',
         rules
@@ -331,7 +331,7 @@ if (wysihtml5.browser.supported()) {
       '<br class="wysiwyg-clear-left wysiwyg-clear-right">'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<br clear="left" class="wysiwyg-clear-right">',
         rules
@@ -361,7 +361,7 @@ if (wysihtml5.browser.supported()) {
       }
     };
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="1">foo</font>',
         rules
@@ -369,7 +369,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-xx-small">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="2">foo</font>',
         rules
@@ -377,7 +377,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-small">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="3">foo</font>',
         rules
@@ -385,7 +385,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-medium">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="4">foo</font>',
         rules
@@ -393,7 +393,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-large">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="5">foo</font>',
         rules
@@ -401,7 +401,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-x-large">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="6">foo</font>',
         rules
@@ -409,7 +409,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-xx-large">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="7">foo</font>',
         rules
@@ -417,7 +417,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-xx-large">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="+1">foo</font>',
         rules
@@ -425,7 +425,7 @@ if (wysihtml5.browser.supported()) {
       '<span class="wysiwyg-font-size-larger">foo</span>'
     );
     
-    this.equals(
+    this.equal(
       this.sanitize(
         '<font size="-1">foo</font>',
         rules
@@ -442,7 +442,7 @@ if (wysihtml5.browser.supported()) {
       }
     };
 
-    this.equals(
+    this.equal(
       this.sanitize("<o:p>foo</o:p>", rules),
       "<span>foo</span>",
       "Unknown tag with namespace gets renamed to span"
@@ -461,13 +461,13 @@ if (wysihtml5.browser.supported()) {
       }
     };
     
-    this.equals(
+    this.equal(
       this.sanitize('<header class="a b c">foo</header>', rules),
       '<span class="a c">foo</span>',
       "Allowed classes 'a' and 'c' are correctly kept and unknown class 'b' is correctly removed."
     );
     
-    this.equals(
+    this.equal(
       this.sanitize('<footer class="ab c d" class="a">foo</footer>', rules),
       '<div class="c">foo</div>',
       "Allowed classes 'c' is correctly kept and unknown class 'b' is correctly removed."

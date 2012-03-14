@@ -52,19 +52,19 @@ if (wysihtml5.browser.supportsCommand(document, "insertHTML")) {
       editor.setValue("1 2 3 4 5");
 
       that.triggerUndo(editor);
-      equals(editor.getValue(), "1 2 3 4");
+      equal(editor.getValue(), "1 2 3 4");
       that.triggerRedo(editor);
       that.triggerRedo(editor);
-      equals(editor.getValue(), "1 2 3 4 5");
+      equal(editor.getValue(), "1 2 3 4 5");
       that.triggerUndo(editor);
       that.triggerUndo(editor);
-      equals(editor.getValue(), "1 2 3");
+      equal(editor.getValue(), "1 2 3");
       that.triggerUndo(editor);
       that.triggerUndo(editor);
-      equals(editor.getValue(), "1");
+      equal(editor.getValue(), "1");
       that.triggerUndo(editor);
       that.triggerUndo(editor);
-      equals(editor.getValue(), "1");
+      equal(editor.getValue(), "1");
       
       start();
     });
@@ -81,12 +81,12 @@ if (wysihtml5.browser.supportsCommand(document, "insertHTML")) {
       editor.setValue("<i><b>1</b></i>").fire("beforecommand:composer");
       
       that.triggerUndo(editor);
-      equals(editor.getValue(), "<b>1</b>");
+      equal(editor.getValue(), "<b>1</b>");
       that.triggerRedo(editor);
-      equals(editor.getValue(), "<i><b>1</b></i>");
+      equal(editor.getValue(), "<i><b>1</b></i>");
       that.triggerUndo(editor);
       that.triggerUndo(editor);
-      equals(editor.getValue(), "1");
+      equal(editor.getValue(), "1");
       
       start();
     });

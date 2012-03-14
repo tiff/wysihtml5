@@ -22,9 +22,9 @@ asyncTest("Basic Tests with IE=Edge", function() {
       "body { text-indent: 50px; }"
     ]).into(doc);
     
-    equals(wysihtml5.dom.getStyle("display")    .from(element), "block");
-    equals(wysihtml5.dom.getStyle("text-align") .from(element), "right");
-    equals(wysihtml5.dom.getStyle("text-indent").from(element), "50px");
+    equal(wysihtml5.dom.getStyle("display")    .from(element), "block");
+    equal(wysihtml5.dom.getStyle("text-align") .from(element), "right");
+    equal(wysihtml5.dom.getStyle("text-indent").from(element), "50px");
     
     start();
   }, { uaCompatible: "IE=Edge" }).insertInto(document.body);
@@ -45,9 +45,9 @@ asyncTest("Basic Tests with IE=7", function() {
       "body { text-indent: 50px; }"
     ]).into(doc);
     
-    equals(wysihtml5.dom.getStyle("display")    .from(element), "block");
-    equals(wysihtml5.dom.getStyle("text-align") .from(element), "right");
-    equals(wysihtml5.dom.getStyle("text-indent").from(body),    "50px");
+    equal(wysihtml5.dom.getStyle("display")    .from(element), "block");
+    equal(wysihtml5.dom.getStyle("text-align") .from(element), "right");
+    equal(wysihtml5.dom.getStyle("text-indent").from(body),    "50px");
     
     start();
   }, { uaCompatible: "IE=7" }).insertInto(document.body);

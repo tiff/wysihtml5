@@ -1,6 +1,6 @@
 module("wysihtml5.dom.renameElement", {
-  equals: function(actual, expected, message) {
-    return wysihtml5.assert.htmlEquals(actual, expected, message);
+  equal: function(actual, expected, message) {
+    return wysihtml5.assert.htmlEqual(actual, expected, message);
   },
   
   renameElement: function(html, newNodeName) {
@@ -11,17 +11,17 @@ module("wysihtml5.dom.renameElement", {
 });
 
 test("Basic tests", function() {
-  this.equals(
+  this.equal(
     this.renameElement("<p>foo</p>", "div"),
     "<div>foo</div>"
   );
   
-  this.equals(
+  this.equal(
     this.renameElement("<ul><li>foo</li></ul>", "ol"),
     "<ol><li>foo</li></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.renameElement('<p align="left" class="foo"></p>', "h2"),
     '<h2 align="left" class="foo"></h2>'
   );

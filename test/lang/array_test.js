@@ -10,13 +10,13 @@ test("contains()", function() {
 
 test("without()", function() {
   var arr = [1, 2, 3];
-  same(wysihtml5.lang.array(arr).without([1]), [2, 3]);
-  same(wysihtml5.lang.array(arr).without([4]), [1, 2, 3]);
+  deepEqual(wysihtml5.lang.array(arr).without([1]), [2, 3]);
+  deepEqual(wysihtml5.lang.array(arr).without([4]), [1, 2, 3]);
 });
 
 test("get()", function() {
   var nodeList = document.getElementsByTagName("*"),
       arr      = wysihtml5.lang.array(nodeList).get();
-  equals(arr.length, nodeList.length);
+  equal(arr.length, nodeList.length);
   ok(arr instanceof Array);
 });

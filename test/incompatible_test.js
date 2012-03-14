@@ -28,18 +28,18 @@ asyncTest("Basic test", function() {
     ok(true, "'load' event correctly triggered");
     ok(!wysihtml5.dom.hasClass(document.body, "wysihtml5-supported"), "<body> didn't receive the 'wysihtml5-supported' class");
     ok(!editor.isCompatible(), "isCompatible returns false when rich text editing is not correctly supported in the current browser");
-    equals(that.textareaElement.style.display, "", "Textarea is visible");
+    equal(that.textareaElement.style.display, "", "Textarea is visible");
     ok(!editor.composer, "Composer not initialized");
     
-    equals(document.getElementsByTagName("iframe").length, oldIframesLength, "No hidden field has been inserted into the dom");
-    equals(document.getElementsByTagName("input").length,  oldInputsLength,  "Composer not initialized");
+    equal(document.getElementsByTagName("iframe").length, oldIframesLength, "No hidden field has been inserted into the dom");
+    equal(document.getElementsByTagName("input").length,  oldInputsLength,  "Composer not initialized");
     
     var html = "foobar<br>";
     editor.setValue(html);
-    equals(that.textareaElement.value, html);
-    equals(editor.getValue(), html);
+    equal(that.textareaElement.value, html);
+    equal(editor.getValue(), html);
     editor.clear();
-    equals(that.textareaElement.value, "");
+    equal(that.textareaElement.value, "");
     
     editor.observe("focus", function() {
       ok(true, "Generic 'focus' event fired");

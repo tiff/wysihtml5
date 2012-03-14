@@ -3,15 +3,15 @@ module("wysihtml5.lang.object");
 test("merge()", function() {
   var obj         = { foo: 1, bar: 1 },
       returnValue = wysihtml5.lang.object(obj).merge({ bar: 2, baz: 3 }).get();
-  equals(returnValue, obj);
-  same(obj, { foo: 1, bar: 2, baz: 3 });
+  equal(returnValue, obj);
+  deepEqual(obj, { foo: 1, bar: 2, baz: 3 });
 });
 
 test("clone()", function() {
   var obj = { foo: true },
       returnValue = wysihtml5.lang.object(obj).clone();
   ok(obj != returnValue);
-  same(obj, returnValue);
+  deepEqual(obj, returnValue);
 });
 
 test("isArray()", function() {

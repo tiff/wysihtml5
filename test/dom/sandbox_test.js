@@ -33,10 +33,10 @@ asyncTest("Basic Test", function() {
   expect(8);
   
   var sandbox = new wysihtml5.dom.Sandbox(function(param) {
-    equals(param, sandbox, "The parameter passed into the readyCallback is the sandbox instance");
+    equal(param, sandbox, "The parameter passed into the readyCallback is the sandbox instance");
     
     var iframes = document.querySelectorAll("iframe.wysihtml5-sandbox");
-    equals(iframes.length, 1, "iFrame sandbox inserted into dom tree");
+    equal(iframes.length, 1, "iFrame sandbox inserted into dom tree");
     
     var iframe = iframes[iframes.length - 1],
         isIframeInvisible = iframe.width == 0 && iframe.height == 0 && iframe.frameBorder == 0;
@@ -51,8 +51,8 @@ asyncTest("Basic Test", function() {
     var isDocumentObject = sandbox.getDocument().appendChild && sandbox.getDocument().body;
     ok(isDocumentObject, "wysihtml5.Sandbox.prototype.getDocument() works properly");
     
-    equals(sandbox.getIframe(), iframe, "wysihtml5.Sandbox.prototype.getIframe() returns the iframe correctly");
-    equals(typeof(sandbox.getWindow().onerror), "function", "window.onerror is set");
+    equal(sandbox.getIframe(), iframe, "wysihtml5.Sandbox.prototype.getIframe() returns the iframe correctly");
+    equal(typeof(sandbox.getWindow().onerror), "function", "window.onerror is set");
     
     start();
   });
@@ -107,8 +107,8 @@ asyncTest("Security test #2", function() {
     sandbox.getDocument().body.innerHTML = html;
     
     setTimeout(function() {
-      equals(window._hackedCookie   || "", "", "Cookie can't be easily stolen");
-      equals(window._hackedVariable || 0, 0, "iFrame has no access to parent");
+      equal(window._hackedCookie   || "", "", "Cookie can't be easily stolen");
+      equal(window._hackedVariable || 0, 0, "iFrame has no access to parent");
       
       start();
     }, 2000);
@@ -128,12 +128,12 @@ asyncTest("Check charset & doctype", function() {
         isQuirksMode   = iframeDocument.compatMode == "BackCompat";
     
     ok(!isQuirksMode, "iFrame isn't in quirks mode");
-    equals(that.getCharset(iframeDocument), that.getCharset(document), "Charset correctly inherited by iframe");
+    equal(that.getCharset(iframeDocument), that.getCharset(document), "Charset correctly inherited by iframe");
     
     iframeDocument.body.innerHTML = '<meta charset="iso-8859-1">&uuml;';
     
     setTimeout(function() {
-      equals(that.getCharset(iframeDocument), that.getCharset(document), "Charset isn't overwritten");
+      equal(that.getCharset(iframeDocument), that.getCharset(document), "Charset isn't overwritten");
       start();
     }, 500);
   });
@@ -147,7 +147,7 @@ asyncTest("Check insertion of single stylesheet", function() {
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var doc = sandbox.getDocument();
-    equals(doc.getElementsByTagName("link").length, 1, "Correct amount of stylesheets inserted into the dom tree");
+    equal(doc.getElementsByTagName("link").length, 1, "Correct amount of stylesheets inserted into the dom tree");
     start();
   }, {
     stylesheets: "https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/blitzer/jquery-ui.css"
@@ -160,7 +160,7 @@ asyncTest("Check insertion of multiple stylesheets", function() {
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var doc = sandbox.getDocument();
-    equals(doc.getElementsByTagName("link").length, 2, "Correct amount of stylesheets inserted into the dom tree");
+    equal(doc.getElementsByTagName("link").length, 2, "Correct amount of stylesheets inserted into the dom tree");
     start();
   }, {
     stylesheets: [
@@ -179,7 +179,7 @@ asyncTest("Check X-UA-Compatible meta tag #1", function() {
         uaCompatibleMetaTag = doc.querySelector("meta[http-equiv='X-UA-Compatible']");
     ok(uaCompatibleMetaTag, "X-UA-Compatible meta tag found");
     if (uaCompatibleMetaTag) {
-      equals(uaCompatibleMetaTag.getAttribute("content"), "IE=Edge", "X-UA-Compatible correctly set");
+      equal(uaCompatibleMetaTag.getAttribute("content"), "IE=Edge", "X-UA-Compatible correctly set");
     }
     start();
   }).insertInto(document.body);
@@ -198,7 +198,7 @@ asyncTest("Check X-UA-Compatible meta tag #2", function() {
     
     ok(docMode === 7 || docMode === 9, "iFrame is in in IE7 or IE9 mode");
     if (uaCompatibleMetaTag) {
-      equals(uaCompatibleMetaTag.getAttribute("content"), "IE=7", "X-UA-Compatible correctly set");
+      equal(uaCompatibleMetaTag.getAttribute("content"), "IE=7", "X-UA-Compatible correctly set");
     }
     start();
   }, {

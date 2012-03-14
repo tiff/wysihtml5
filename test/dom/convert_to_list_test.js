@@ -1,6 +1,6 @@
 module("wysihtml5.dom.convertToList", {
-  equals: function(actual, expected, message) {
-    return wysihtml5.assert.htmlEquals(actual, expected, message);
+  equal: function(actual, expected, message) {
+    return wysihtml5.assert.htmlEqual(actual, expected, message);
   },
   
   convertToList: function(html, type) {
@@ -14,54 +14,54 @@ module("wysihtml5.dom.convertToList", {
 });
 
 test("Basic tests for UL", function() {
-  this.equals(
+  this.equal(
     this.convertToList("<div>foo</div>", "ul"),
     "<ul><li>foo</li></ul>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span></span>", "ul"),
     "<ul></ul>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span>foo<br>bar</span>", "ul"),
     "<ul><li>foo</li><li>bar</li></ul>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span>foo<br>bar<div>baz</div></span>", "ul"),
     "<ul><li>foo</li><li>bar</li><li><div>baz</div></li></ul>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span><div></div><h1></h1><p>yeah</p></span>", "ul"),
     "<ul><li><div></div></li><li><h1></h1></li><li><p>yeah</p></li></ul>"
   );
 });
 
 test("Basic tests for OL", function() {
-  this.equals(
+  this.equal(
     this.convertToList("<div>foo</div>", "ol"),
     "<ol><li>foo</li></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span></span>", "ol"),
     "<ol></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span>foo<br>bar</span>", "ol"),
     "<ol><li>foo</li><li>bar</li></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span>foo<br>bar<div>baz</div></span>", "ol"),
     "<ol><li>foo</li><li>bar</li><li><div>baz</div></li></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<span><div></div><h1></h1><p>yeah</p></span>", "ol"),
     "<ol><li><div></div></li><li><h1></h1></li><li><p>yeah</p></li></ol>"
   );
@@ -69,17 +69,17 @@ test("Basic tests for OL", function() {
 
 
 test("Test whether it doesn't convert dom trees that are already a list", function() {
-  this.equals(
+  this.equal(
     this.convertToList("<ol><li>foo</li></ol>", "ol"),
     "<ol><li>foo</li></ol>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<menu><li>foo</li></menu>", "ol"),
     "<menu><li>foo</li></menu>"
   );
   
-  this.equals(
+  this.equal(
     this.convertToList("<ul><li>foo</li></ul>", "ol"),
     "<ul><li>foo</li></ul>"
   );

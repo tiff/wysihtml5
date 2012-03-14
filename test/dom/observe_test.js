@@ -27,7 +27,7 @@ test("Basic test", function() {
   });
   
   wysihtml5.dom.observe(element, "click", function(event) {
-    equals(event.target, element, "event.target or event.srcElement are set");
+    equal(event.target, element, "event.target or event.srcElement are set");
     ok(true, "'click' correctly fired");
   });
   
@@ -47,7 +47,7 @@ test("Test stopPropagation and scope of event handler", function(event) {
   
   wysihtml5.dom.observe(this.element, "click", function(event) {
     event.stopPropagation();
-    equals(this, element, "Event handler bound to correct scope");
+    equal(this, element, "Event handler bound to correct scope");
     ok(true, "stopPropagation correctly fired");
   });
   
@@ -55,6 +55,7 @@ test("Test stopPropagation and scope of event handler", function(event) {
 });
 
 test("Test detaching events", function() {
+  expect(0);
   var eventListener = wysihtml5.dom.observe(this.element, "click", function() {
     ok(false, "This should not be triggered");
   });

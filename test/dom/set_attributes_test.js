@@ -10,6 +10,6 @@ test("Basic test", function() {
     "class":  "bar"
   }).on(this.element);
   
-  equals(this.element.id, "foo");
-  equals(this.element.className, "bar");
+  equal(this.element.id, "foo");
+  equal(this.element.className, "bar");
 });

@@ -7,13 +7,13 @@ wysihtml5.assert = wysihtml5.assert || {};
  *
  * @author Christopher Blum <christopher.blum@xing.com>
  * @example
- *    wysihtml5.assert.htmlEquals(
+ *    wysihtml5.assert.htmlEqual(
  *      removeAttributes('<p align="center">foo</p>'),
  *      '<p>foo</p>',
  *      'Removed align attribute on <p>'
  *    );
  */
-wysihtml5.assert.htmlEquals = (function() {
+wysihtml5.assert.htmlEqual = (function() {
   var htmlHost = document.createElement("div");
   
   /**

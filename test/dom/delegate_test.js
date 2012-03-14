@@ -24,7 +24,7 @@ test("Basic test", function() {
   
   wysihtml5.dom.delegate(this.container, "a", "click", function(event) {
     ok(true, "Callback handler executed");
-    equals(this, that.link1, "Callback handler executed in correct scope");
+    equal(this, that.link1, "Callback handler executed in correct scope");
     ok(event.stopPropagation && event.preventDefault, "Parameter passed into callback handler is a proper event object");
   });
   
@@ -38,7 +38,7 @@ test("Click on nested element works as well", function() {
   
   wysihtml5.dom.delegate(this.container, "a", "click", function(event) {
     ok(true, "Callback handler executed");
-    equals(this, that.link2, "Callback handler executed in correct scope");
+    equal(this, that.link2, "Callback handler executed in correct scope");
     ok(event.stopPropagation && event.preventDefault, "Parameter passed into callback handler is a proper event object");
   });
   

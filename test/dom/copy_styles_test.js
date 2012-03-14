@@ -28,17 +28,17 @@ test("Basic Tests", function() {
   
   wysihtml5.dom.copyStyles(["width", "height", "text-align", "float"]).from(this.div).to(this.span);
   
-  equals(wysihtml5.dom.getStyle("width")      .from(this.span), "400px",  "Width correctly copied");
-  equals(wysihtml5.dom.getStyle("height")     .from(this.span), "200px",  "Height correctly copied");
-  equals(wysihtml5.dom.getStyle("text-align") .from(this.span), "right",  "Text-align correctly copied");
-  equals(wysihtml5.dom.getStyle("float")      .from(this.span), "left",   "Float correctly copied");
+  equal(wysihtml5.dom.getStyle("width")      .from(this.span), "400px",  "Width correctly copied");
+  equal(wysihtml5.dom.getStyle("height")     .from(this.span), "200px",  "Height correctly copied");
+  equal(wysihtml5.dom.getStyle("text-align") .from(this.span), "right",  "Text-align correctly copied");
+  equal(wysihtml5.dom.getStyle("float")      .from(this.span), "left",   "Float correctly copied");
 });
 
 
 test("Whether it copies native user agent styles", function() {
   wysihtml5.dom.copyStyles(["display"]).from(this.span).to(this.div);
   
-  equals(wysihtml5.dom.getStyle("display").from(this.div), "inline", "Display correctly copied");
+  equal(wysihtml5.dom.getStyle("display").from(this.div), "inline", "Display correctly copied");
 });
 
 
@@ -60,11 +60,11 @@ test("Advanced tests", function() {
   var anotherDivColor = wysihtml5.dom.getStyle("color").from(this.anotherDiv).replace(/\s+/g, "");
   ok(anotherDivColor == "rgb(255,0,0)" || anotherDivColor == "#ff0000", "Second div has correct color");
   
-  equals(wysihtml5.dom.getStyle("text-decoration").from(this.div), "underline", "Text-decoration hasn't been overwritten");
+  equal(wysihtml5.dom.getStyle("text-decoration").from(this.div), "underline", "Text-decoration hasn't been overwritten");
   
   if ("MozBorderRadius" in this.div.style) {
-    equals(wysihtml5.dom.getStyle("-moz-border-radius").from(this.div),        "5px 5px 5px 5px", "First div has correct border-radius");
-    equals(wysihtml5.dom.getStyle("-moz-border-radius").from(this.anotherDiv), "5px 5px 5px 5px", "Second div has correct border-radius");
+    equal(wysihtml5.dom.getStyle("-moz-border-radius").from(this.div),        "5px 5px 5px 5px", "First div has correct border-radius");
+    equal(wysihtml5.dom.getStyle("-moz-border-radius").from(this.anotherDiv), "5px 5px 5px 5px", "Second div has correct border-radius");
   }
 });
 
@@ -87,7 +87,7 @@ asyncTest("Test copying styles from one element to another element which is in a
       .from(that.span)
       .to(iframeElement);
     
-    equals(iframeElement.style.styleFloat || iframeElement.style.cssFloat, "left", "Element in iframe correctly got css float copied over");
+    equal(iframeElement.style.styleFloat || iframeElement.style.cssFloat, "left", "Element in iframe correctly got css float copied over");
     
     start();
   }, 1000);
@@ -104,7 +104,7 @@ test("Test copying styles that were set via style element", function() {
     .from(this.span)
     .to(this.div);
   
-  equals(
+  equal(
     wysihtml5.dom.getStyle("font-size").from(this.div), "16px", "Font-size correctly copied"
   );
 });
