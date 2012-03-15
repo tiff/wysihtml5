@@ -40,7 +40,7 @@
           
       // Catch CTRL+Z and CTRL+Y
       dom.observe(this.composerElement, "keydown", function(event) {
-        if (!event.ctrlKey && !(event.metaKey && wysihtml5.browser.isMac())) {
+        if (event.altKey || (!event.ctrlKey && !event.metaKey)) {
           return;
         }
         
