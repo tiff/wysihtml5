@@ -29,6 +29,8 @@ module("wysihtml5.browser", {
 
 
 test("Check mobile contentEditable support", function() {
+  document.querySelector = document.querySelectorAll = function() {};
+  
   wysihtml5.browser.USER_AGENT = this.userAgents.iPad_iOS3;
   ok(!wysihtml5.browser.supported(), "iPad is correctly unsupported");
   
