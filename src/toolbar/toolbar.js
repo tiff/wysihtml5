@@ -82,8 +82,6 @@
         });
 
         dialog.observe("save", function(attributes) {
-          that.editor.focus(false);
-
           if (caretBookmark) {
             wysihtml5.selection.setBookmark(caretBookmark);
           }

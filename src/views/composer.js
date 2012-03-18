@@ -70,6 +70,13 @@
     },
 
     focus: function(setToEnd) {
+      // IE 8 fires the focus event after .focus()
+      // This is needed by our simulate_placeholder.js to work
+      // therefore we clear it ourselves this time
+      if (wysihtml5.browser.doesAsyncFocus() && this.hasPlaceholderSet()) {
+        this.clear();
+      }
+      
       this.base();
       
       var lastChild = this.element.lastChild;
@@ -105,8 +112,7 @@
       this.sandbox = new dom.Sandbox(function() {
         that._create();
       }, {
-        stylesheets:  this.config.stylesheets,
-        uaCompatible: "IE=7"
+        stylesheets:  this.config.stylesheets
       });
       this.iframe  = this.sandbox.getIframe();
 

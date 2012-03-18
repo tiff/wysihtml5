@@ -333,6 +333,20 @@ wysihtml5.browser = (function() {
      */
     crashesWhenDefineProperty: function(property) {
       return isIE && (property === "XMLHttpRequest" || property === "XDomainRequest");
+    },
+    
+    /**
+     * IE is the only browser who fires the "focus" event not immediately when .focus() is called on an element
+     */
+    doesAsyncFocus: function() {
+      return isIE;
+    },
+    
+    /**
+     * In IE it's impssible for the user and for the selection library to set the caret after an <img> when it's the lastChild in the document
+     */
+    hasProblemsSettingCaretAfterImg: function() {
+      return isIE;
     }
   };
 })();

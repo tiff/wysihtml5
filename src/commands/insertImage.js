@@ -17,6 +17,7 @@
 
       var doc   = element.ownerDocument,
           image = this.state(element),
+          textNode,
           i,
           parent;
 
@@ -45,7 +46,13 @@
       }
 
       wysihtml5.selection.insertNode(image);
-      wysihtml5.selection.setAfter(image);
+      if (wysihtml5.browser.hasProblemsSettingCaretAfterImg()) {
+        textNode = doc.createTextNode(wysihtml5.INVISIBLE_SPACE);
+        wysihtml5.selection.insertNode(textNode);
+        wysihtml5.selection.setAfter(textNode);
+      } else {
+        wysihtml5.selection.setAfter(image);
+      }
     },
 
     state: function(element) {

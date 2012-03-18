@@ -7,7 +7,7 @@ module("wysihtml5.dom.insertCSS", {
   }
 });
 
-asyncTest("Basic Tests with IE=Edge", function() {
+asyncTest("Basic Tests", function() {
   expect(3);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
@@ -27,28 +27,5 @@ asyncTest("Basic Tests with IE=Edge", function() {
     equal(wysihtml5.dom.getStyle("text-indent").from(element), "50px");
     
     start();
-  }, { uaCompatible: "IE=Edge" }).insertInto(document.body);
-});
-
-asyncTest("Basic Tests with IE=7", function() {
-  expect(3);
-  
-  new wysihtml5.dom.Sandbox(function(sandbox) {
-    var doc     = sandbox.getDocument(),
-        body    = doc.body,
-        element = doc.createElement("sub");
-    
-    body.appendChild(element);
-    
-    wysihtml5.dom.insertCSS([
-      "sub { display: block; text-align: right; }",
-      "body { text-indent: 50px; }"
-    ]).into(doc);
-    
-    equal(wysihtml5.dom.getStyle("display")    .from(element), "block");
-    equal(wysihtml5.dom.getStyle("text-align") .from(element), "right");
-    equal(wysihtml5.dom.getStyle("text-indent").from(body),    "50px");
-    
-    start();
-  }, { uaCompatible: "IE=7" }).insertInto(document.body);
+  }).insertInto(document.body);
 });

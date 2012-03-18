@@ -15,7 +15,7 @@
  * @author Christopher Blum <christopher.blum@xing.com>
  *
  * @param {Function} [readyCallback] Method that gets invoked when the sandbox is ready
- * @param {Object} [config] Optional parameters, see defaultConfig property for more info
+ * @param {Object} [config] Optional parameters
  *
  * @example
  *    new wysihtml5.dom.Sandbox(function(sandbox) {
@@ -26,9 +26,6 @@
   var /**
        * Default configuration
        */
-      defaultConfig       = {
-        uaCompatible: "IE=Edge"   // X-UA-Compatible meta tag value (Document compatibility mode)
-      },
       doc                 = document,
       /**
        * Properties to unset/protect on the window object
@@ -59,7 +56,7 @@
 
     constructor: function(readyCallback, config) {
       this.callback = readyCallback || wysihtml5.EMPTY_FUNCTION;
-      this.config   = wysihtml5.lang.object({}).merge(defaultConfig).merge(config).get();
+      this.config   = wysihtml5.lang.object({}).merge(config).get();
       this.iframe   = this._createIframe();
     },
     
@@ -160,8 +157,7 @@
           charset        = doc.characterSet || doc.charset || "utf-8",
           sandboxHtml    = this._getHtml({
             charset:      charset,
-            stylesheets:  this.config.stylesheets,
-            uaCompatible: this.config.uaCompatible
+            stylesheets:  this.config.stylesheets
           });
 
       // Create the basic dom tree including proper DOCTYPE and charset
@@ -223,7 +219,7 @@
 
       return wysihtml5.lang.string(
         '<!DOCTYPE html><html><head>'
-        + '<meta http-equiv="X-UA-Compatible" content="#{uaCompatible}"><meta charset="#{charset}">#{stylesheets}</head>'
+        + '<meta charset="#{charset}">#{stylesheets}</head>'
         + '<body></body></html>'
       ).interpolate(templateVars);
     },

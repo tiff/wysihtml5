@@ -171,37 +171,14 @@ asyncTest("Check insertion of multiple stylesheets", function() {
 });
 
 
-asyncTest("Check X-UA-Compatible meta tag #1", function() {
-  expect(2);
+asyncTest("Check X-UA-Compatible", function() {
+  expect(1);
   
   new wysihtml5.dom.Sandbox(function(sandbox) {
     var doc                 = sandbox.getDocument(),
-        uaCompatibleMetaTag = doc.querySelector("meta[http-equiv='X-UA-Compatible']");
-    ok(uaCompatibleMetaTag, "X-UA-Compatible meta tag found");
-    if (uaCompatibleMetaTag) {
-      equal(uaCompatibleMetaTag.getAttribute("content"), "IE=Edge", "X-UA-Compatible correctly set");
-    }
-    start();
-  }).insertInto(document.body);
-});
-
-
-asyncTest("Check X-UA-Compatible meta tag #2", function() {
-  expect(3);
-  
-  new wysihtml5.dom.Sandbox(function(sandbox) {
-    var doc                 = sandbox.getDocument(),
-        docMode             = doc.documentMode || 7,
-        uaCompatibleMetaTag = doc.querySelector("meta[http-equiv='X-UA-Compatible']");
-        
-    ok(uaCompatibleMetaTag, "X-UA-Compatible meta tag found");
+        docMode             = doc.documentMode;
     
-    ok(docMode === 7 || docMode === 9, "iFrame is in in IE7 or IE9 mode");
-    if (uaCompatibleMetaTag) {
-      equal(uaCompatibleMetaTag.getAttribute("content"), "IE=7", "X-UA-Compatible correctly set");
-    }
+    ok(doc.documentMode === document.documentMode, "iFrame is in in the same document mode as the parent site");
     start();
-  }, {
-    uaCompatible: "IE=7"
   }).insertInto(document.body);
 });
