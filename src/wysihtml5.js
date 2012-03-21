@@ -4,8 +4,8 @@
  *
  * Author: Christopher Blum (https://github.com/tiff)
  *
- * Copyright (C) 2011 XING AG
- * Licensed under GNU General Public License
+ * Copyright (C) 2012 XING AG
+ * Licensed under the MIT license (MIT)
  *
  */
 var wysihtml5 = {
