@@ -153,7 +153,7 @@
 
       var that           = this,
           iframeWindow   = iframe.contentWindow,
-          iframeDocument = iframe.contentDocument || iframe.contentWindow.document,
+          iframeDocument = iframe.contentWindow.document,
           charset        = doc.characterSet || doc.charset || "utf-8",
           sandboxHtml    = this._getHtml({
             charset:      charset,
@@ -165,8 +165,8 @@
       iframeDocument.write(sandboxHtml);
       iframeDocument.close();
 
-      this.getWindow = function() { return iframeWindow; };
-      this.getDocument = function() { return iframeDocument; };
+      this.getWindow = function() { return iframe.contentWindow; };
+      this.getDocument = function() { return iframe.contentWindow.document; };
 
       // Catch js errors and pass them to the parent's onerror event
       // addEventListener("error") doesn't work properly in some browsers
