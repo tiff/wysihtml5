@@ -42,7 +42,11 @@ wysihtml5.dom.getStyle = (function() {
         // gives you the original "50%".
         // Opera supports both, currentStyle and window.getComputedStyle, that's why checking for currentStyle should have higher prio
         if (currentStyle) {
-          return currentStyle[camelizedProperty];
+          try {
+                return currentStyle[camelizedProperty];
+          } catch(e) {
+            //ie will occasionally fail for unknown reasons. swallowing exception
+          }
         }
 
         var win                 = doc.defaultView || doc.parentWindow,
