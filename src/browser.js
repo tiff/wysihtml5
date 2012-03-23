@@ -10,6 +10,7 @@ wysihtml5.browser = (function() {
       isIE        = userAgent.indexOf("MSIE")         !== -1 && userAgent.indexOf("Opera") === -1,
       isGecko     = userAgent.indexOf("Gecko")        !== -1 && userAgent.indexOf("KHTML") === -1,
       isWebKit    = userAgent.indexOf("AppleWebKit/") !== -1,
+      isChrome    = userAgent.indexOf("Chrome/")      !== -1,
       isOpera     = userAgent.indexOf("Opera/")       !== -1;
   
   function iosVersion(userAgent) {
@@ -347,6 +348,10 @@ wysihtml5.browser = (function() {
      */
     hasProblemsSettingCaretAfterImg: function() {
       return isIE;
+    },
+    
+    hasUndoInContextMenu: function() {
+      return isGecko || isChrome || isOpera;
     }
   };
 })();
