@@ -3,7 +3,7 @@
  * Inspired by http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
  *
  * @param {Element} element Container element in which to search for urls
- * @author Christopher Blum <christopher.blum@xing.com>
+ *
  * @example
  *    <div id="text-container">Please click here: www.google.com</div>
  *    <script>wysihtml5.dom.autoLink(document.getElementById("text-container"));</script>

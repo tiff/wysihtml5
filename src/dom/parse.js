@@ -2,8 +2,6 @@
  * HTML Sanitizer
  * Rewrites the HTML based on given rules
  *
- * @author Christopher Blum <christopher.blum@xing.com>
- *
  * @param {Element|String} elementOrHtml HTML String to be sanitized OR element whose content should be sanitized
  * @param {Object} [rules] List of rules for rewriting the HTML, if there's no rule for an element it will
  *    be converted to a "span". Each rule is a key/value pair where key is the tag to convert, and value the

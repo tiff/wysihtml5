@@ -5,8 +5,6 @@
  *
  * Interesting article on how to copy styles
  *
- * @author Christopher Blum <christopher.blum@xing.com>
- *
  * @param {Array} stylesToCopy List of styles which should be copied
  * @return {Object} Returns an object which offers the "from" method which can be invoked with the element where to
  *    copy the styles from., this again returns an object which provides a method named "to" which can be invoked 

@@ -1,11 +1,10 @@
 /**
- * @author Christopher Blum <christopher.blum@xing.com> to match WYSIHTML5 logic
- * in order to be able ...
+ * Inspired by the rangy CSS Applier module written by Tim Down and licensed under the MIT license.
+ * http://code.google.com/p/rangy/
+ *
+ * changed in order to be able ...
  *    - to use custom tags
  *    - to detect and replace similar css classes via reg exp
- *
- * Inspired by the rangy CSS Applier module written by Tim Down and  licensed under the MIT license.
- * http://code.google.com/p/rangy/
  */
 (function(wysihtml5, rangy) {
   var defaultTagName = "span";

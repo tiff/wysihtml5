@@ -1,7 +1,6 @@
 /**
  * Takes an element, removes it and replaces it with it's childs
  * 
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Object} node The node which to replace with it's child nodes
  * @example
  *    <div id="foo">

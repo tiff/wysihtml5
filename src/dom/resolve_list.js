@@ -1,7 +1,6 @@
 /**
  * Unwraps an unordered/ordered list
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} element The list element which should be unwrapped
  *
  * @example

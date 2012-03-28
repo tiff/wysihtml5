@@ -8,12 +8,12 @@
       REG_EXP = /wysiwyg-font-size-[a-z]+/g;
   
   wysihtml5.commands.fontSize = {
-    exec: function(element, command, size) {
-      return wysihtml5.commands.formatInline.exec(element, command, "span", "wysiwyg-font-size-" + size, REG_EXP);
+    exec: function(composer, command, size) {
+      return wysihtml5.commands.formatInline.exec(composer, command, "span", "wysiwyg-font-size-" + size, REG_EXP);
     },
 
-    state: function(element, command, size) {
-      return wysihtml5.commands.formatInline.state(element, command, "span", "wysiwyg-font-size-" + size, REG_EXP);
+    state: function(composer, command, size) {
+      return wysihtml5.commands.formatInline.state(composer, command, "span", "wysiwyg-font-size-" + size, REG_EXP);
     },
 
     value: function() {

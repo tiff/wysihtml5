@@ -1,7 +1,6 @@
 /**
  * IE and Opera leave an empty paragraph in the contentEditable element after clearing it
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Object} contentEditableElement The contentEditable element to observe for clearing events
  * @exaple
  *    wysihtml5.quirks.ensureProperClearing(myContentEditableElement);
@@ -21,8 +20,8 @@
       }, 0);
     };
 
-    return function(contentEditableElement) {
-      dom.observe(contentEditableElement, ["cut", "keydown"], clearIfNecessary);
+    return function(composer) {
+      dom.observe(composer.element, ["cut", "keydown"], clearIfNecessary);
     };
   })();
 
@@ -31,7 +30,6 @@
   /**
    * In Opera when the caret is in the first and only item of a list (<ul><li>|</li></ul>) and the list is the first child of the contentEditable element, it's impossible to delete the list by hitting backspace
    *
-   * @author Christopher Blum <christopher.blum@xing.com>
    * @param {Object} contentEditableElement The contentEditable element to observe for clearing events
    * @exaple
    *    wysihtml5.quirks.ensureProperClearing(myContentEditableElement);
@@ -67,14 +65,14 @@
       list.parentNode.removeChild(list);
     };
 
-    return function(contentEditableElement) {
-      dom.observe(contentEditableElement, "keydown", function(event) {
+    return function(composer) {
+      dom.observe(composer.element, "keydown", function(event) {
         if (event.keyCode !== wysihtml5.BACKSPACE_KEY) {
           return;
         }
 
-        var element = wysihtml5.selection.getSelectedNode();
-        clearIfNecessary(element, contentEditableElement);
+        var element = composer.selection.getSelectedNode();
+        clearIfNecessary(element, composer.element);
       });
     };
   })();

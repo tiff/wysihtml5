@@ -56,17 +56,17 @@
   }
   
   wysihtml5.commands.formatInline = {
-    exec: function(element, command, tagName, className, classRegExp) {
-      var range = wysihtml5.selection.getRange();
+    exec: function(composer, command, tagName, className, classRegExp) {
+      var range = composer.selection.getRange();
       if (!range) {
         return false;
       }
       _getApplier(tagName, className, classRegExp).toggleRange(range);
-      wysihtml5.selection.setSelection(range);
+      composer.selection.setSelection(range);
     },
 
-    state: function(element, command, tagName, className, classRegExp) {
-      var doc           = element.ownerDocument,
+    state: function(composer, command, tagName, className, classRegExp) {
+      var doc           = composer.doc,
           aliasTagName  = ALIAS_MAPPING[tagName] || tagName,
           range;
 
@@ -81,7 +81,7 @@
          return false;
       }
 
-      range = wysihtml5.selection.getRange();
+      range = composer.selection.getRange();
       if (!range) {
         return false;
       }

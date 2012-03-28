@@ -3,9 +3,9 @@
       NODE_NAME = "A",
       dom       = wysihtml5.dom;
   
-  function _removeFormat(element, anchors) {
-    var length = anchors.length,
-        i      = 0,
+  function _removeFormat(composer, anchors) {
+    var length  = anchors.length,
+        i       = 0,
         anchor,
         codeElement,
         textContent;
@@ -25,8 +25,8 @@
     }
   }
 
-  function _format(element, attributes) {
-    var doc             = element.ownerDocument,
+  function _format(composer, attributes) {
+    var doc             = composer.doc,
         tempClass       = "_wysihtml5-temp-" + (+new Date()),
         tempClassRegExp = /non-matching-class/g,
         i               = 0,
@@ -39,7 +39,7 @@
         textContent,
         whiteSpace,
         j;
-    wysihtml5.commands.formatInline.exec(element, undef, NODE_NAME, tempClass, tempClassRegExp);
+    wysihtml5.commands.formatInline.exec(composer, undef, NODE_NAME, tempClass, tempClassRegExp);
     anchors = doc.querySelectorAll(NODE_NAME + "." + tempClass);
     length  = anchors.length;
     for (; i<length; i++) {
@@ -51,19 +51,21 @@
     }
 
     elementToSetCaretAfter = anchor;
+    console.log(anchor);
     if (length === 1) {
       textContent = dom.getTextContent(anchor);
       hasElementChild = !!anchor.querySelector("*");
       isEmpty = textContent === "" || textContent === wysihtml5.INVISIBLE_SPACE;
       if (!hasElementChild && isEmpty) {
+        console.log(anchor.href);
         dom.setTextContent(anchor, anchor.href);
         whiteSpace = doc.createTextNode(" ");
-        wysihtml5.selection.setAfter(anchor);
-        wysihtml5.selection.insertNode(whiteSpace);
+        composer.selection.setAfter(anchor);
+        composer.selection.insertNode(whiteSpace);
         elementToSetCaretAfter = whiteSpace;
       }
     }
-    wysihtml5.selection.setAfter(elementToSetCaretAfter);
+    composer.selection.setAfter(elementToSetCaretAfter);
   }
   
   wysihtml5.commands.createLink = {
@@ -76,28 +78,26 @@
      * 
      * @example
      *    // either ...
-     *    wysihtml5.commands.createLink.exec(element, "createLink", "http://www.google.de");
+     *    wysihtml5.commands.createLink.exec(composer, "createLink", "http://www.google.de");
      *    // ... or ...
-     *    wysihtml5.commands.createLink.exec(element, "createLink", { href: "http://www.google.de", target: "_blank" });
+     *    wysihtml5.commands.createLink.exec(composer, "createLink", { href: "http://www.google.de", target: "_blank" });
      */
-    exec: function(element, command, value) {
-      var doc           = element.ownerDocument,
-          anchors       = this.state(element, command);
-
+    exec: function(composer, command, value) {
+      var anchors = this.state(composer, command);
       if (anchors) {
         // Selection contains links
-        wysihtml5.selection.executeAndRestore(function() {
-          _removeFormat(element, anchors);
+        composer.selection.executeAndRestore(function() {
+          _removeFormat(composer, anchors);
         });
       } else {
         // Create links
         value = typeof(value) === "object" ? value : { href: value };
-        _format(element, value);
+        _format(composer, value);
       }
     },
 
-    state: function(element, command) {
-      return wysihtml5.commands.formatInline.state(element, command, "A");
+    state: function(composer, command) {
+      return wysihtml5.commands.formatInline.state(composer, command, "A");
     },
 
     value: function() {

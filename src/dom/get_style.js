@@ -3,7 +3,7 @@
  *
  * @param {Element} element The element on which to retrieve the style
  * @param {String} property The CSS property to retrieve ("float", "display", "text-align", ...)
- * @author Christopher Blum <christopher.blum@xing.com>
+ *
  * @example
  *    wysihtml5.dom.getStyle("display").from(document.body);
  *    // => "block"

@@ -3,14 +3,14 @@
       LINE_BREAK = "<br>" + (wysihtml5.browser.needsSpaceAfterLineBreak() ? " " : "");
   
   wysihtml5.commands.insertLineBreak = {
-    exec: function(element, command) {
-      if (wysihtml5.commands.support(command)) {
-        element.ownerDocument.execCommand(command, false, null);
+    exec: function(composer, command) {
+      if (composer.commands.support(command)) {
+        composer.doc.execCommand(command, false, null);
         if (!wysihtml5.browser.autoScrollsToCaret()) {
-          wysihtml5.selection.scrollIntoView(element);
+          composer.selection.scrollIntoView();
         }
       } else {
-        wysihtml5.commands.exec("insertHTML", LINE_BREAK);
+        composer.commands.exec("insertHTML", LINE_BREAK);
       }
     },
 

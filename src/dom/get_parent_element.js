@@ -2,7 +2,6 @@
  * Walks the dom tree from the given node up until it finds a match
  * Designed for optimal performance.
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} node The from which to check the parent nodes
  * @param {Object} matchingSet Object to match against (possible properties: nodeName, className, classRegExp)
  * @param {Number} [levels] How many parents should the function check up from the current node (defaults to 50)

@@ -2,7 +2,6 @@
  * Force rerendering of a given element
  * Needed to fix display misbehaviors of IE
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} element The element object which needs to be rerendered
  * @example
  *    wysihtml5.quirks.redraw(document.body);

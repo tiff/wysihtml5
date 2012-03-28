@@ -4,7 +4,6 @@
  * Fixing IE's inability to treat unknown elements (HTML5 section, article, ...) correctly
  * when inserted via innerHTML
  * 
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {String} html The html which should be wrapped in a dom element
  * @param {Obejct} [context] Document object of the context the html belongs to
  *

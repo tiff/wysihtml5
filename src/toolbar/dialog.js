@@ -1,7 +1,6 @@
 /**
  * Toolbar Dialog
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} link The toolbar link which causes the dialog to show up
  * @param {Element} container The dialog container
  *

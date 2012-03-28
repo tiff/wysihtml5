@@ -5,8 +5,6 @@
  *    - div[contentEditable] elements don't support it
  *    - older browsers (such as IE8 and Firefox 3.6) don't support it at all
  *
- * @author Christopher Blum <christopher.blum@xing.com>
- *
  * @param {Object} parent Instance of main wysihtml5.Editor class
  * @param {Element} view Instance of wysihtml5.views.* class
  * @param {String} placeholderText

@@ -5,8 +5,6 @@
  *  - Catch paste events
  *  - Dispatch proprietary newword:composer event
  *  - Keyboard shortcuts
- *
- * @author Christopher Blum <christopher.blum@xing.com>
  */
 (function(wysihtml5) {
   var dom       = wysihtml5.dom,
@@ -69,7 +67,7 @@
             originalScrollTop = document.documentElement.scrollTop || document.body.scrollTop,
             originalScrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
         try {
-          wysihtml5.selection.insertNode(input);
+          that.selection.insertNode(input);
         } catch(e) {
           element.appendChild(input);
         }
@@ -100,7 +98,7 @@
       }
       if (data) {
         element.focus();
-        wysihtml5.commands.exec("insertHTML", data);
+        that.commands.exec("insertHTML", data);
         that.parent.fire("paste").fire("paste:composer");
         event.stopPropagation();
         event.preventDefault();
@@ -128,7 +126,7 @@
       dom.observe(element, "mousedown", function(event) {
         var target = event.target;
         if (target.nodeName === "IMG") {
-          wysihtml5.selection.selectNode(target);
+          that.selection.selectNode(target);
           event.preventDefault();
         }
       });
@@ -139,14 +137,14 @@
       var keyCode  = event.keyCode,
           command  = shortcuts[keyCode];
       if ((event.ctrlKey || event.metaKey) && command) {
-        wysihtml5.commands.exec(command);
+        that.commands.exec(command);
         event.preventDefault();
       }
     });
 
     // --------- Make sure that when pressing backspace/delete on selected images deletes the image and it's anchor ---------
     dom.observe(element, "keydown", function(event) {
-      var target  = wysihtml5.selection.getSelectedNode(true),
+      var target  = that.selection.getSelectedNode(true),
           keyCode = event.keyCode,
           parent;
       if (target && target.nodeName === "IMG" && (keyCode === wysihtml5.BACKSPACE_KEY || keyCode === wysihtml5.DELETE_KEY)) { // 8 => backspace, 46 => delete

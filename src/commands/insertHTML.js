@@ -2,11 +2,11 @@
   var undef;
   
   wysihtml5.commands.insertHTML = {
-    exec: function(element, command, html) {
-      if (wysihtml5.commands.support(command)) {
-        element.ownerDocument.execCommand(command, false, html);
+    exec: function(composer, command, html) {
+      if (composer.commands.support(command)) {
+        composer.doc.execCommand(command, false, html);
       } else {
-        wysihtml5.selection.insertHTML(html);
+        composer.selection.insertHTML(html);
       }
     },
 

@@ -1,7 +1,6 @@
 /**
  * Converts an HTML fragment/element into a unordered/ordered list
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} element The element which should be turned into a list
  * @param {String} listType The list type in which to convert the tree (either "ul" or "ol")
  * @return {Element} The created list

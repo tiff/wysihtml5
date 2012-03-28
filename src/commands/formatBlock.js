@@ -1,7 +1,6 @@
 (function(wysihtml5) {
   var undef,
       dom                     = wysihtml5.dom,
-      selection               = wysihtml5.selection,
       DEFAULT_NODE_NAME       = "DIV",
       // Following elements are grouped
       // when the caret is within a H1 and the H4 is invoked, the H1 should turn into H4
@@ -125,7 +124,7 @@
         if (target.nodeType !== wysihtml5.ELEMENT_NODE) {
           return;
         }
-        displayStyle  = dom.getStyle("display").from(target);
+        displayStyle = dom.getStyle("display").from(target);
         if (displayStyle.substr(0, 6) !== "inline") {
           // Make sure that only block elements receive the given class
           target.className += " " + className;
@@ -138,12 +137,12 @@
     }
   }
 
-  function _selectLineAndWrap(element) {
-    selection.selectLine();
-    selection.surround(element);
+  function _selectLineAndWrap(composer, element) {
+    composer.selection.selectLine();
+    composer.selection.surround(element);
     _removeLineBreakBeforeAndAfter(element);
     _removeLastChildIfLineBreak(element);
-    selection.selectNode(element);
+    composer.selection.selectNode(element);
   }
 
   function _hasClasses(element) {
@@ -151,15 +150,15 @@
   }
   
   wysihtml5.commands.formatBlock = {
-    exec: function(element, command, nodeName, className, classRegExp) {
-      var doc          = element.ownerDocument,
-          blockElement = this.state(element, command, nodeName, className, classRegExp),
+    exec: function(composer, command, nodeName, className, classRegExp) {
+      var doc          = composer.doc,
+          blockElement = this.state(composer, command, nodeName, className, classRegExp),
           selectedNode;
 
       nodeName = typeof(nodeName) === "string" ? nodeName.toUpperCase() : nodeName;
 
       if (blockElement) {
-        selection.executeAndRestoreSimple(function() {
+        composer.selection.executeAndRestoreSimple(function() {
           if (classRegExp) {
             _removeClass(blockElement, classRegExp);
           }
@@ -179,13 +178,13 @@
 
       // Find similiar block element and rename it (<h2 class="foo"></h2>  =>  <h1 class="foo"></h1>)
       if (nodeName === null || wysihtml5.lang.array(BLOCK_ELEMENTS_GROUP).contains(nodeName)) {
-        selectedNode = selection.getSelectedNode();
+        selectedNode = composer.selection.getSelectedNode();
         blockElement = dom.getParentElement(selectedNode, {
-          nodeName:     BLOCK_ELEMENTS_GROUP
+          nodeName: BLOCK_ELEMENTS_GROUP
         });
 
         if (blockElement) {
-          selection.executeAndRestoreSimple(function() {
+          composer.selection.executeAndRestoreSimple(function() {
             // Rename current block element to new block element and add class
             if (nodeName) {
               blockElement = dom.renameElement(blockElement, nodeName);
@@ -198,7 +197,7 @@
         }
       }
 
-      if (wysihtml5.commands.support(command)) {
+      if (composer.commands.support(command)) {
         _execCommand(doc, command, nodeName || DEFAULT_NODE_NAME, className);
         return;
       }
@@ -207,12 +206,12 @@
       if (className) {
         blockElement.className = className;
       }
-      _selectLineAndWrap(blockElement);
+      _selectLineAndWrap(composer, blockElement);
     },
 
-    state: function(element, command, nodeName, className, classRegExp) {
+    state: function(composer, command, nodeName, className, classRegExp) {
       nodeName = typeof(nodeName) === "string" ? nodeName.toUpperCase() : nodeName;
-      var selectedNode = selection.getSelectedNode();
+      var selectedNode = composer.selection.getSelectedNode();
       return dom.getParentElement(selectedNode, {
         nodeName:     nodeName,
         className:    className,

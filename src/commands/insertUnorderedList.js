@@ -2,34 +2,34 @@
   var undef;
   
   wysihtml5.commands.insertUnorderedList = {
-    exec: function(element, command) {
-      var doc = element.ownerDocument,
+    exec: function(composer, command) {
+      var doc = composer.doc,
           selectedNode,
           isEmpty,
           tempElement,
           list;
 
-      if (wysihtml5.commands.support(command)) {
+      if (composer.commands.support(command)) {
         doc.execCommand(command, false, null);
       } else {
-        selectedNode = wysihtml5.selection.getSelectedNode();
+        selectedNode = composer.selection.getSelectedNode();
         list = wysihtml5.dom.getParentElement(selectedNode, { nodeName: ["UL", "OL"] });
 
         if (!list) {
           tempElement = doc.createElement("span");
-          wysihtml5.selection.surround(tempElement);
+          composer.selection.surround(tempElement);
           isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE;
-          wysihtml5.selection.executeAndRestoreSimple(function() {
+          composer.selection.executeAndRestoreSimple(function() {
             list = wysihtml5.dom.convertToList(tempElement, "ul");
           });
 
           if (isEmpty) {
-            wysihtml5.selection.selectNode(list.querySelector("li"));
+            composer.selection.selectNode(list.querySelector("li"));
           }
           return;
         }
 
-        wysihtml5.selection.executeAndRestoreSimple(function() {
+        composer.selection.executeAndRestoreSimple(function() {
           if (list.nodeName === "UL") {
             // Unwrap list
             // <ul><li>foo</li><li>bar</li></ul>
@@ -47,9 +47,9 @@
       }
     },
 
-    state: function(element, command) {
+    state: function(composer, command) {
       try {
-        return element.ownerDocument.queryCommandState(command);
+        return composer.doc.queryCommandState(command);
       } catch(e) {
         return false;
       }

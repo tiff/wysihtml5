@@ -1,8 +1,6 @@
 (function(wysihtml5) {
   var dom       = wysihtml5.dom,
-      browser   = wysihtml5.browser,
-      selection = wysihtml5.selection,
-      commands  = wysihtml5.commands;
+      browser   = wysihtml5.browser;
   
   wysihtml5.views.Composer = wysihtml5.views.View.extend(
     /** @scope wysihtml5.views.Composer.prototype */ {
@@ -82,9 +80,9 @@
       var lastChild = this.element.lastChild;
       if (setToEnd && lastChild) {
         if (lastChild.nodeName === "BR") {
-          selection.setBefore(this.element.lastChild);
+          this.selection.setBefore(this.element.lastChild);
         } else {
-          selection.setAfter(this.element.lastChild);
+          this.selection.setAfter(this.element.lastChild);
         }
       }
     },
@@ -131,16 +129,17 @@
     _create: function() {
       var that = this;
       
-      this.element            = this.sandbox.getDocument().body;
+      this.doc                = this.sandbox.getDocument();
+      this.element            = this.doc.body;
       this.textarea           = this.parent.textarea;
       this.element.innerHTML  = this.textarea.getValue(true);
       this.enable();
       
       // Make sure our selection handler is ready
-      selection.initialize(this.sandbox.getDocument());
+      this.selection = new wysihtml5.Selection(this.parent);
       
-      // Make sure commands are ready
-      commands.initialize(this.parent);
+      // Make sure commands dispatcher is ready
+      this.commands  = new wysihtml5.Commands(this.parent);
 
       dom.copyAttributes([
         "className", "spellcheck", "title", "lang", "dir", "accessKey"
@@ -170,7 +169,7 @@
       }
       
       // Make sure that the browser avoids using inline styles whenever possible
-      commands.exec("styleWithCSS", false);
+      this.commands.exec("styleWithCSS", false);
 
       this._initAutoLinking();
       this._initObjectResizing();
@@ -181,15 +180,15 @@
         setTimeout(function() { that.focus(); }, 100);
       }
 
-      wysihtml5.quirks.insertLineBreakOnReturn(this.element);
+      wysihtml5.quirks.insertLineBreakOnReturn(this);
 
       // IE sometimes leaves a single paragraph, which can't be removed by the user
       if (!browser.clearsContentEditableCorrectly()) {
-        wysihtml5.quirks.ensureProperClearing(this.element);
+        wysihtml5.quirks.ensureProperClearing(this);
       }
 
       if (!browser.clearsListsInContentEditableCorrectly()) {
-        wysihtml5.quirks.ensureProperClearingOfLists(this.element);
+        wysihtml5.quirks.ensureProperClearingOfLists(this);
       }
 
       // Set up a sync that makes sure that textarea and editor have the same content
@@ -205,10 +204,11 @@
     },
 
     _initAutoLinking: function() {
-      var supportsDisablingOfAutoLinking = browser.canDisableAutoLinking(),
+      var that                           = this,
+          supportsDisablingOfAutoLinking = browser.canDisableAutoLinking(),
           supportsAutoLinking            = browser.doesAutoLinkingInContentEditable();
       if (supportsDisablingOfAutoLinking) {
-        commands.exec("autoUrlDetect", false);
+        this.commands.exec("autoUrlDetect", false);
       }
 
       if (!this.config.autoLink) {
@@ -219,7 +219,7 @@
       // OR when he supports auto linking but we were able to turn it off (IE9+)
       if (!supportsAutoLinking || (supportsAutoLinking && supportsDisablingOfAutoLinking)) {
         this.parent.observe("newword:composer", function() {
-          selection.executeAndRestore(function(startContainer, endContainer) {
+          that.selection.executeAndRestore(function(startContainer, endContainer) {
             dom.autoLink(endContainer.parentNode);
           });
         });
@@ -246,7 +246,7 @@
           return;
         }
 
-        var selectedNode = selection.getSelectedNode(event.target.ownerDocument),
+        var selectedNode = that.selection.getSelectedNode(event.target.ownerDocument),
             link         = dom.getParentElement(selectedNode, { nodeName: "A" }, 4),
             textContent;
 
@@ -276,8 +276,8 @@
           propertiesLength  = properties.length,
           element           = this.element;
       
-      commands.exec("enableObjectResizing", this.config.allowObjectResizing);
-
+      this.commands.exec("enableObjectResizing", this.config.allowObjectResizing);
+      
       if (this.config.allowObjectResizing) {
          // IE sets inline styles after resizing objects
          // The following lines make sure that the width/height css properties

@@ -1,7 +1,6 @@
 /**
  * Renames an element (eg. a <div> to a <p>) and keeps its childs
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} element The list element which should be renamed
  * @param {Element} newNodeName The desired tag name
  *

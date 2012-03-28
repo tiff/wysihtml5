@@ -1,7 +1,6 @@
 /**
  * WYSIHTML5 Editor
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} textareaElement Reference to the textarea which should be turned into a rich text interface
  * @param {Object} [config] See defaultConfig object below for explanation of each individual config option
  *
@@ -163,7 +162,7 @@
       this.observe("paste:composer", function() {
         var keepScrollPosition  = true,
             that                = this;
-        wysihtml5.selection.executeAndRestore(function() {
+        that.composer.selection.executeAndRestore(function() {
           wysihtml5.quirks.cleanPastedHTML(that.composer.element);
           that.parse(that.composer.element);
         }, keepScrollPosition);

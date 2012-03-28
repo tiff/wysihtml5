@@ -5,7 +5,6 @@ wysihtml5.assert = wysihtml5.assert || {};
  * Compare html strings without stumbling upon browser misbehaviors
  * Uses and takes the same parameters as QUnit's equal method
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @example
  *    wysihtml5.assert.htmlEqual(
  *      removeAttributes('<p align="center">foo</p>'),

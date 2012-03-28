@@ -12,8 +12,6 @@
  *    - therefore the "allow-scripts" flag is needed, which then would deactivate any security, as the js executed inside the iframe
  *      can do anything as if the sandbox attribute wasn't set
  *
- * @author Christopher Blum <christopher.blum@xing.com>
- *
  * @param {Function} [readyCallback] Method that gets invoked when the sandbox is ready
  * @param {Object} [config] Optional parameters
  *

@@ -10,8 +10,6 @@
  * 
  * "Accessing Google Speech API Chrome 11"
  * http://mikepultz.com/2011/03/accessing-google-speech-api-chrome-11/
- *
- * @author Christopher Blum <christopher.blum@xing.com>
  */
 (function(wysihtml5) {
   var dom = wysihtml5.dom;

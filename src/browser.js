@@ -1,7 +1,5 @@
 /**
  * Detect browser support for specific features
- *
- * @author Christopher Blum <christopher.blum@xing.com>
  */
 wysihtml5.browser = (function() {
   var userAgent   = navigator.userAgent,

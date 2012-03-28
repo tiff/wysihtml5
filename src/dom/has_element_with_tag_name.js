@@ -3,7 +3,6 @@
  * Optimized for being heavily executed
  * Unleashes the power of live node lists
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Object} doc The document object of the context where to check
  * @param {String} tagName Upper cased tag name
  * @example

@@ -1,8 +1,6 @@
 /**
  * Method to set dom events
  *
- * @author Christopher Blum <christopher.blum@xing.com>
- *
  * @example
  *    wysihtml5.dom.observe(iframe.contentWindow.document.body, ["focus", "blur"], function() { ... });
  */

@@ -1,7 +1,6 @@
 /**
  * Checks for empty text node childs and removes them
  *
- * @author Christopher Blum <christopher.blum@xing.com>
  * @param {Element} node The element in which to cleanup
  * @example
  *    wysihtml5.dom.removeEmptyTextNodes(element);

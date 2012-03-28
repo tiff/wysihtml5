@@ -1,3 +1,9 @@
+/**
+ * Selection API
+ *
+ * @example
+ *    var selection = new wysihtml5.Selection(editor);
+ */
 (function(wysihtml5) {
   var dom = wysihtml5.dom;
   
@@ -12,18 +18,15 @@
     return top;
   }
   
-  wysihtml5.selection = {
-    
-    /**
-     * Setup selection for editor
-     *
-     * @param {Object} doc Document object of the context
-     */
-    initialize: function(doc) {
+  wysihtml5.Selection = Base.extend(
+    /** @scope wysihtml5.Selection.prototype */ {
+    constructor: function(editor) {
       // Make sure that our external range library is initialized
       window.rangy.init();
       
-      this.doc = doc;
+      this.editor   = editor;
+      this.composer = editor.composer;
+      this.doc      = this.composer.doc;
     },
     
     /**
@@ -37,7 +40,7 @@
     },
 
     /**
-     * Restore a selection retrieved via wysihtml5.selection.getBookmark
+     * Restore a selection retrieved via wysihtml5.Selection.prototype.getBookmark
      *
      * @param {Object} bookmark An object that represents the current selection
      */
@@ -54,7 +57,7 @@
      *
      * @param {Object} node The element or text node where to position the caret in front of
      * @example
-     *    wysihtml5.selection.setBefore(myElement);
+     *    selection.setBefore(myElement);
      */
     setBefore: function(node) {
       var range = rangy.createRange(this.doc);
@@ -68,7 +71,7 @@
      *
      * @param {Object} node The element or text node where to position the caret in front of
      * @example
-     *    wysihtml5.selection.setBefore(myElement);
+     *    selection.setBefore(myElement);
      */
     setAfter: function(node) {
       var range = rangy.createRange(this.doc);
@@ -82,7 +85,7 @@
      *
      * @param {Element} node The node/element to select
      * @example
-     *    wysihtml5.selection.selectNode(document.getElementById("my-image"));
+     *    selection.selectNode(document.getElementById("my-image"));
      */
     selectNode: function(node) {
       var range           = rangy.createRange(this.doc),
@@ -120,7 +123,7 @@
      * @param {Boolean} [controlRange] (only IE) Whether it should return the selected ControlRange element when the selection type is a "ControlRange"
      * @return {Object} The node that contains the caret
      * @example
-     *    var nodeThatContainsCaret = wysihtml5.selection.getSelectedNode();
+     *    var nodeThatContainsCaret = selection.getSelectedNode();
      */
     getSelectedNode: function(controlRange) {
       var selection,
@@ -237,7 +240,7 @@
      *
      * @param {String} html HTML string to insert
      * @example
-     *    wysihtml5.selection.insertHTML("<p>foobar</p>");
+     *    selection.insertHTML("<p>foobar</p>");
      */
     insertHTML: function(html) {
       var range     = rangy.createRange(this.doc),
@@ -254,7 +257,7 @@
      *
      * @param {Object} node HTML string to insert
      * @example
-     *    wysihtml5.selection.insertNode(document.createTextNode("foobar"));
+     *    selection.insertNode(document.createTextNode("foobar"));
      */
     insertNode: function(node) {
       var range = this.getRange();
@@ -289,11 +292,10 @@
      * Scroll the current caret position into the view
      * FIXME: This is a bit hacky, there might be a smarter way of doing this
      *
-     * @param {Object} element A scrollable element in which the caret is currently positioned
      * @example
-     *    wysihtml5.selection.scrollIntoView(element);
+     *    selection.scrollIntoView();
      */
-    scrollIntoView: function(element) {
+    scrollIntoView: function() {
       var doc           = this.doc,
           hasScrollBars = doc.documentElement.scrollHeight > doc.documentElement.offsetHeight,
           tempElement   = doc._wysihtml5ScrollIntoViewElement = doc._wysihtml5ScrollIntoViewElement || (function() {
@@ -308,8 +310,8 @@
         this.insertNode(tempElement);
         offsetTop = _getCumulativeOffsetTop(tempElement);
         tempElement.parentNode.removeChild(tempElement);
-        if (offsetTop > element.scrollTop) {
-          element.scrollTop = offsetTop;
+        if (offsetTop > doc.body.scrollTop) {
+          doc.body.scrollTop = offsetTop;
         }
       }
     },
@@ -411,7 +413,6 @@
           selection = rangy.getSelection(win);
       return selection.setSingleRange(range);
     }
-  };
+  });
   
 })(wysihtml5);
-

@@ -23,23 +23,24 @@
     /** @scope wysihtml5.UndoManager.prototype */ {
     constructor: function(editor) {
       this.editor = editor;
-      this.composerElement = editor.composer.element;
-      this.history = [this.editor.composer.getValue()];
+      this.composer = editor.composer;
+      this.element = this.composer.element;
+      this.history = [this.composer.getValue()];
       this.position = 1;
       
       // Undo manager currently only supported in browsers who have the insertHTML command (not IE)
-      if (wysihtml5.commands.support("insertHTML")) {
+      if (this.composer.commands.support("insertHTML")) {
         this._observe();
       }
     },
     
     _observe: function() {
       var that      = this,
-          doc       = this.editor.composer.sandbox.getDocument(),
+          doc       = this.composer.sandbox.getDocument(),
           lastKey;
           
       // Catch CTRL+Z and CTRL+Y
-      dom.observe(this.composerElement, "keydown", function(event) {
+      dom.observe(this.element, "keydown", function(event) {
         if (event.altKey || (!event.ctrlKey && !event.metaKey)) {
           return;
         }
@@ -58,7 +59,7 @@
       });
       
       // Catch delete and backspace
-      dom.observe(this.composerElement, "keydown", function(event) {
+      dom.observe(this.element, "keydown", function(event) {
         var keyCode = event.keyCode;
         if (keyCode === lastKey) {
           return;
@@ -84,11 +85,11 @@
           clearInterval(interval);
         };
         
-        dom.observe(this.composerElement, "contextmenu", function() {
+        dom.observe(this.element, "contextmenu", function() {
           cleanUp();
-          wysihtml5.selection.executeAndRestoreSimple(function() {
-            if (that.composerElement.lastChild) {
-              wysihtml5.selection.setAfter(that.composerElement.lastChild);
+          that.composer.selection.executeAndRestoreSimple(function() {
+            if (that.element.lastChild) {
+              that.composer.selection.setAfter(that.element.lastChild);
             }
 
             // enable undo button in context menu
@@ -128,7 +129,7 @@
     
     transact: function() {
       var previousHtml  = this.history[this.position - 1],
-          currentHtml   = this.editor.composer.getValue();
+          currentHtml   = this.composer.getValue();
       
       if (currentHtml == previousHtml) {
         return;
@@ -165,7 +166,7 @@
     },
     
     set: function(html) {
-      this.editor.composer.setValue(html);
+      this.composer.setValue(html);
       this.editor.focus(true);
     }
   });
