@@ -51,13 +51,11 @@
     }
 
     elementToSetCaretAfter = anchor;
-    console.log(anchor);
     if (length === 1) {
       textContent = dom.getTextContent(anchor);
       hasElementChild = !!anchor.querySelector("*");
       isEmpty = textContent === "" || textContent === wysihtml5.INVISIBLE_SPACE;
       if (!hasElementChild && isEmpty) {
-        console.log(anchor.href);
         dom.setTextContent(anchor, anchor.href);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.setAfter(anchor);
