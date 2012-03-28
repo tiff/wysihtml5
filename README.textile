@@ -1,4 +1,4 @@
-h1. wysihtml5 0.3.0 RC 1
+h1. wysihtml5 0.3.0 RC 2
 
 wysihtml5 is an open source rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.
@@ -19,9 +19,8 @@ h2. Features:
 
 h2. Browser Support
 
-The rich text editing interface is supported in IE8+, FF 3.5+, Safari 4+, Opera 11+ and Chrome.
+The rich text editing interface is supported in IE8+, FF 3.5+, Safari 4+, Safari on iOS 5+, Opera 11+ and Chrome.
 *Graceful Degradation:* Users with other browsers will see the textarea and are still able to write plain HTML by themselves.
-As of now iOS and Android don’t support rich text editing properly. For now they are treated like IE 6+7.
 
 h2. Demos
 
