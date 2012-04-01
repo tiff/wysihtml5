@@ -1,11 +1,8 @@
 /**
  * Full HTML5 compatibility rule set
- * Creates fully valid, secure and compatible HTML5 without affecting the visual appearance
+ * These rules define which tags and css classes are supported and which tags should be specially treated.
  *
- * Examples:
- *    <font size="1">foo</font>
- *    ... becomes ...
- *    <span class="wysiwyg-font-size-xx-small">foo</span>
+ * Examples based on this rule set:
  *
  *    <a href="http://foobar.com">foo</a>
  *    ... becomes ...
