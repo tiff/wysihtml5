@@ -15,10 +15,6 @@
  *    ... becomes ...
  *    <img class="wysiwyg-float-left" src="http://foobar.com/image.png" alt="">
  *
- *    <u>foo</u>
- *    ... becomes ...
- *    <span class="wysiwyg-text-decoration-underline">foo</span>
- *
  *    <div>foo<script>alert(document.cookie)</script></div>
  *    ... becomes ...
  *    <div>foo</div>
@@ -45,42 +41,40 @@ var wysihtml5ParserRules = {
      * Following css classes won't be removed when parsed by the wysihtml5 html parser
      */
     "classes": {
-        "wysiwyg-font-size-x-large": 1,
-        "wysiwyg-font-size-small": 1,
-        "wysiwyg-color-yellow": 1,
-        "wysiwyg-color-purple": 1,
-        "wysiwyg-font-size-x-small": 1,
-        "wysiwyg-color-olive": 1,
-        "wysiwyg-clear-right": 1,
-        "wysiwyg-text-decoration-underline": 1,
-        "wysiwyg-font-size-xx-small": 1,
-        "wysiwyg-text-align-right": 1,
-        "wysiwyg-color-green": 1,
-        "wysiwyg-font-size-medium": 1,
-        "wysiwyg-float-right": 1,
-        "wysiwyg-font-size-larger": 1,
         "wysiwyg-clear-both": 1,
-        "wysiwyg-text-align-left": 1,
-        "wysiwyg-color-red": 1,
-        "wysiwyg-color-black": 1,
-        "wysiwyg-color-maroon": 1,
-        "wysiwyg-color-fuchsia": 1,
-        "wysiwyg-color-blue": 1,
-        "wysiwyg-text-align-justify": 1,
-        "wysiwyg-color-navy": 1,
         "wysiwyg-clear-left": 1,
-        "wysiwyg-color-xing": 1,
-        "wysiwyg-font-size-large": 1,
-        "wysiwyg-color-silver": 1,
+        "wysiwyg-clear-right": 1,
         "wysiwyg-color-aqua": 1,
+        "wysiwyg-color-black": 1,
+        "wysiwyg-color-blue": 1,
+        "wysiwyg-color-fuchsia": 1,
         "wysiwyg-color-gray": 1,
-        "wysiwyg-font-size-smaller": 1,
-        "wysiwyg-color-white": 1,
+        "wysiwyg-color-green": 1,
         "wysiwyg-color-lime": 1,
-        "wysiwyg-text-align-center": 1,
-        "wysiwyg-font-size-xx-large": 1,
+        "wysiwyg-color-maroon": 1,
+        "wysiwyg-color-navy": 1,
+        "wysiwyg-color-olive": 1,
+        "wysiwyg-color-purple": 1,
+        "wysiwyg-color-red": 1,
+        "wysiwyg-color-silver": 1,
         "wysiwyg-color-teal": 1,
-        "wysiwyg-float-left": 1
+        "wysiwyg-color-white": 1,
+        "wysiwyg-color-yellow": 1,
+        "wysiwyg-float-left": 1,
+        "wysiwyg-float-right": 1,
+        "wysiwyg-font-size-large": 1,
+        "wysiwyg-font-size-larger": 1,
+        "wysiwyg-font-size-medium": 1,
+        "wysiwyg-font-size-small": 1,
+        "wysiwyg-font-size-smaller": 1,
+        "wysiwyg-font-size-x-large": 1,
+        "wysiwyg-font-size-x-small": 1,
+        "wysiwyg-font-size-xx-large": 1,
+        "wysiwyg-font-size-xx-small": 1,
+        "wysiwyg-text-align-center": 1,
+        "wysiwyg-text-align-justify": 1,
+        "wysiwyg-text-align-left": 1,
+        "wysiwyg-text-align-right": 1
     },
     /**
      * Tag list
@@ -217,10 +211,7 @@ var wysihtml5ParserRules = {
         "abbr": {
             "rename_tag": "span"
         },
-        "u": {
-            "rename_tag": "span",
-            "set_class": "wysiwyg-text-decoration-underline"
-        },
+        "u": {},
         "bgsound": {
             "remove": 1
         },

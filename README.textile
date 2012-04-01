@@ -4,7 +4,7 @@ wysihtml5 is an open source rich text editor based on HTML5 technology and the p
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.
 The code is completely library agnostic: No jQuery, Prototype or similar is required.
 
-h2. Features:
+h2. Features
 
 * Auto linking of urls as-you-type
 * Generates valid and semantic HTML5 markup (no <code><font></code>)
@@ -33,120 +33,13 @@ h2. Companies using wysihtml5
 * "XING":https://www.xing.com - Business Social Network with more than 12 million members
 * and many more ...
 
-h2. Configuration
+h2. Wiki
 
-Following is a list of all configuration options with their corresponding default values:
+Check our "Wiki Pages":https://github.com/xing/wysihtml5 including a simple "Getting Started Tutorial":https://github.com/xing/wysihtml5/wiki/Installation.
 
-<pre>
-  new wysihtml5.Editor("textarea-id", {
-    // Give the editor a name, the name will also be set as class name on the iframe and on the iframe's body
-    name:                 null,
-    // Whether the editor should look like the textarea (by adopting styles)
-    style:                true,
-    // Id of the toolbar element, pass falsey value if you don't want any toolbar logic
-    toolbar:              null,
-    // Whether urls, entered by the user should automatically become clickable-links
-    autoLink:             true,
-    // Object which includes parser rules (set this to examples/rules/spec.json or your own spec, otherwise only span tags are allowed!)
-    parserRules:          null,
-    // Parser method to use when the user inserts content via copy & paste
-    parser:               wysihtml5.dom.parse || Prototype.K,
-    // Class name which should be set on the contentEditable element in the created sandbox iframe, can be styled via the 'stylesheets' option
-    composerClassName:    "wysihtml5-editor",
-    // Class name to add to the body when the wysihtml5 editor is supported
-    bodyClassName:        "wysihtml5-supported",
-    // Array (or single string) of stylesheet urls to be loaded in the editor's iframe
-    stylesheets:          [],
-    // Placeholder text to use, defaults to the placeholder attribute on the textarea element
-    placeholderText:      null,
-    // Whether the composer should allow the user to manually resize images, tables etc.
-    allowObjectResizing:  true,
-    // Whether the rich text editor should be rendered on touch devices (wysihtml5 >= 0.3.0 comes with basic support for iOS 5)
-    supportTouchDevices:  true
-  });
-</pre>
+h2. Research
 
-h2. Events
-
-The editor comes with a simple event handling:
-
-<pre>
-  var editor = new wyishtml5.Editor("textarea-id", { ... });
-  editor.observe("change", function() {
-    alert("The content of the editor has changed")
-  });
-  
-  editor.observe("load", function() {
-    alert("wysihtml5 is ready for take off!");
-  });
-</pre>
-
-List of supported events:
-* _load_ - when the editor is fully loaded
-* _beforeload_ - for internal use only
-* _focus_ - when the editor (regardless if rich text or source view) receives focus
-* _focus:composer_ - when the rich text view receives focus
-* _focus:textarea_ - when the source view receives focus
-* _blur_ - when the editor (regardless if rich text or source view) gets blurred
-* _blur:composer_ - when the rich text view gets blurred
-* _blur:textarea_ - when the source view gets blurred
-* _change_ - when the value changed (regardless if rich text or source view)
-* _change:composer_ - when the value of the rich text view got changed
-* _change:textarea_ - when the value of the source view got changed
-* _paste_ - when the user pastes or drops content (regardless if rich text or source view)
-* _paste:composer_ - when the user pastes or drops content into the rich text view
-* _paste:textarea_ - when the user pastes or drops content into the source view
-* _newword:composer_ - when the user wrote a new word in the rich text view
-* _destroy:composer_ - when the rich text view gets removed
-* _change_view_ - when switched between source and rich text view
-* _show:dialog_ - when a toolbar dialog is shown
-* _save:dialog_ - when save in a toolbar dialog is clicked
-* _cancel:dialog_ - when cancel in a toolbar dialog is clicked
-* _undo:composer_ - when the user invokes an undo action (CMD + Z or via context menu)
-* _redo:composer_ - when the user invokes a redo action (CMD + Y, CMD + SHIFT + Z or via context menu)
-* _beforecommand:composer_ - when the user is about to format something via a rich text command
-* _aftercommand:composer_ - when the user formatted something via a rich text command
-
-h2. Useful helpers
-
-* When the browser supports rich text formatting the <code><body></code> of the page receives a css class "wysihtml5-supported". This can be useful if you want to display some hints or activate certain UI elements.
-* When the browser supports rich text formatting a hidden <code><input></code> with name "_wysihtml5_mode" and value "1" is inserted after the textarea. This can be used on the server side to specially treat wysihtml5 output after form submit.
-* If within a <code><form></code> the editor hooks into the "reset" and "submit" events and ensures that the rich text element is in sync with the original <code><textarea></code>
-
-h2. Progressive-Enhancement/Initialization Step By Step
-
-# Takes a <code><textarea></code>
-# Checks whether the browser supports rich text editing properly (stops here if not)
-# Sets a class "wysihtml5-supported" on the <code><body></code> of the page (can be used to toggle text hints on the page via CSS)
-# Creates an inline <code><iframe></code> with <code><body contenteditable="true"></code>
-# Copies textarea box styles (float, border, position, box-shadow, ...) to the 
-<code><iframe></code>
-# Copies textarea text styles (color, font-size, font-family, text-indent, ...) to 
-the iframe's <code><body></code>
-# Copies several attributes (spellcheck, autofocus, placeholder, className, title, ...) 
-from the <code><textarea></code> to the iframe's <code><body></code>
-# Checks whether HTMl5 autofocus and placeholder attributes are set and 
-simulates their logic on the iframe's <code><body></code>
-# Hides the <code><textarea></code>
-# Initializes sync logic (text you typed into the iframe's <code><body></code> is automatically
-copied to the hidden <code><textarea></code>)
-# Observes the form's "onsubmit" and "onreset" events and simulates their
-behavior on the iframe's <code><body></code>
-# Checks whether a toolbar is given and sets event listeners on it's link
-
-h2. How to compile your own wysihtml5
-
-Clone and build the js file:
-<pre>git clone git://github.com/xing/wysihtml5.git
-cd wysihtml5
-make</pre>
-
-Run the unit tests:
-<pre>make unittest</pre>
-
-h2. Research Material
-
-Before starting this library we spent a lot of time investigating the different browsers and their behaviors.
+Before starting wysihtml5 we spent a lot of time investigating the different browsers and their behaviors.
 
 Check this repository:
 "https://github.com/tiff/wysihtml5-tests":https://github.com/tiff/wysihtml5-tests
