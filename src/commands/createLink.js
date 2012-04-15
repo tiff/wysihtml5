@@ -56,7 +56,7 @@
       hasElementChild = !!anchor.querySelector("*");
       isEmpty = textContent === "" || textContent === wysihtml5.INVISIBLE_SPACE;
       if (!hasElementChild && isEmpty) {
-        dom.setTextContent(anchor, anchor.href);
+        dom.setTextContent(anchor, attributes.text || anchor.href);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.setAfter(anchor);
         composer.selection.insertNode(whiteSpace);
