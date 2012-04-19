@@ -38,6 +38,21 @@ test("Basic tests for UL", function() {
     this.convertToList("<span><div></div><h1></h1><p>yeah</p></span>", "ul"),
     "<ul><li><div></div></li><li><h1></h1></li><li><p>yeah</p></li></ul>"
   );
+  
+  this.equal(
+    this.convertToList("<span><b>foo bar<br></b><b>foo bar</b></span>", "ul"),
+    "<ul><li><b>foo bar</b></li><li><b>foo bar</b></li></ul>"
+  );
+  
+  this.equal(
+    this.convertToList("<span><div>foo</div><br><div>bar</div></span>", "ul"),
+    "<ul><li><div>foo</div></li><li><div>bar</div></li></ul>"
+  );
+  
+  this.equal(
+    this.convertToList("<span><div>foo<br></div><div>bar</div></span>", "ul"),
+    "<ul><li><div>foo</div></li><li><div>bar</div></li></ul>"
+  );
 });
 
 test("Basic tests for OL", function() {
