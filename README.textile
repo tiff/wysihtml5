@@ -37,7 +37,7 @@ h2. Companies using wysihtml5
 
 h2. Wiki
 
-Check our "Wiki Pages":https://github.com/xing/wysihtml5 including a simple "Getting Started Tutorial":https://github.com/xing/wysihtml5/wiki/Installation.
+Check our "Wiki Pages":https://github.com/xing/wysihtml5/wikiincluding a simple "Getting Started Tutorial":https://github.com/xing/wysihtml5/wiki/Getting-Started.
 
 h2. Research
 
