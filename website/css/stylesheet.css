@@ -1,0 +1,139 @@
+html {
+  overflow: hidden;
+}
+
+html {
+  background: url(../img/bg_pattern_r1.png);
+  height: 100%;
+}
+
+body {
+  width: 750px;
+  min-height: 100%;
+  margin: 0 auto;
+  font-family: Helvetica, Arial, Verdana;
+}
+
+header {
+  margin: 30px 0 0 0;
+  display: block;
+  border-radius: 4px;
+  width: 750px;
+  background: #eee;
+  text-align: center;
+  background-image: linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ddd;
+  font-size: 0;
+  text-align: center;
+}
+
+header ul {
+  border-left: 1px solid #ddd;
+  display: inline-block;
+  overflow: hidden;
+}
+
+header li {
+  position: relative;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #fff;
+  list-style: none;
+  font-size: 12px;
+  display: inline-block;
+  cursor: pointer;
+  height: 40px;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 68px;
+
+}
+
+header li:after {
+  content: "";
+  background: url(../img/spr_toolbar_icons_r1.png) no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+header li:hover {
+  background-image: linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
+}
+
+[data-wysihtml5-command="bold"]:after {
+  background-position: 25px center;
+}
+
+[data-wysihtml5-command="italic"]:after {
+  background-position: -48px center;
+}
+
+[data-wysihtml5-command="insertUnorderedList"]:after {
+  background-position: -115px center;
+}
+
+[data-wysihtml5-command="insertOrderedList"]:after {
+  background-position: -197px center;
+}
+
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]:after {
+  background-position: -344px center;
+}
+
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]:after {
+  background-position: -428px center;
+}
+
+[data-wysihtml5-command="createLink"]:after {
+  background-position: -271px center;
+}
+
+[data-wysihtml5-command="insertImage"]:after {
+  background-position: -513px center;
+}
+
+[data-wysihtml5-command="insertSpeech"]:after {
+  background-position: -596px center;
+}
+
+[data-wysihtml5-action="change_view"]:after {
+  background-position: -670px center;
+}
+
+.wysihtml5-command-active {
+  background-color: #ddd;
+}
+
+section {
+  position: absolute;
+  width: 750px;
+  top: 120px;
+  bottom: 0;
+}
+
+textarea {
+  font-family: "Courier New", Courier, monospace;
+  width: 100%;
+  background: transparent;
+  height: 100%;
+  border: 0;
+  resize: none;
+}
+
+a.fork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}

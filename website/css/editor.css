@@ -1,0 +1,44 @@
+html {
+  background: transparent;
+}
+
+body {
+  font-family: Helvetica, Arial, Verdana !important;
+}
+
+h1, h2 {
+  line-height: 1;
+  font-family: Rockwell, "Courier New", Courier, Georgia;
+  border-bottom: 1px solid #999;
+  font-weight: bold;
+  margin: 0 5px 25px 0;
+  padding: 0 0 8px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+p {
+  line-height: 1.25;
+}
+
+p, ul, ol {
+  margin-bottom: 25px;
+}
+
+a {
+  color: #007200;
+}
+
+strong, b {
+  font-weight: bold;
+}
+
+i, em {
+  font-style: italic;
+}
