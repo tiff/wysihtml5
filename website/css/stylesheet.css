@@ -38,7 +38,8 @@ header ul {
   overflow: hidden;
 }
 
-header li {
+[data-wysihtml5-command],
+[data-wysihtml5-action] {
   position: relative;
   border-right: 1px solid #ddd;
   border-left: 1px solid #fff;
@@ -53,7 +54,8 @@ header li {
 
 }
 
-header li:after {
+[data-wysihtml5-command]::after,
+[data-wysihtml5-action]::after {
   content: "";
   background: url(../img/spr_toolbar_icons_r1.png) no-repeat;
   position: absolute;
@@ -63,7 +65,8 @@ header li:after {
   bottom: 0;
 }
 
-header li:hover {
+[data-wysihtml5-command]:hover,
+[data-wysihtml5-action]:hover {
   background-image: linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
   background-image: -o-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
   background-image: -moz-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
@@ -71,48 +74,55 @@ header li:hover {
   background-image: -ms-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
 }
 
-[data-wysihtml5-command="bold"]:after {
-  background-position: 25px center;
+[data-wysihtml5-command="bold"]::after {
+  background-position: 24px center;
 }
 
-[data-wysihtml5-command="italic"]:after {
+[data-wysihtml5-command="italic"]::after {
   background-position: -48px center;
 }
 
-[data-wysihtml5-command="insertUnorderedList"]:after {
+[data-wysihtml5-command="insertUnorderedList"]::after {
   background-position: -115px center;
 }
 
-[data-wysihtml5-command="insertOrderedList"]:after {
+[data-wysihtml5-command="insertOrderedList"]::after {
   background-position: -197px center;
 }
 
-[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]:after {
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]::after {
   background-position: -344px center;
 }
 
-[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]:after {
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]::after {
   background-position: -428px center;
 }
 
-[data-wysihtml5-command="createLink"]:after {
+[data-wysihtml5-command="createLink"]::after {
   background-position: -271px center;
 }
 
-[data-wysihtml5-command="insertImage"]:after {
+[data-wysihtml5-command="insertImage"]::after {
   background-position: -513px center;
 }
 
-[data-wysihtml5-command="insertSpeech"]:after {
+[data-wysihtml5-command="insertSpeech"]::after {
   background-position: -596px center;
 }
 
-[data-wysihtml5-action="change_view"]:after {
+[data-wysihtml5-action="change_view"]::after {
   background-position: -670px center;
 }
 
+.wysihtml5-action-active,
 .wysihtml5-command-active {
-  background-color: #ddd;
+  background: #ddd !important;
+}
+
+.wysihtml5-commands-disabled [data-wysihtml5-command] {
+  opacity: 0.4;
+  cursor: default;
+  background-image: none !important;
 }
 
 section {
