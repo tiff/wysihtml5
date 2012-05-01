@@ -17,7 +17,7 @@ h2. Features
 * Source code view for users with HTML skills
 * Uses sandboxed iframes in order to prevent identity theft through XSS
 * Editor inherits styles and attributes (placeholder, autofocus, ...) from original textarea (you only have to style one element)
-* Speech-input for Chrome 11+
+* Speech-input for Chrome
 
 h2. Browser Support
 
