@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="../parser_rules/advanced.js" ></script>
-    <script src="../dist/wysihtml5-0.3.0.min.js" ></script>
+    <script src="../dist/wysihtml5-0.3.0.js" ></script>
   </head>
   <body>
     <a href="http://github.com/xing/wysihtml5" class="fork"><img src="https://a248.e.akamai.net/camo.github.com/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a>
+    <p class="get-started"><strong>Get started:</strong> <a href="#">Download</a> the latest version and read the <a href="#">introduction</a></p>
     <header id="wysihtml5-editor-toolbar">
       <ul>
         <li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)">bold</li>
@@ -53,31 +54,31 @@
     
     <section>
       <textarea id="wysihtml5-editor" spellcheck="false">
-        <h1>WYSIHTML5 - A better approach to wysiwyg</h1>
-        <p>wysihtml5 is an <a href="https://github.com/xing/wysihtml5">open source</a> rich text editor based on HTML5 technology and the progressive-enhancement approach.
-        It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
-        <h2>Features</h2>
-        <ul>
-          <li>Lightweight (compared to TinyMCE, Aloha etc.)</li>
-          <li>Auto-linking of urls as-you-type</li>
-          <li>Generates valid and semantic HTML5 markup (no &amp;lt;font&amp;gt;, &amp;lt;center&amp;gt;, ...)</li>
-          <li>Uses class names instead of inline styles</li>
-          <li>Unifies line break handling across browsers (hitting enter will create &amp;lt;br&amp;gt; instead of &amp;lt;p&amp;gt; or &amp;lt;div&amp;gt;)</li>
-          <li>Auto-parses content inserted via copy &amp;amp; paste (from Word, Powerpoint, other web pages, ...)</li>
-          <li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
-          <li>Speech-input for Chrome</li>
-          <li>No library (jQuery, prototype etc.) required</li>
-        </ul>
-        <h2>Browser Support</h2>
-        <ul>
-          <li>Firefox 3.5+</li>
-          <li>Chrome</li>
-          <li>IE 8+</li>
-          <li>Safari 4+</li>
-          <li>Safari on iOS 5+</li>
-          <li>Opera 11+</li>
-        <ul>
-        <p><strong>Graceful degradation:</strong> Unsupported browsers will get a &amp;lt;textarea&amp;gt;</p>
+<h1>WYSIHTML5 - A better approach to wysiwyg</h1>
+<p>wysihtml5 is an <a href="https://github.com/xing/wysihtml5">open source</a> rich text editor based on HTML5 technology and the progressive-enhancement approach.
+It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
+<h2>Features</h2>
+<ul>
+  <li>Lightweight (compared to TinyMCE, Aloha etc.)</li>
+  <li>Auto-linking of urls as-you-type</li>
+  <li>Generates valid and semantic HTML5 markup (no <i>&amp;lt;font&amp;gt;</i>, <i>&amp;lt;center&amp;gt;</i>, ...)</li>
+  <li>Uses class names instead of inline styles</li>
+  <li>Unifies line break handling across browsers (hitting enter will create <i>&amp;lt;br&amp;gt;</i> instead of <i>&amp;lt;p&amp;gt;</i> or <i>&amp;lt;div&amp;gt;</i>)</li>
+  <li>Auto-parses content inserted via copy &amp;amp; paste (from Word, Powerpoint, other web pages, ...)</li>
+  <li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
+  <li>Speech-input for Chrome</li>
+  <li>No library (jQuery, prototype etc.) required</li>
+</ul>
+<h2>Browser Support</h2>
+<ul>
+  <li><img src="img/icn_firefox.png"> Firefox 3.5+</li>
+  <li><img src="img/icn_chrome.png"> Chrome</li>
+  <li><img src="img/icn_internet_explorer.png"> IE 8+</li>
+  <li><img src="img/icn_safari.png"> Safari 4+</li>
+  <li><img src="img/icn_ios.png"> Safari on iOS 5+</li>
+  <li><img src="img/icn_opera.png"> Opera 11+</li>
+  <li><strong>Graceful degradation:</strong> Unsupported browsers will get a <i>&amp;lt;textarea&amp;gt;</i></li>
+</ul>
       </textarea>
     </section>
     <script>

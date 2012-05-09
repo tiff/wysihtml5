@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  margin-bottom: 25px;
   font-family: Helvetica, Arial, Verdana !important;
 }
 
@@ -23,12 +24,12 @@ h2 {
   font-size: 22px;
 }
 
-p {
-  line-height: 1.25;
+p, li {
+  line-height: 1.5;
 }
 
 p, ul, ol {
-  margin-bottom: 25px;
+  padding-bottom: 25px;
 }
 
 a {
@@ -41,4 +42,21 @@ strong, b {
 
 i, em {
   font-style: italic;
+}
+
+li {
+  margin-left: 30px;
+}
+
+ul li {
+  list-style: disc outside;
+}
+
+ol li {
+  list-style: decimal outside;
+}
+
+li img {
+  vertical-align: middle;
+  margin: 2px 5px 5px 0;
 }
