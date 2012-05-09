@@ -40,8 +40,7 @@ header {
   background-image: -moz-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
   background-image: -webkit-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
   background-image: -ms-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-  border: 1px solid #ddd;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
   font-size: 0;
   text-align: center;
 }
@@ -137,6 +136,7 @@ header ul {
 
 .wysihtml5-action-active,
 .wysihtml5-command-active {
+  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.2);
   background: #eee !important;
 }
 
