@@ -25,58 +25,48 @@
         <li data-wysihtml5-command="insertSpeech" title="Insert speech">insert speech</li>
         <li data-wysihtml5-action="change_view" title="Show HTML">switch to html</li>
       </ul>
-      
-      <div data-wysihtml5-dialog="createLink" style="display: none;">
-        <label>
-          Link:
-          <input data-wysihtml5-dialog-field="href" value="http://">
-        </label>
-        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-      </div>
-
-      <div data-wysihtml5-dialog="insertImage" style="display: none;">
-        <label>
-          Image:
-          <input data-wysihtml5-dialog-field="src" value="http://">
-        </label>
-        <label>
-          Align:
-          <select data-wysihtml5-dialog-field="className">
-            <option value="">default</option>
-            <option value="wysiwyg-float-left">left</option>
-            <option value="wysiwyg-float-right">right</option>
-          </select>
-        </label>
-        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-      </div>
-      
     </header>
     
+    <div data-wysihtml5-dialog="createLink" style="display: none;">
+      <label>
+        Link:
+        <input data-wysihtml5-dialog-field="href" value="http://">
+      </label>
+      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+    </div>
+
+    <div data-wysihtml5-dialog="insertImage" style="display: none;">
+      <label>
+        Image:
+        <input data-wysihtml5-dialog-field="src" value="http://">
+      </label>
+      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+    </div>
+    
     <section>
-      <textarea id="wysihtml5-editor" spellcheck="false">
+      <textarea id="wysihtml5-editor" spellcheck="false" wrap="off" autofocus placeholder="Enter something ...">
 <h1>WYSIHTML5 - A better approach to wysiwyg</h1>
 <p>wysihtml5 is an <a href="https://github.com/xing/wysihtml5">open source</a> rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
 <h2>Features</h2>
 <ul>
-  <li>Lightweight (compared to TinyMCE, Aloha etc.)</li>
+  <li>It's fast and lightweight (smaller than TinyMCE, Aloha, ...)</li>
   <li>Auto-linking of urls as-you-type</li>
-  <li>Generates valid and semantic HTML5 markup (no <i>&amp;lt;font&amp;gt;</i>, <i>&amp;lt;center&amp;gt;</i>, ...)</li>
+  <li>Generates valid and semantic HTML5 markup (even when the content is pasted from MS Word)</li>
   <li>Uses class names instead of inline styles</li>
-  <li>Unifies line break handling across browsers (hitting enter will create <i>&amp;lt;br&amp;gt;</i> instead of <i>&amp;lt;p&amp;gt;</i> or <i>&amp;lt;div&amp;gt;</i>)</li>
-  <li>Auto-parses content inserted via copy &amp;amp; paste (from Word, Powerpoint, other web pages, ...)</li>
+  <li>Unifies line break handling across browsers</li>
   <li>Uses sandboxed iframes in order to prevent identity theft through XSS</li>
   <li>Speech-input for Chrome</li>
-  <li>No library (jQuery, prototype etc.) required</li>
+  <li>No jQuery required</li>
 </ul>
 <h2>Browser Support</h2>
 <ul>
-  <li><img src="img/icn_firefox.png"> Firefox 3.5+</li>
-  <li><img src="img/icn_chrome.png"> Chrome</li>
-  <li><img src="img/icn_internet_explorer.png"> IE 8+</li>
-  <li><img src="img/icn_safari.png"> Safari 4+</li>
-  <li><img src="img/icn_ios.png"> Safari on iOS 5+</li>
-  <li><img src="img/icn_opera.png"> Opera 11+</li>
+  <li><img src="img/icn_firefox.png" width="24" height="24"> Firefox 3.5+</li>
+  <li><img src="img/icn_chrome.png" width="24" height="24"> Chrome</li>
+  <li><img src="img/icn_internet_explorer.png" width="24" height="24"> IE 8+</li>
+  <li><img src="img/icn_safari.png" width="24" height="24"> Safari 4+</li>
+  <li><img src="img/icn_ios.png" width="24" height="24"> Safari on iOS 5+</li>
+  <li><img src="img/icn_opera.png" width="24" height="24"> Opera 11+</li>
   <li><strong>Graceful degradation:</strong> Unsupported browsers will get a <i>&amp;lt;textarea&amp;gt;</i></li>
 </ul>
       </textarea>
@@ -86,6 +76,11 @@ It uses a sophisticated security concept and aims to generate fully valid HTML5 
         toolbar:     "wysihtml5-editor-toolbar",
         stylesheets: ["http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css", "css/editor.css"],
         parserRules: wysihtml5ParserRules
+      });
+      
+      editor.on("load", function() {
+        var composer = editor.composer;
+        composer.selection.selectNode(editor.composer.element.querySelector("h1"));
       });
     </script>
   </body>

@@ -128,9 +128,16 @@ header ul {
   background-position: -670px center;
 }
 
+[data-wysihtml5-dialog] {
+  display: none;
+  position: absolute;
+  width: 750px;
+  top: 100px;
+}
+
 .wysihtml5-action-active,
 .wysihtml5-command-active {
-  background: #ddd !important;
+  background: #eee !important;
 }
 
 .wysihtml5-commands-disabled [data-wysihtml5-command] {
@@ -142,7 +149,7 @@ header ul {
 section {
   position: absolute;
   width: 750px;
-  top: 120px;
+  top: 130px;
   bottom: 0;
 }
 
