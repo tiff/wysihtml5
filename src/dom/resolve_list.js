@@ -41,7 +41,7 @@
     
     var doc             = list.ownerDocument,
         fragment        = doc.createDocumentFragment(),
-        previousSibling = list.previousSibling,
+        previousSibling = list.previousElementSibling || list.previousSibling,
         firstChild,
         lastChild,
         isLastChild,
