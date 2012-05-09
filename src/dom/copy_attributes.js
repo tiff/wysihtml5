@@ -23,7 +23,7 @@ wysihtml5.dom.copyAttributes = function(attributesToCopy) {
               length    = attributesToCopy.length;
           for (; i<length; i++) {
             attribute = attributesToCopy[i];
-            if (elementToCopyFrom[attribute]) {
+            if (typeof(elementToCopyFrom[attribute]) !== "undefined" && elementToCopyFrom[attribute] !== "") {
               elementToCopyTo[attribute] = elementToCopyFrom[attribute];
             }
           }
