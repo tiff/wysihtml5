@@ -34,21 +34,23 @@ wysihtml5.Commands = Base.extend(
   exec: function(command, value) {
     var obj     = wysihtml5.commands[command],
         args    = wysihtml5.lang.array(arguments).get(),
-        method  = obj && obj.exec;
+        method  = obj && obj.exec,
+        result  = null;
     
     this.editor.fire("beforecommand:composer");
     
     if (method) {
       args.unshift(this.composer);
-      return method.apply(obj, args);
+      result = method.apply(obj, args);
     } else {
       try {
         // try/catch for buggy firefox
-        return this.doc.execCommand(command, false, value);
+        result = this.doc.execCommand(command, false, value);
       } catch(e) {}
     }
     
     this.editor.fire("aftercommand:composer");
+    return result;
   },
   
   /**
