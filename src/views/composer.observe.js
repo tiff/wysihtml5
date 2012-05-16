@@ -174,9 +174,11 @@
       if (nodeName !== "A" && nodeName !== "IMG") {
         return;
       }
-
-      title = titlePrefixes[nodeName] + (target.getAttribute("href") || target.getAttribute("src"));
-      target.setAttribute("title", title);
+      var hasTitle = target.hasAttribute("title");
+      if(!hasTitle){
+        title = titlePrefixes[nodeName] + (target.getAttribute("href") || target.getAttribute("src"));
+        target.setAttribute("title", title);
+      }
     });
   };
 })(wysihtml5);
