@@ -48,6 +48,7 @@
           i       = 0,
           mapping = this[type + "Mapping"] = {},
           link,
+          group,
           name,
           value,
           dialog;
@@ -55,10 +56,12 @@
         link    = links[i];
         name    = link.getAttribute("data-wysihtml5-" + type);
         value   = link.getAttribute("data-wysihtml5-" + type + "-value");
+        group   = this.container.querySelector("[data-wysihtml5-" + type + "-group='" + name + "']");
         dialog  = this._getDialog(link, name);
         
         mapping[name + ":" + value] = {
           link:   link,
+          group:  group,
           name:   name,
           value:  value,
           dialog: dialog,
@@ -217,6 +220,9 @@
         if (this.commandsDisabled) {
           state = false;
           dom.removeClass(command.link, CLASS_NAME_COMMAND_ACTIVE);
+          if (command.group) {
+            dom.removeClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
+          }
           if (command.dialog) {
             command.dialog.hide();
           }
@@ -230,6 +236,9 @@
             state = state.length === 1 ? state[0] : true;
           }
           dom.removeClass(command.link, CLASS_NAME_COMMAND_DISABLED);
+          if (command.group) {
+            dom.removeClass(command.group, CLASS_NAME_COMMAND_DISABLED);
+          }
         }
 
         if (command.state === state) {
@@ -239,6 +248,9 @@
         command.state = state;
         if (state) {
           dom.addClass(command.link, CLASS_NAME_COMMAND_ACTIVE);
+          if (command.group) {
+            dom.addClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
+          }
           if (command.dialog) {
             if (typeof(state) === "object") {
               command.dialog.show(state);
@@ -248,6 +260,9 @@
           }
         } else {
           dom.removeClass(command.link, CLASS_NAME_COMMAND_ACTIVE);
+          if (command.group) {
+            dom.removeClass(command.group, CLASS_NAME_COMMAND_ACTIVE);
+          }
           if (command.dialog) {
             command.dialog.hide();
           }

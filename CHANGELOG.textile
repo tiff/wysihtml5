@@ -1,3 +1,13 @@
+*wysihtml5 0.3.0* (May 18, 2012)
+
+* Support for query command groups in toolbar
+* Don't overwrite title attribute on img and a tags (thx to @bobanj, #65)
+* Fix copying of attributes (eg. spellcheck="false")
+* Allow toolbar button other than anchors
+* Fix another keyboard issue on Windows (#46)
+* Improve insertUnorderedList and insertOrderedList commands
+* Now possible to specify text of a hyperlink (thx to @jhollingworth, #45)
+
 *wysihtml5 0.3.0 RC 2* (March 29, 2012)
 
 * Changed License from GPL to MIT
