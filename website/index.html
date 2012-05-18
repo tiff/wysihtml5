@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Open source rich text editor based on HTML5 and the progressive-enhancement approach. Uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.">
-    <title>wysihtml5 - A better approach to wysiwyg</title>
+    <title>wysihtml5 - A better approach to rich text editing</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/2.9.0/build/reset/reset-min.css">
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="../parser_rules/advanced.js" ></script>
@@ -12,40 +12,60 @@
   <body>
     <a href="http://github.com/xing/wysihtml5" class="fork"><img src="https://a248.e.akamai.net/camo.github.com/abad93f42020b733148435e2cd92ce15c542d320/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a>
     <p class="get-started"><strong>Get started:</strong> <a href="#">Download</a> the latest version and read the <a href="#">introduction</a></p>
-    <header id="wysihtml5-editor-toolbar">
-      <ul>
-        <li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)">bold</li>
-        <li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)">italic</li>
-        <li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list">insert unordered list</li>
-        <li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list">insert ordered list</li>
-        <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1">headline 1</li>
-        <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2">headline 2</li>
-        <li data-wysihtml5-command="createLink" title="Insert a link">insert link</li>
-        <li a data-wysihtml5-command="insertImage" title="Insert an image">insert image</li>
-        <li data-wysihtml5-command="insertSpeech" title="Insert speech">insert speech</li>
-        <li data-wysihtml5-action="change_view" title="Show HTML">switch to html</li>
-      </ul>
-    </header>
-    
-    <div data-wysihtml5-dialog="createLink" style="display: none;">
-      <label>
-        Link:
-        <input data-wysihtml5-dialog-field="href" value="http://">
-      </label>
-      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-    </div>
+    <div id="wysihtml5-editor-toolbar">
+      <header>
+        <ul class="commands">
+          <li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)"></li>
+          <li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)"></li>
+          <li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list"></li>
+          <li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list"></li>
+          <li data-wysihtml5-command="createLink" title="Insert a link"></li>
+          <li data-wysihtml5-command="insertImage" title="Insert an image"></li>
+          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1"></li>
+          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2"></li>
+          <li class="fore-color" title="Color the selected text">
+            <ul>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="black"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="silver"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="gray"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="maroon"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="red"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="purple"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="fuchsia"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="green"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="lime"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="olive"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="yellow"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="navy"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="blue"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="teal"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="aqua"></li>
+            </ul>
+          </li>
+          <li data-wysihtml5-command="insertSpeech" title="Insert speech"></li>
+          <li data-wysihtml5-action="change_view" title="Show HTML"></li>
+        </ul>
+      </header>
+      <div data-wysihtml5-dialog="createLink" style="display: none;">
+        <label>
+          Link:
+          <input data-wysihtml5-dialog-field="href" value="http://">
+        </label>
+        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+      </div>
 
-    <div data-wysihtml5-dialog="insertImage" style="display: none;">
-      <label>
-        Image:
-        <input data-wysihtml5-dialog-field="src" value="http://">
-      </label>
-      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+      <div data-wysihtml5-dialog="insertImage" style="display: none;">
+        <label>
+          Image:
+          <input data-wysihtml5-dialog-field="src" value="http://">
+        </label>
+        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+      </div>
     </div>
     
     <section>
       <textarea id="wysihtml5-editor" spellcheck="false" wrap="off" autofocus placeholder="Enter something ...">
-<h1>WYSIHTML5 - A better approach to wysiwyg</h1>
+<h1>WYSIHTML5 - A better approach to rich text editing</h1>
 <p>wysihtml5 is an <a href="https://github.com/xing/wysihtml5">open source</a> rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
 <h2>Features</h2>

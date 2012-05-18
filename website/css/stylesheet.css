@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  width: 750px;
+  width: 810px;
   min-height: 100%;
   margin: 0 auto;
   font-family: Helvetica, Arial, Verdana;
@@ -29,11 +29,17 @@ strong {
   color: #666;
 }
 
+#wysihtml5-editor-toolbar {
+  position: relative;
+}
+
 header {
   display: block;
   border-radius: 4px;
-  width: 750px;
+  width: 810px;
   background: #eee;
+  position: relative;
+  z-index: 1;
   text-align: center;
   background-image: linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
   background-image: -o-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
@@ -45,14 +51,14 @@ header {
   text-align: center;
 }
 
-header ul {
+.commands {
   border-left: 1px solid #ddd;
   display: inline-block;
-  overflow: hidden;
 }
 
 [data-wysihtml5-command],
-[data-wysihtml5-action] {
+[data-wysihtml5-action],
+.fore-color {
   position: relative;
   border-right: 1px solid #ddd;
   border-left: 1px solid #fff;
@@ -61,16 +67,15 @@ header ul {
   display: inline-block;
   cursor: pointer;
   height: 40px;
-  overflow: hidden;
-  text-indent: -9999px;
   width: 68px;
-
 }
 
 [data-wysihtml5-command]::after,
-[data-wysihtml5-action]::after {
+[data-wysihtml5-action]::after,
+.fore-color::after {
   content: "";
-  background: url(../img/spr_toolbar_icons_r1.png) no-repeat;
+  background-image: url(../img/spr_toolbar_icons_r1.png);
+  background-repeat: no-repeat;
   position: absolute;
   left: 0;
   right: 0;
@@ -79,7 +84,8 @@ header ul {
 }
 
 [data-wysihtml5-command]:hover,
-[data-wysihtml5-action]:hover {
+[data-wysihtml5-action]:hover,
+.fore-color:hover {
   background-image: linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
   background-image: -o-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
   background-image: -moz-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
@@ -119,6 +125,10 @@ header ul {
   background-position: -513px center;
 }
 
+.fore-color::after {
+  background-position: -741px center;
+}
+
 [data-wysihtml5-command="insertSpeech"]::after {
   background-position: -596px center;
 }
@@ -127,11 +137,29 @@ header ul {
   background-position: -670px center;
 }
 
-[data-wysihtml5-dialog] {
+.fore-color ul {
   display: none;
   position: absolute;
-  width: 750px;
-  top: 100px;
+  z-index: 2;
+  top: 40px;
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: hidden;
+}
+
+.fore-color li {
+  display: block;
+  margin: 2px;
+  height: 12px;
+  background: red;
+}
+
+.fore-color:hover ul {
+  display: block;
+}
+
+.wysihtml5-commands-disabled .fore-color ul {
+  display: none;
 }
 
 .wysihtml5-action-active,
@@ -140,16 +168,61 @@ header ul {
   background: #eee !important;
 }
 
-.wysihtml5-commands-disabled [data-wysihtml5-command] {
+.wysihtml5-commands-disabled [data-wysihtml5-command],
+.wysihtml5-commands-disabled .fore-color {
   opacity: 0.4;
   cursor: default;
   background-image: none !important;
 }
 
+[data-wysihtml5-dialog] {
+  color: #333;
+  font-size: 14px;
+  text-align: left;
+  border-radius: 4px;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  background: #FFFBE0;
+  position: absolute;
+  width: 810px;
+  text-align: center;
+  top: 45px;
+}
+
+[data-wysihtml5-dialog] input {
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 3px;
+  width: 300px;
+}
+
+[data-wysihtml5-dialog] input:focus {
+  outline: 0;
+  border: 1px solid #666;
+}
+
+[data-wysihtml5-dialog-action] {
+  padding: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+[data-wysihtml5-dialog-action="save"] {
+  background: #007200;
+}
+
+[data-wysihtml5-dialog-action="cancel"] {
+  background: #999;
+}
+
 section {
   position: absolute;
-  width: 750px;
-  top: 130px;
+  width: 810px;
+  top: 139px;
   bottom: 0;
 }
 
