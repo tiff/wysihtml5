@@ -258,7 +258,7 @@
         action = actionMapping[i];
         
         if (action.name === "change_view") {
-          action.state = this.editor.currentView === editor.textarea;
+          action.state = this.editor.currentView === this.editor.textarea;
           if (action.state) {
             dom.addClass(action.link, CLASS_NAME_ACTION_ACTIVE);
           } else {
