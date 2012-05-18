@@ -142,20 +142,70 @@ header {
   position: absolute;
   z-index: 2;
   top: 40px;
+  right: -1px;
+  left: -2px;
   border: 1px solid #ccc;
+  border-top: 0;
   background: #fff;
   overflow: hidden;
 }
 
 .fore-color li {
   display: block;
-  margin: 2px;
-  height: 12px;
-  background: red;
+  margin: 3px;
+  width: auto;
+  border: 0;
+  height: 15px;
+}
+
+.fore-color li::after {
+  display: none;
 }
 
 .fore-color:hover ul {
   display: block;
+}
+
+.fore-color [data-wysihtml5-command-value="silver"] {
+  background: silver !important;
+}
+
+
+.fore-color [data-wysihtml5-command-value="gray"] {
+  background: gray !important;
+}
+
+.fore-color [data-wysihtml5-command-value="maroon"] {
+  background: maroon !important;
+}
+
+.fore-color [data-wysihtml5-command-value="red"] {
+  background: red !important;
+}
+
+.fore-color [data-wysihtml5-command-value="purple"] {
+  background: purple !important;
+}
+
+.fore-color [data-wysihtml5-command-value="green"] {
+  background: green !important;
+}
+
+.fore-color [data-wysihtml5-command-value="olive"] {
+  background: olive !important;
+}
+
+.fore-color [data-wysihtml5-command-value="navy"] {
+  background: navy !important;
+}
+
+.fore-color [data-wysihtml5-command-value="blue"] {
+  background: blue !important;
+}
+
+.fore-color .wysihtml5-command-active {
+  outline: 1px solid #666;
+  outline-offset: 1px;
 }
 
 .wysihtml5-commands-disabled .fore-color ul {

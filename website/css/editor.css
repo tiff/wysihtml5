@@ -33,7 +33,7 @@ p, ul, ol {
 }
 
 a {
-  color: #007200;
+  color: inherit;
 }
 
 strong, b {

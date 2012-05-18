@@ -15,35 +15,29 @@
     <div id="wysihtml5-editor-toolbar">
       <header>
         <ul class="commands">
-          <li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)"></li>
-          <li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)"></li>
-          <li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list"></li>
-          <li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list"></li>
-          <li data-wysihtml5-command="createLink" title="Insert a link"></li>
-          <li data-wysihtml5-command="insertImage" title="Insert an image"></li>
-          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1"></li>
-          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2"></li>
-          <li class="fore-color" title="Color the selected text">
+          <li data-wysihtml5-command="bold" title="Make text bold (CTRL + B)" class="command"></li>
+          <li data-wysihtml5-command="italic" title="Make text italic (CTRL + I)" class="command"></li>
+          <li data-wysihtml5-command="insertUnorderedList" title="Insert an unordered list" class="command"></li>
+          <li data-wysihtml5-command="insertOrderedList" title="Insert an ordered list" class="command"></li>
+          <li data-wysihtml5-command="createLink" title="Insert a link" class="command"></li>
+          <li data-wysihtml5-command="insertImage" title="Insert an image" class="command"></li>
+          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1" title="Insert headline 1" class="command"></li>
+          <li data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2" title="Insert headline 2" class="command"></li>
+          <li data-wysihtml5-command-group="foreColor" class="fore-color" title="Color the selected text" class="command">
             <ul>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="black"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="silver"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="gray"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="maroon"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="red"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="purple"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="fuchsia"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="green"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="lime"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="olive"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="yellow"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="navy"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="blue"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="teal"></li>
-              <li data-wysihtml5-command="foreColor" data-wysihtml5-command="aqua"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="silver"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="gray"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="maroon"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="purple"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="olive"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="navy"></li>
+              <li data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue"></li>
             </ul>
           </li>
-          <li data-wysihtml5-command="insertSpeech" title="Insert speech"></li>
-          <li data-wysihtml5-action="change_view" title="Show HTML"></li>
+          <li data-wysihtml5-command="insertSpeech" title="Insert speech" class="command"></li>
+          <li data-wysihtml5-action="change_view" title="Show HTML" class="action"></li>
         </ul>
       </header>
       <div data-wysihtml5-dialog="createLink" style="display: none;">
@@ -66,7 +60,7 @@
     <section>
       <textarea id="wysihtml5-editor" spellcheck="false" wrap="off" autofocus placeholder="Enter something ...">
 <h1>WYSIHTML5 - A better approach to rich text editing</h1>
-<p>wysihtml5 is an <a href="https://github.com/xing/wysihtml5">open source</a> rich text editor based on HTML5 technology and the progressive-enhancement approach.
+<p>wysihtml5 is an <span class="wysiwyg-color-green"><a href="https://github.com/xing/wysihtml5">open source</a></span> rich text editor based on HTML5 technology and the progressive-enhancement approach.
 It uses a sophisticated security concept and aims to generate fully valid HTML5 markup by preventing unmaintainable tag soups and inline styles.</p>
 <h2>Features</h2>
 <ul>
