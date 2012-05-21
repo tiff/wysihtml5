@@ -26,7 +26,7 @@ The rich text editing interface is supported in IE8+, FF 3.5+, Safari 4+, Safari
 
 h2. Demos
 
-* "Simple Editor with italic and bold buttons"http://xing.github.com/wysihtml5/examples/simple.html
+* "Simple Editor with italic and bold buttons:"http://xing.github.com/wysihtml5/examples/simple.html
 * "Editor with advanced functionality":http://xing.github.com/wysihtml5/examples/advanced.html
 
 h2. Companies using wysihtml5
