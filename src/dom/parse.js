@@ -371,7 +371,7 @@ wysihtml5.dom.parse = (function() {
     })(),
 
     absolute_path: (function() {
-      var REG_EXP = /^\/[\/a-z0-9%?.]*$/i;
+      var REG_EXP = /^\/[\/a-z0-9%?._\-]*$/i;
       return function(attributeValue) {
         if (!attributeValue || !attributeValue.match(REG_EXP)) {
           return null;
@@ -384,7 +384,7 @@ wysihtml5.dom.parse = (function() {
 
     href: (function() {
       var HTTP_REG_EXP = /^https?:\/\//i;
-      var APATH_REG_EXP = /^\/[\/a-z0-9%?.]*$/i;
+      var APATH_REG_EXP = /^\/[\/a-z0-9%?._\-]*$/i;
       return function(attributeValue) {
         if (!attributeValue || (!attributeValue.match(HTTP_REG_EXP) && !attributeValue.match(APATH_REG_EXP))) {
           return null;
