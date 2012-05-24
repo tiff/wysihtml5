@@ -9,7 +9,75 @@
 
 <script src="http://code.jquery.com/qunit/qunit-git.js"></script>
 
-<script src="../dist/wysihtml5-0.3.0.js"></script>
+<script src="../src/wysihtml5.js"></script>
+<script src="../lib/rangy/rangy-core.js"></script>
+<script src="../lib/base/base.js"></script>
+<script src="../src/browser.js"></script>
+<script src="../src/lang/array.js"></script>
+<script src="../src/lang/dispatcher.js"></script>
+<script src="../src/lang/object.js"></script>
+<script src="../src/lang/string.js"></script>
+<script src="../src/dom/auto_link.js"></script>
+<script src="../src/dom/class.js"></script>
+<script src="../src/dom/contains.js"></script>
+<script src="../src/dom/convert_to_list.js"></script>
+<script src="../src/dom/copy_attributes.js"></script>
+<script src="../src/dom/copy_styles.js"></script>
+<script src="../src/dom/delegate.js"></script>
+<script src="../src/dom/get_as_dom.js"></script>
+<script src="../src/dom/get_parent_element.js"></script>
+<script src="../src/dom/get_style.js"></script>
+<script src="../src/dom/has_element_with_tag_name.js"></script>
+<script src="../src/dom/has_element_with_class_name.js"></script>
+<script src="../src/dom/insert.js"></script>
+<script src="../src/dom/insert_css.js"></script>
+<script src="../src/dom/observe.js"></script>
+<script src="../src/dom/parse.js"></script>
+<script src="../src/dom/remove_empty_text_nodes.js"></script>
+<script src="../src/dom/rename_element.js"></script>
+<script src="../src/dom/replace_with_child_nodes.js"></script>
+<script src="../src/dom/resolve_list.js"></script>
+<script src="../src/dom/sandbox.js"></script>
+<script src="../src/dom/set_attributes.js"></script>
+<script src="../src/dom/set_styles.js"></script>
+<script src="../src/dom/simulate_placeholder.js"></script>
+<script src="../src/dom/text_content.js"></script>
+<script src="../src/quirks/clean_pasted_html.js"></script>
+<script src="../src/quirks/ensure_proper_clearing.js"></script>
+<script src="../src/quirks/get_correct_inner_html.js"></script>
+<script src="../src/quirks/insert_line_break_on_return.js"></script>
+<script src="../src/quirks/redraw.js"></script>
+<script src="../src/selection/selection.js"></script>
+<script src="../src/selection/html_applier.js"></script>
+<script src="../src/commands.js"></script>
+<script src="../src/commands/bold.js"></script>
+<script src="../src/commands/createLink.js"></script>
+<script src="../src/commands/fontSize.js"></script>
+<script src="../src/commands/foreColor.js"></script>
+<script src="../src/commands/formatBlock.js"></script>
+<script src="../src/commands/formatInline.js"></script>
+<script src="../src/commands/insertHTML.js"></script>
+<script src="../src/commands/insertImage.js"></script>
+<script src="../src/commands/insertLineBreak.js"></script>
+<script src="../src/commands/insertOrderedList.js"></script>
+<script src="../src/commands/insertUnorderedList.js"></script>
+<script src="../src/commands/italic.js"></script>
+<script src="../src/commands/justifyCenter.js"></script>
+<script src="../src/commands/justifyLeft.js"></script>
+<script src="../src/commands/justifyRight.js"></script>
+<script src="../src/commands/underline.js"></script>
+<script src="../src/undo_manager.js"></script>
+<script src="../src/views/view.js"></script>
+<script src="../src/views/composer.js"></script>
+<script src="../src/views/composer.style.js"></script>
+<script src="../src/views/composer.observe.js"></script>
+<script src="../src/views/synchronizer.js"></script>
+<script src="../src/views/textarea.js"></script>
+<script src="../src/toolbar/dialog.js"></script>
+<script src="../src/toolbar/speech.js"></script>
+<script src="../src/toolbar/toolbar.js"></script>
+<script src="../src/editor.js"></script>
+
 <script src="../src/assert/html_equal.js"></script>
 
 <script src="browser_test.js"></script>
@@ -18,7 +86,7 @@
 <script>
   if (wysihtml5.browser.supported()) {
     document.write(
-      '<script src="assert/html_equal_test.js"><\/script>'               +
+      '<script src="assert/html_equal_test.js"><\/script>'                +
       '<script src="lang/array_test.js"><\/script>'                       +
       '<script src="lang/object_test.js"><\/script>'                      +
       '<script src="lang/string_test.js"><\/script>'                      +
@@ -42,7 +110,7 @@
       '<script src="dom/set_attributes_test.js"><\/script>'               +
       '<script src="dom/parse_test.js"><\/script>'                        +
       '<script src="quirks/clean_pasted_html_test.js"><\/script>'         +
-      '<script src="undo_manager_test.js"><\/script>'         +
+      '<script src="undo_manager_test.js"><\/script>'                     +
       '<script src="editor_test.js"><\/script>'
     );
   }

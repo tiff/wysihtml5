@@ -474,6 +474,25 @@ if (wysihtml5.browser.supported()) {
     );
   });
   
+  test("Check mailto links", function() {
+    var rules = {
+      tags: {
+        a: {
+          check_attributes: {
+            href:   "url"
+          }
+        }
+      }
+    };
+    
+
+    this.equal(
+      this.sanitize('<a href="mailto:foo@bar.com">foo</a>', rules),
+      '<a href="mailto:foo@bar.com">foo</a>',
+      "'mailto:' urls are not stripped"
+    );
+  });
+  
   test("Check Firefox misbehavior with tilde characters in urls", function() {
     var rules = {
       tags: {
