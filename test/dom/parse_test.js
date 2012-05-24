@@ -98,17 +98,58 @@ if (wysihtml5.browser.supported()) {
         '<h1 id="main-headline" >take this you snorty little sanitizer</h1>' +
         '<h2>yes, you!</h2>' +
         '<h3>i\'m old and ready to die</h3>' +
-        '<div><video src="pr0n.avi">foobar</video><img src="http://foo.gif" height="10" width="10"></div>' +
+        '<div><video src="pr0n.avi">foobar</video><img src="http://foo.gif" height="10" width="10"><img src="/foo.gif"></div>' +
         '<div><a href="http://www.google.de"></a></div>',
         rules
       ),
       '<h2>take this you snorty little sanitizer</h2>' +
       '<h2>yes, you!</h2>' +
-      '<span><img alt="foo" border="1" src="http://foo.gif" height="10" width="10"></span>' +
+      '<span><img alt="foo" border="1" src="http://foo.gif" height="10" width="10"><img alt="foo" border="1"></span>' +
       '<span><i title=""></i></span>'
     );
   });
 
+  test("Attribute check of absolute_path cleans up", function() {
+    var rules = {
+      tags: {
+        img: {
+          check_attributes: { src: "absolute_path" }
+        }
+      }
+    };
+
+    this.equal(
+      this.sanitize(
+        '<img src="http://url.gif">' +
+        '<img src="/path/to/absolute%20href.gif">' +
+        '<img src="mango time">',
+        rules
+      ),
+      '<img><img src="/path/to/absolute%20href.gif"><img>'
+    );
+  });
+
+  test("Attribute check of href cleans up", function() {
+    var rules = {
+      tags: {
+        img: {
+          check_attributes: { src: "href" }
+        }
+      }
+    };
+
+    this.equal(
+      this.sanitize(
+        '<img src="HTTP://url.gif">' +
+        '<img src="/path/to/absolute%20href.gif">' +
+        '<img src="mango time">',
+        rules
+      ),
+      '<img src="http://url.gif">' +
+      '<img src="/path/to/absolute%20href.gif">' +
+      '<img>'
+    );
+  });
 
   test("Bug in IE8 where invalid html causes duplicated content", function() {
     var rules = {
