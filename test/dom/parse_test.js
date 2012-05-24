@@ -520,7 +520,7 @@ if (wysihtml5.browser.supported()) {
       tags: {
         a: {
           check_attributes: {
-            href:   "url"
+            href: "href"
           }
         }
       }

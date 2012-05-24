@@ -359,7 +359,7 @@ wysihtml5.dom.parse = (function() {
   // ------------ attribute checks ------------ \\
   var attributeCheckMethods = {
     url: (function() {
-      var REG_EXP = /^(https?:\/\/|mailto:)/i;
+      var REG_EXP = /^https?:\/\//i;
       return function(attributeValue) {
         if (!attributeValue || !attributeValue.match(REG_EXP)) {
           return null;
@@ -371,7 +371,7 @@ wysihtml5.dom.parse = (function() {
     })(),
 
     absolute_path: (function() {
-      var REG_EXP = /^\/[\/a-z0-9%?._\-]*$/i;
+      var REG_EXP = /^\/.*/i;
       return function(attributeValue) {
         if (!attributeValue || !attributeValue.match(REG_EXP)) {
           return null;
@@ -383,10 +383,10 @@ wysihtml5.dom.parse = (function() {
     })(),
 
     href: (function() {
-      var HTTP_REG_EXP = /^https?:\/\//i;
-      var APATH_REG_EXP = /^\/[\/a-z0-9%?._\-]*$/i;
+      var HTTP_REG_EXP = /^(https?:\/\/|mailto:)/i,
+          PATH_REG_EXP = /^\/.*/i;
       return function(attributeValue) {
-        if (!attributeValue || (!attributeValue.match(HTTP_REG_EXP) && !attributeValue.match(APATH_REG_EXP))) {
+        if (!attributeValue || (!attributeValue.match(HTTP_REG_EXP) && !attributeValue.match(PATH_REG_EXP))) {
           return null;
         }
         return attributeValue.replace(HTTP_REG_EXP, function(match) {
