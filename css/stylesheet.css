@@ -8,6 +8,9 @@ body {
   width: 810px;
   min-height: 100%;
   margin: 0 auto;
+}
+
+body, textarea, input {
   font-family: Helvetica, Arial, Verdana;
 }
 
@@ -274,7 +277,6 @@ section {
 }
 
 textarea {
-  font-family: "Courier New", Courier, monospace;
   width: 100%;
   background: transparent;
   height: 100%;
