@@ -40,11 +40,12 @@
       }
 
       image = doc.createElement(NODE_NAME);
-
+      
       for (i in value) {
-        var attr = doc.createAttribute(i);
-        attr.nodeValue = value[i];
-        image.setAttributeNode(attr);
+        if (i === "className") {
+          i = "class";
+        }
+        image.setAttribute(i, attr);
       }
 
       composer.selection.insertNode(image);

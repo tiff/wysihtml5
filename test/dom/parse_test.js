@@ -534,6 +534,25 @@ if (wysihtml5.browser.supported()) {
     );
   });
   
+  test("Check custom data attributes", function() {
+    var rules = {
+      tags: {
+        span: {
+          check_attributes: {
+            "data-max-width": "numbers"
+          }
+        }
+      }
+    };
+    
+
+    this.equal(
+      this.sanitize('<span data-max-width="24px" data-min-width="25">foo</span>', rules),
+      '<span data-max-width="24">foo</span>',
+      "custom data attributes are not stripped"
+    );
+  });
+  
   test("Check Firefox misbehavior with tilde characters in urls", function() {
     var rules = {
       tags: {
