@@ -42,7 +42,9 @@
       image = doc.createElement(NODE_NAME);
 
       for (i in value) {
-        image[i] = value[i];
+        var attr = doc.createAttribute(i);
+        attr.nodeValue = value[i];
+        image.setAttributeNode(attr);
       }
 
       composer.selection.insertNode(image);
