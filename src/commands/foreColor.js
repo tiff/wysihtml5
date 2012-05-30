@@ -5,7 +5,7 @@
  */
 (function(wysihtml5) {
   var undef,
-      REG_EXP = /wysiwyg-color-[a-z]+/g;
+      REG_EXP = /wysiwyg-color-[0-9a-z]+/g;
   
   wysihtml5.commands.foreColor = {
     exec: function(composer, command, color) {
