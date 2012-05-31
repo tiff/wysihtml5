@@ -18,7 +18,7 @@
  *
  *    <marquee>foo</marquee>
  *    ... becomes ...
- *    <span>foo</marquee>
+ *    <span>foo</span>
  *
  *    foo <br clear="both"> bar
  *    ... becomes ...
