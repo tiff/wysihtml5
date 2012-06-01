@@ -45,7 +45,7 @@
         if (i === "className") {
           i = "class";
         }
-        image.setAttribute(i, attr);
+        image.setAttribute(i, value[i]);
       }
 
       composer.selection.insertNode(image);
