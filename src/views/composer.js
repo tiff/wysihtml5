@@ -307,7 +307,7 @@
     },
     
     _initUndoManager: function() {
-      new wysihtml5.UndoManager(this.parent);
+      this.undoManager = new wysihtml5.UndoManager(this.parent);
     }
   });
 })(wysihtml5);
