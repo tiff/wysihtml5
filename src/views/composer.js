@@ -177,7 +177,7 @@
 
       // Simulate html5 autofocus on contentEditable element
       if (this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) {
-        setTimeout(function() { that.focus(); }, 100);
+        setTimeout(function() { that.focus(true); }, 100);
       }
 
       wysihtml5.quirks.insertLineBreakOnReturn(this);
