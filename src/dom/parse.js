@@ -370,8 +370,8 @@ wysihtml5.dom.parse = (function() {
       };
     })(),
 
-    absolute_path: (function() {
-      var REG_EXP = /^\/.*/i;
+    src: (function() {
+      var REG_EXP = /^(\/|https?:\/\/)/i;
       return function(attributeValue) {
         if (!attributeValue || !attributeValue.match(REG_EXP)) {
           return null;

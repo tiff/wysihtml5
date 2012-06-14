@@ -95,8 +95,10 @@ var wysihtml5ParserRules = {
      *    - set_attributes:     sets/overrides the given attributes
      *
      *    - check_attributes:   checks the given HTML attribute via the given method
-     *                            - url:      checks whether the given string is an url, deletes the attribute if not
-     *                            - alt:      strips unwanted characters. if the attribute is not set, then it gets set (to ensure valid and compatible HTML)
+     *                            - url:            allows only valid urls (starting with http:// or https://)
+     *                            - src:            allows something like "/foobar.jpg", "http://google.com", ...
+     *                            - href:           allows something like "mailto:bert@foo.com", "http://google.com", "/foobar.jpg"
+     *                            - alt:            strips unwanted characters. if the attribute is not set, then it gets set (to ensure valid and compatible HTML)
      *                            - numbers:  ensures that the attribute only contains numeric characters
      */
     "tags": {
@@ -178,7 +180,7 @@ var wysihtml5ParserRules = {
         },
         "a": {
             "check_attributes": {
-                "href": "url"
+                "href": "href"
             },
             "set_attributes": {
                 "rel": "nofollow",
@@ -189,7 +191,7 @@ var wysihtml5ParserRules = {
             "check_attributes": {
                 "width": "numbers",
                 "alt": "alt",
-                "src": "url",
+                "src": "src",
                 "height": "numbers"
             },
             "add_class": {
