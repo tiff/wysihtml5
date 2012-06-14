@@ -19,10 +19,12 @@
           if (view.hasPlaceholderSet()) {
             view.clear();
           }
+          view.placeholderSet = false;
           dom.removeClass(view.element, CLASS_NAME);
         },
         set = function() {
           if (view.isEmpty()) {
+            view.placeholderSet = true;
             view.setValue(placeholderText);
             dom.addClass(view.element, CLASS_NAME);
           }
