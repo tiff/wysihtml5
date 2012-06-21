@@ -507,4 +507,22 @@ if (wysihtml5.browser.supported()) {
       start();
     });
   });
+  
+  asyncTest("Check whether everything works when the textarea is not within a form", function() {
+    expect(3);
+    
+    var textareaElement = document.createElement("textarea");
+    document.body.appendChild(textareaElement);
+    var editor = new wysihtml5.Editor(textareaElement);
+    
+    var that = this;
+    editor.observe("load", function() {
+      ok(!document.querySelector("input[name='_wysihtml5_mode']"), "No hidden _wysihtml5_mode input has been created");
+      ok(that.getIframeElement(), "Editor's iframe has been created");
+      equal(textareaElement.style.display, "none", "Textarea is not visible");
+      textareaElement.parentNode.removeChild(textareaElement);
+      
+      start();
+    });
+  });
 }

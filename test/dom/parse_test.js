@@ -109,11 +109,11 @@ if (wysihtml5.browser.supported()) {
     );
   });
 
-  test("Attribute check of absolute_path cleans up", function() {
+  test("Attribute check of 'url' cleans up", function() {
     var rules = {
       tags: {
         img: {
-          check_attributes: { src: "absolute_path" }
+          check_attributes: { src: "url" }
         }
       }
     };
@@ -125,15 +125,15 @@ if (wysihtml5.browser.supported()) {
         '<img src="mango time">',
         rules
       ),
-      '<img><img src="/path/to/absolute%20href.gif"><img>'
+      '<img src="http://url.gif"><img><img>'
     );
   });
 
-  test("Attribute check of href cleans up", function() {
+  test("Attribute check of 'src' cleans up", function() {
     var rules = {
       tags: {
         img: {
-          check_attributes: { src: "href" }
+          check_attributes: { src: "src" }
         }
       }
     };
@@ -142,12 +142,42 @@ if (wysihtml5.browser.supported()) {
       this.sanitize(
         '<img src="HTTP://url.gif">' +
         '<img src="/path/to/absolute%20href.gif">' +
+        '<img src="mailto:christopher@foobar.com">' +
         '<img src="mango time">',
         rules
       ),
       '<img src="http://url.gif">' +
       '<img src="/path/to/absolute%20href.gif">' +
+      '<img>' +
       '<img>'
+    );
+  });
+  
+  test("Attribute check of 'href' cleans up", function() {
+    var rules = {
+      tags: {
+        a: {
+          check_attributes: { href: "href" }
+        }
+      }
+    };
+
+    this.equal(
+      this.sanitize(
+        '<a href="/foobar"></a>' +
+        '<a href="HTTPS://google.com"></a>' +
+        '<a href="http://google.com"></a>' +
+        '<a href="MAILTO:christopher@foobar.com"></a>' +
+        '<a href="mango time"></a>' +
+        '<a href="ftp://google.com"></a>',
+        rules
+      ),
+      '<a href="/foobar"></a>' +
+      '<a href="https://google.com"></a>' +
+      '<a href="http://google.com"></a>' +
+      '<a href="mailto:christopher@foobar.com"></a>' +
+      '<a></a>' +
+      '<a></a>'
     );
   });
 
