@@ -162,6 +162,10 @@
      * Show the dialog element
      */
     show: function(elementToChange) {
+      if (dom.hasClass(this.link, CLASS_NAME_OPENED)) {
+        return;
+      }
+      
       var that        = this,
           firstField  = this.container.querySelector(SELECTOR_FORM_ELEMENTS);
       this.elementToChange = elementToChange;
