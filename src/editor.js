@@ -110,9 +110,12 @@
     },
 
     setValue: function(html, parse) {
+      this.fire("unset_placeholder");
+      
       if (!html) {
         return this.clear();
       }
+      
       this.currentView.setValue(html, parse);
       return this;
     },
