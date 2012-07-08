@@ -1,10 +1,10 @@
 (function(wysihtml5) {
-  var supportsClassList = wysihtml5.browser.supportsClassList(),
-      api               = wysihtml5.dom;
+  var api = wysihtml5.dom;
   
   api.addClass = function(element, className) {
-    if (supportsClassList) {
-      return element.classList.add(className);
+    var classList = element.classList;
+    if (classList) {
+      return classList.add(className);
     }
     if (api.hasClass(element, className)) {
       return;
@@ -13,16 +13,18 @@
   };
   
   api.removeClass = function(element, className) {
-    if (supportsClassList) {
-      return element.classList.remove(className);
+    var classList = element.classList;
+    if (classList) {
+      return classList.remove(className);
     }
     
     element.className = element.className.replace(new RegExp("(^|\\s+)" + className + "(\\s+|$)"), " ");
   };
   
   api.hasClass = function(element, className) {
-    if (supportsClassList) {
-      return element.classList.contains(className);
+    var classList = element.classList;
+    if (classList) {
+      return classList.contains(className);
     }
     
     var elementClassName = element.className;
