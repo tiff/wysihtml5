@@ -94,8 +94,11 @@ It uses a sophisticated security concept and aims to generate fully valid HTML5 
       });
       
       editor.on("load", function() {
-        var composer = editor.composer;
-        composer.selection.selectNode(editor.composer.element.querySelector("h1"));
+        var composer = editor.composer,
+            h1 = editor.composer.element.querySelector("h1");
+        if (h1) {
+          composer.selection.selectNode(h1);
+        }
       });
     </script>
   </body>
