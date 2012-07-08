@@ -204,8 +204,12 @@
     set: function(historyEntry) {
       this.element.innerHTML = "";
       
-      while (historyEntry.firstChild) {
-        this.element.appendChild(historyEntry.firstChild);
+      var i = 0,
+          childNodes = historyEntry.childNodes,
+          length = historyEntry.childNodes.length;
+      
+      for (; i<length; i++) {
+        this.element.appendChild(childNodes[i].cloneNode(true));
       }
       
       // Restore selection
