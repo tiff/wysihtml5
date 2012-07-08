@@ -7,8 +7,9 @@
       Y_KEY               = 89,
       BACKSPACE_KEY       = 8,
       DELETE_KEY          = 46,
-      MAX_HISTORY_ENTRIES = 30,
-      CARET_PLACEHOLDER   = "_wysihtml5-caret-placeholder",
+      MAX_HISTORY_ENTRIES = 25,
+      DATA_ATTR_NODE      = "data-wysihtml5-selection-node",
+      DATA_ATTR_OFFSET    = "data-wysihtml5-selection-offset",
       UNDO_HTML           = '<span id="_wysihtml5-undo" class="_wysihtml5-temp">' + wysihtml5.INVISIBLE_SPACE + '</span>',
       REDO_HTML           = '<span id="_wysihtml5-redo" class="_wysihtml5-temp">' + wysihtml5.INVISIBLE_SPACE + '</span>',
       dom                 = wysihtml5.dom;
@@ -20,12 +21,6 @@
     }
   }
   
-  function silentRemove(element) {
-    if (element.parentNode) {
-      element.parentNode.removeChild(element);
-    }
-  }
-  
   wysihtml5.UndoManager = wysihtml5.lang.Dispatcher.extend(
     /** @scope wysihtml5.UndoManager.prototype */ {
     constructor: function(editor) {
@@ -33,10 +28,11 @@
       this.composer = editor.composer;
       this.element = this.composer.element;
       
-      var initialValue = this.composer.getValue();
-      this.history = [initialValue];
-      this.historyWithCaret = [initialValue];
-      this.position = 1;
+      this.position = 0;
+      this.historyStr = [];
+      this.historyDom = [];
+      
+      this.transact();
       
       this._observe();
     },
@@ -135,32 +131,46 @@
     },
     
     transact: function() {
-      var previousHtml  = this.history[this.position - 1],
-          currentHtml   = this.composer.getValue(),
-          doc           = this.composer.sandbox.getDocument(),
-          that          = this;
+      var previousHtml      = this.historyStr[this.position - 1],
+          currentHtml       = this.composer.getValue();
       
-      if (currentHtml == previousHtml) {
+      if (currentHtml === previousHtml) {
         return;
       }
       
-      var length = this.history.length = this.historyWithCaret.length = this.position;
+      var length = this.historyStr.length = this.historyDom.length = this.position;
       if (length > MAX_HISTORY_ENTRIES) {
-        this.history.shift();
-        this.historyWithCaret.shift();
+        this.historyStr.shift();
+        this.historyDom.shift();
         this.position--;
       }
       
       this.position++;
-          
-      this.composer.selection.executeAndRestoreSimple(function() {
-        var placeholder = doc.createElement("span");
-        placeholder.id = CARET_PLACEHOLDER;
-        that.composer.selection.insertNode(placeholder);
-        that.history.push(currentHtml);
-        that.historyWithCaret.push(that.composer.getValue());
-        silentRemove(placeholder);
-      });
+      
+      var range   = this.composer.selection.getRange(),
+          node    = range.startContainer || this.element,
+          offset  = range.startOffset    || 0,
+          element,
+          position;
+      
+      if (node.nodeType === wysihtml5.ELEMENT_NODE) {
+        element = node;
+      } else {
+        element  = node.parentNode;
+        position = this.getChildNodeIndex(element, node);
+      }
+      
+      element.setAttribute(DATA_ATTR_OFFSET, offset);
+      if (typeof(position) !== "undefined") {
+        element.setAttribute(DATA_ATTR_NODE, position);
+      }
+      
+      var clone = this.element.cloneNode(!!currentHtml);
+      this.historyDom.push(clone);
+      this.historyStr.push(currentHtml);
+      
+      element.removeAttribute(DATA_ATTR_OFFSET);
+      element.removeAttribute(DATA_ATTR_NODE);
     },
     
     undo: function() {
@@ -170,7 +180,7 @@
         return;
       }
       
-      this.set(this.historyWithCaret[--this.position - 1]);
+      this.set(this.historyDom[--this.position - 1]);
       this.editor.fire("undo:composer");
     },
     
@@ -179,7 +189,7 @@
         return;
       }
       
-      this.set(this.historyWithCaret[++this.position - 1]);
+      this.set(this.historyDom[++this.position - 1]);
       this.editor.fire("redo:composer");
     },
     
@@ -188,18 +198,53 @@
     },
     
     redoPossible: function() {
-      return this.position < this.history.length;
+      return this.position < this.historyStr.length;
     },
     
-    set: function(html) {
-      this.composer.setValue(html);
-      var placeholder = this.composer.sandbox.getDocument().getElementById(CARET_PLACEHOLDER);
-      if (placeholder) {
-        this.composer.selection.setAfter(placeholder);
-        silentRemove(placeholder);
-      } else {
-        this.editor.focus(true);
+    set: function(historyEntry) {
+      this.element.innerHTML = "";
+      
+      while (historyEntry.firstChild) {
+        this.element.appendChild(historyEntry.firstChild);
       }
+      
+      // Restore selection
+      var offset,
+          node,
+          position;
+      
+      if (historyEntry.hasAttribute(DATA_ATTR_OFFSET)) {
+        offset    = historyEntry.getAttribute(DATA_ATTR_OFFSET);
+        position  = historyEntry.getAttribute(DATA_ATTR_NODE);
+        node      = this.element;
+      } else {
+        node      = this.element.querySelector("[" + DATA_ATTR_OFFSET + "]") || this.element;
+        offset    = node.getAttribute(DATA_ATTR_OFFSET);
+        position  = node.getAttribute(DATA_ATTR_NODE);
+        node.removeAttribute(DATA_ATTR_OFFSET);
+        node.removeAttribute(DATA_ATTR_NODE);
+      }
+      
+      if (position !== null) {
+        node = this.getChildNodeByIndex(node, +position);
+      }
+      
+      this.composer.selection.set(node, offset);
+    },
+    
+    getChildNodeIndex: function(parent, child) {
+      var i           = 0,
+          childNodes  = parent.childNodes,
+          length      = childNodes.length;
+      for (; i<length; i++) {
+        if (childNodes[i] === child) {
+          return i;
+        }
+      }
+    },
+    
+    getChildNodeByIndex: function(parent, index) {
+      return parent.childNodes[index];
     }
   });
 })(wysihtml5);

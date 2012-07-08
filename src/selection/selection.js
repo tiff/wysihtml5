@@ -234,7 +234,13 @@
       try { newRange.setEnd(rangeBackup.endContainer, rangeBackup.endOffset); } catch(e2) {}
       try { this.setSelection(newRange); } catch(e3) {}
     },
-
+    
+    set: function(node, offset) {
+      var newRange = rangy.createRange(this.doc);
+      newRange.setStart(node, offset || 0);
+      this.setSelection(newRange);
+    },
+    
     /**
      * Insert html at the caret position and move the cursor after the inserted html
      *
