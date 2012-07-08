@@ -132,6 +132,34 @@
       });
     }
     
+    if (browser.hasHistoryIssue() && wysihtml5.browser.supportsSelectionModify()) {
+      dom.observe(element, "keydown", function(event) {
+        if (!event.metaKey && !event.ctrlKey) {
+          return;
+        }
+        
+        var keyCode   = event.keyCode,
+            win       = element.ownerDocument.defaultView,
+            selection = win.getSelection();
+        
+        if (keyCode === 37 || keyCode === 39) {
+          if (keyCode === 37) {
+            selection.modify("extend", "left", "lineboundary");
+            if (!event.shiftKey) {
+              selection.collapseToStart();
+            }
+          }
+          if (keyCode === 39) {
+            selection.modify("extend", "right", "lineboundary");
+            if (!event.shiftKey) {
+              selection.collapseToEnd();
+            }
+          }
+          event.preventDefault();
+        }
+      });
+    }
+    
     // --------- Shortcut logic ---------
     dom.observe(element, "keydown", function(event) {
       var keyCode  = event.keyCode,

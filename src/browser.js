@@ -91,6 +91,13 @@ wysihtml5.browser = (function() {
     hasCurrentStyleProperty: function() {
       return "currentStyle" in testElement;
     },
+    
+    /**
+     * Firefox on OSX navigates through history when hitting CMD + Arrow right/left
+     */
+    hasHistoryIssue: function() {
+      return isGecko;
+    },
 
     /**
      * Whether the browser inserts a <br> when pressing enter in a contentEditable element
