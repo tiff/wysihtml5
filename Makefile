@@ -58,6 +58,7 @@ JS_FILES = src/wysihtml5.js \
   src/commands/justifyCenter.js \
   src/commands/justifyLeft.js \
   src/commands/justifyRight.js \
+  src/commands/justifyFull.js \
   src/commands/redo.js \
   src/commands/underline.js \
   src/commands/undo.js \
