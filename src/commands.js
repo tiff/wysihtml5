@@ -78,28 +78,5 @@ wysihtml5.Commands = Base.extend(
         return false;
       }
     }
-  },
-  
-  /**
-   * Get the current command's value
-   *
-   * @param {String} command The command string which to check (eg. "formatBlock")
-   * @return {String} The command value
-   * @example
-   *    var currentBlockElement = commands.value("formatBlock");
-   */
-  value: function(command) {
-    var obj     = wysihtml5.commands[command],
-        method  = obj && obj.value;
-    if (method) {
-      return method.call(obj, this.composer, command);
-    } else {
-      try {
-        // try/catch for buggy firefox
-        return this.doc.queryCommandValue(command);
-      } catch(e) {
-        return null;
-      }
-    }
   }
 });

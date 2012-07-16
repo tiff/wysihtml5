@@ -4,8 +4,7 @@
  * Instead we set a css class
  */
 (function(wysihtml5) {
-  var undef,
-      REG_EXP = /wysiwyg-color-[0-9a-z]+/g;
+  var REG_EXP = /wysiwyg-color-[0-9a-z]+/g;
   
   wysihtml5.commands.foreColor = {
     exec: function(composer, command, color) {
@@ -14,10 +13,6 @@
 
     state: function(composer, command, color) {
       return wysihtml5.commands.formatInline.state(composer, command, "span", "wysiwyg-color-" + color, REG_EXP);
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

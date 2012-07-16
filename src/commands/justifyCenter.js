@@ -1,6 +1,5 @@
 (function(wysihtml5) {
-  var undef,
-      CLASS_NAME  = "wysiwyg-text-align-center",
+  var CLASS_NAME  = "wysiwyg-text-align-center",
       REG_EXP     = /wysiwyg-text-align-[0-9a-z]+/g;
   
   wysihtml5.commands.justifyCenter = {
@@ -10,10 +9,6 @@
 
     state: function(composer, command) {
       return wysihtml5.commands.formatBlock.state(composer, "formatBlock", null, CLASS_NAME, REG_EXP);
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

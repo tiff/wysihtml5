@@ -96,10 +96,6 @@
 
     state: function(composer, command) {
       return wysihtml5.commands.formatInline.state(composer, command, "A");
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

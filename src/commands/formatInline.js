@@ -32,8 +32,7 @@
  *      <span>ab|c</span> de|<b>fgh</b>
  */
 (function(wysihtml5) {
-  var undef,
-      // Treat <b> as <strong> and vice versa
+  var // Treat <b> as <strong> and vice versa
       ALIAS_MAPPING = {
         "strong": "b",
         "em":     "i",
@@ -87,10 +86,6 @@
       }
 
       return _getApplier(tagName, className, classRegExp).isAppliedToRange(range);
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

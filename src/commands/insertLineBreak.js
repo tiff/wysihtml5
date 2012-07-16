@@ -1,6 +1,5 @@
 (function(wysihtml5) {
-  var undef,
-      LINE_BREAK = "<br>" + (wysihtml5.browser.needsSpaceAfterLineBreak() ? " " : "");
+  var LINE_BREAK = "<br>" + (wysihtml5.browser.needsSpaceAfterLineBreak() ? " " : "");
   
   wysihtml5.commands.insertLineBreak = {
     exec: function(composer, command) {
@@ -16,10 +15,6 @@
 
     state: function() {
       return false;
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

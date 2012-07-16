@@ -1,6 +1,5 @@
 (function(wysihtml5) {
-  var undef,
-      dom                     = wysihtml5.dom,
+  var dom                     = wysihtml5.dom,
       DEFAULT_NODE_NAME       = "DIV",
       // Following elements are grouped
       // when the caret is within a H1 and the H4 is invoked, the H1 should turn into H4
@@ -217,10 +216,6 @@
         className:    className,
         classRegExp:  classRegExp
       });
-    },
-
-    value: function() {
-      return undef;
     }
   };
 })(wysihtml5);

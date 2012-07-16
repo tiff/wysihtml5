@@ -97,11 +97,6 @@
       }
 
       return imagesInSelection[0];
-    },
-
-    value: function(composer) {
-      var image = this.state(composer);
-      return image && image.src;
     }
   };
 })(wysihtml5);
