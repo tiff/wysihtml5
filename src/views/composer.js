@@ -224,6 +224,10 @@
             dom.autoLink(endContainer.parentNode);
           });
         });
+        
+        dom.observe(this.element, "blur", function() {
+          dom.autoLink(that.element);
+        });
       }
 
       // Assuming we have the following:
