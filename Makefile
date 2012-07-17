@@ -2,6 +2,8 @@ VERSION = $(shell cat version.txt)
 
 JS_OUTPUT = "dist/wysihtml5-${VERSION}.js"
 
+OPEN = $(shell which xdg-open || which gnome-open || which open)
+
 JS_FILES = src/wysihtml5.js \
   lib/rangy/rangy-core.js \
   lib/base/base.js \
@@ -90,7 +92,7 @@ minify:
 	@@echo "Done."
 
 unittest: bundle
-	@@open test/index.html
+	@@${OPEN} test/index.html
 
 clean:
 	@@git co ${JS_OUTPUT}
