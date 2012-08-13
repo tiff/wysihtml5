@@ -102,7 +102,7 @@
 
     isEmpty: function() {
       var innerHTML               = this.element.innerHTML,
-          elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, svg, video, audio, button, input, select, textarea";
+          elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, video, audio, button";
       return innerHTML === ""              || 
              innerHTML === this.CARET_HACK ||
              this.hasPlaceholderSet()      ||
@@ -180,13 +180,12 @@
       this._initAutoLinking();
       this._initObjectResizing();
       this._initUndoManager();
-
+      this._initLineBreaking();
+      
       // Simulate html5 autofocus on contentEditable element
       if (this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) {
         setTimeout(function() { that.focus(true); }, 100);
       }
-
-      wysihtml5.quirks.insertLineBreakOnReturn(this);
 
       // IE sometimes leaves a single paragraph, which can't be removed by the user
       if (!browser.clearsContentEditableCorrectly()) {
@@ -321,6 +320,37 @@
     
     _initUndoManager: function() {
       this.undoManager = new wysihtml5.UndoManager(this.parent);
+    },
+    
+    _initLineBreaking: function() {
+      if (!this.config.lineBreakTagName) {
+        return;
+      }
+      var that                              = this,
+          tagName                           = this.config.lineBreakTagName.toLowerCase(),
+          USE_NATIVE_LINE_BREAK_INSIDE_TAGS = ["LI", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
+          LIST_TAGS                         = ["UL", "OL", "MENU"];
+      
+      dom.observe(this.doc, "keydown", function(event) {
+        var keyCode = event.keyCode;
+        
+        // only when key that is about to be entered is a real key
+        if (tagName !== "br" && that.isEmpty()) {
+          var lineBreakElement = that.doc.createElement(tagName);
+          that.element.innerHTML = "";
+          that.element.appendChild(lineBreakElement);
+          that.selection.selectNode(lineBreakElement);
+          return;
+        }
+
+        if (event.shiftKey || (keyCode !== wysihtml5.ENTER_KEY && keyCode !== wysihtml5.BACKSPACE_KEY)) {
+          return;
+        }
+        
+        var element       = event.target,
+            selectedNode  = that.selection.getSelectedNode(),
+            blockElement  = dom.getParentElement(selectedNode, { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4);
+      });
     }
   });
 })(wysihtml5);

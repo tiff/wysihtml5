@@ -48,6 +48,8 @@
     composerClassName:    "wysihtml5-editor",
     // Class name to add to the body when the wysihtml5 editor is supported
     bodyClassName:        "wysihtml5-supported",
+    // Tag name that should be used for line breaks (supported & tested: <br>, <p>, <div> or any falsy value for native behavior)
+    lineBreakTagName:     "br",
     // Array (or single string) of stylesheet urls to be loaded in the editor's iframe
     stylesheets:          [],
     // Placeholder text to use, defaults to the placeholder attribute on the textarea element
