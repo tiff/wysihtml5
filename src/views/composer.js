@@ -101,11 +101,13 @@
     },
 
     isEmpty: function() {
-      var innerHTML               = this.element.innerHTML,
+      var innerHTML               = this.element.innerHTML.toLowerCase(),
           elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, video, audio, button";
-      return innerHTML === ""              || 
-             innerHTML === this.CARET_HACK ||
-             this.hasPlaceholderSet()      ||
+      return innerHTML === ""                               ||
+             innerHTML === this.CARET_HACK                  ||
+             innerHTML === "<p></p>"                        ||
+             innerHTML === "<p>" + this.CARET_HACK + "</p>" ||
+             this.hasPlaceholderSet()                       ||
              (this.getTextContent() === "" && !this.element.querySelector(elementsWithVisualValue));
     },
 
@@ -323,33 +325,63 @@
     },
     
     _initLineBreaking: function() {
-      if (!this.config.lineBreakTagName) {
-        return;
-      }
       var that                              = this,
-          tagName                           = this.config.lineBreakTagName.toLowerCase(),
           USE_NATIVE_LINE_BREAK_INSIDE_TAGS = ["LI", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
           LIST_TAGS                         = ["UL", "OL", "MENU"];
+      
+      function unwrap(selectedNode) {
+        var parentElement = dom.getParentElement(selectedNode, { nodeName: ["P", "DIV"] }, 2);
+        if (!parentElement) {
+          return;
+        }
+
+        var invisibleSpace = parentElement.ownerDocument.createTextNode(wysihtml5.INVISIBLE_SPACE);
+        dom.insert(invisibleSpace).before(parentElement);
+        dom.replaceWithChildNodes(parentElement);
+        composer.selection.selectNode(invisibleSpace);
+      }
       
       dom.observe(this.doc, "keydown", function(event) {
         var keyCode = event.keyCode;
         
-        // only when key that is about to be entered is a real key
-        if (tagName !== "br" && that.isEmpty()) {
-          var lineBreakElement = that.doc.createElement(tagName);
+        if (!that.config.useLineBreaks && that.isEmpty()) {
+          var paragraph = that.doc.createElement("P");
           that.element.innerHTML = "";
-          that.element.appendChild(lineBreakElement);
-          that.selection.selectNode(lineBreakElement);
-          return;
-        }
-
-        if (event.shiftKey || (keyCode !== wysihtml5.ENTER_KEY && keyCode !== wysihtml5.BACKSPACE_KEY)) {
+          that.element.appendChild(paragraph);
+          that.selection.selectNode(paragraph);
           return;
         }
         
-        var element       = event.target,
-            selectedNode  = that.selection.getSelectedNode(),
-            blockElement  = dom.getParentElement(selectedNode, { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4);
+        if (event.shiftKey) {
+          return;
+        }
+        
+        if (keyCode !== wysihtml5.ENTER_KEY && keyCode !== wysihtml5.BACKSPACE_KEY) {
+          return;
+        }
+        
+        var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4);
+        if (blockElement && that.config.useLineBreaks) {
+          setTimeout(function() {
+            var selectedNode = composer.selection.getSelectedNode(),
+                list;
+            if (blockElement.nodeName === "LI") {
+              if (!selectedNode) {
+                return;
+              }
+
+              list = dom.getParentElement(selectedNode, { nodeName: LIST_TAGS }, 2);
+
+              if (!list) {
+                unwrap(selectedNode);
+              }
+            }
+
+            if (keyCode === wysihtml5.ENTER_KEY && blockElement.nodeName.match(/^H[1-6]$/)) {
+              unwrap(selectedNode);
+            }
+          }, 0);
+        }
       });
     }
   });
