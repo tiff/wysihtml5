@@ -91,7 +91,7 @@ minify:
 	@@node build/minify.js ${JS_OUTPUT}
 	@@echo "Done."
 
-unittest: bundle
+unittest:
 	@@${OPEN} test/index.html
 
 clean:
