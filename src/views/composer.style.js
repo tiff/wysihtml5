@@ -108,7 +108,9 @@
         originalActiveElement = doc.querySelector(":focus"),
         textareaElement       = this.textarea.element,
         hasPlaceholder        = textareaElement.hasAttribute("placeholder"),
-        originalPlaceholder   = hasPlaceholder && textareaElement.getAttribute("placeholder");
+        originalPlaceholder   = hasPlaceholder && textareaElement.getAttribute("placeholder"),
+        originalDisplayValue  = textareaElement.style.display;
+    
     this.focusStylesHost      = this.focusStylesHost  || HOST_TEMPLATE.cloneNode(false);
     this.blurStylesHost       = this.blurStylesHost   || HOST_TEMPLATE.cloneNode(false);
   
@@ -120,72 +122,58 @@
     if (textareaElement === originalActiveElement) {
       textareaElement.blur();
     }
-  
+    
+    
+    // set textarea to display="none" to get cascaded styles via getComputedStyle
+    textareaElement.style.display = "none";
+    
     // --------- iframe styles (has to be set before editor styles, otherwise IE9 sets wrong fontFamily on blurStylesHost) ---------
     dom.copyStyles(BOX_FORMATTING).from(textareaElement).to(this.iframe).andTo(this.blurStylesHost);
-  
+    
     // --------- editor styles ---------
     dom.copyStyles(TEXT_FORMATTING).from(textareaElement).to(this.element).andTo(this.blurStylesHost);
-  
+    
     // --------- apply standard rules ---------
     dom.insertCSS(ADDITIONAL_CSS_RULES).into(this.element.ownerDocument);
-  
+    
     // --------- :focus styles ---------
     focusWithoutScrolling(textareaElement);
     dom.copyStyles(BOX_FORMATTING).from(textareaElement).to(this.focusStylesHost);
     dom.copyStyles(TEXT_FORMATTING).from(textareaElement).to(this.focusStylesHost);
-  
+    
+    // reset textarea
+    textareaElement.style.display = originalDisplayValue;
+    
+    dom.copyStyles(["display"]).from(textareaElement).to(this.iframe);
+    
     // Make sure that we don't change the display style of the iframe when copying styles oblur/onfocus
     // this is needed for when the change_view event is fired where the iframe is hidden and then
     // the blur event fires and re-displays it
     var boxFormattingStyles = wysihtml5.lang.array(BOX_FORMATTING).without(["display"]);
-  
+    
     // --------- restore focus ---------
     if (originalActiveElement) {
       originalActiveElement.focus();
     } else {
       textareaElement.blur();
     }
-  
+    
     // --------- restore placeholder ---------
     if (hasPlaceholder) {
       textareaElement.setAttribute("placeholder", originalPlaceholder);
     }
-  
-    // When copying styles, we only get the computed style which is never returned in percent unit
-    // Therefore we've to recalculate style onresize
-    if (!wysihtml5.browser.hasCurrentStyleProperty()) {
-      var winObserver = dom.observe(win, "resize", function() {
-        // Remove event listener if composer doesn't exist anymore
-        if (!dom.contains(document.documentElement, that.iframe)) {
-          winObserver.stop();
-          return;
-        }
-        var originalTextareaDisplayStyle = dom.getStyle("display").from(textareaElement),
-            originalComposerDisplayStyle = dom.getStyle("display").from(that.iframe);
-        textareaElement.style.display = "";
-        that.iframe.style.display = "none";
-        dom.copyStyles(RESIZE_STYLE)
-          .from(textareaElement)
-          .to(that.iframe)
-          .andTo(that.focusStylesHost)
-          .andTo(that.blurStylesHost);
-        that.iframe.style.display = originalComposerDisplayStyle;
-        textareaElement.style.display = originalTextareaDisplayStyle;
-      });
-    }
-  
+    
     // --------- Sync focus/blur styles ---------
     this.parent.observe("focus:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.focusStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.focusStylesHost).to(that.element);
     });
-
+    
     this.parent.observe("blur:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
     });
-  
+    
     return this;
   };
 })(wysihtml5);
