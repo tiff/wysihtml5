@@ -33,7 +33,7 @@ wysihtml5.commands.insertOrderedList = {
       // Create list
       composer.commands.exec("formatBlock", "div", tempClassName);
       tempElement = doc.querySelector("." + tempClassName);
-      isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE;
+      isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE || tempElement.innerHTML === "<br>";
       composer.selection.executeAndRestoreSimple(function() {
         list = wysihtml5.dom.convertToList(tempElement, "ol");
       });
