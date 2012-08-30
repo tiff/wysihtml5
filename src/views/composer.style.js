@@ -165,12 +165,12 @@
     }
     
     // --------- Sync focus/blur styles ---------
-    this.parent.observe("focus:composer", function() {
+    this.parent.on("focus:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.focusStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.focusStylesHost).to(that.element);
     });
     
-    this.parent.observe("blur:composer", function() {
+    this.parent.on("blur:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
     });

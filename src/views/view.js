@@ -13,8 +13,8 @@ wysihtml5.views.View = Base.extend(
   
   _observeViewChange: function() {
     var that = this;
-    this.parent.observe("beforeload", function() {
-      that.parent.observe("change_view", function(view) {
+    this.parent.on("beforeload", function() {
+      that.parent.on("change_view", function(view) {
         if (view === that.name) {
           that.parent.currentView = that;
           that.show();

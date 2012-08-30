@@ -31,11 +31,11 @@
         };
 
     editor
-      .observe("set_placeholder", set)
-      .observe("unset_placeholder", unset)
-      .observe("focus:composer", unset)
-      .observe("paste:composer", unset)
-      .observe("blur:composer", set);
+      .on("set_placeholder", set)
+      .on("unset_placeholder", unset)
+      .on("focus:composer", unset)
+      .on("paste:composer", unset)
+      .on("blur:composer", set);
 
     set();
   };

@@ -223,7 +223,7 @@
       // Only do the auto linking by ourselves when the browser doesn't support auto linking
       // OR when he supports auto linking but we were able to turn it off (IE9+)
       if (!supportsAutoLinking || (supportsAutoLinking && supportsDisablingOfAutoLinking)) {
-        this.parent.observe("newword:composer", function() {
+        this.parent.on("newword:composer", function() {
           that.selection.executeAndRestore(function(startContainer, endContainer) {
             dom.autoLink(endContainer.parentNode);
           });
@@ -330,16 +330,14 @@
       function adjust(selectedNode) {
         var parentElement = dom.getParentElement(selectedNode, { nodeName: ["P", "DIV"] }, 2);
         if (!parentElement) {
-          return;
+          that.selection.executeAndRestore(function() {
+            if (that.config.useLineBreaks) {
+              dom.replaceWithChildNodes(parentElement);
+            } else if  (parentElement.nodeName !== "P") {
+              dom.renameElement(parentElement, "p");
+            }
+          });
         }
-        
-        that.selection.executeAndRestore(function() {
-          if (that.config.useLineBreaks) {
-            dom.replaceWithChildNodes(parentElement);
-          } else if  (parentElement.nodeName !== "P") {
-            dom.renameElement(parentElement, "p");
-          }
-        });
       }
       
       dom.observe(this.doc, "keydown", function(event) {

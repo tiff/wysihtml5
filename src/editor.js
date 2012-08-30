@@ -84,7 +84,7 @@
         this._initParser();
       }
       
-      this.observe("beforeload", function() {
+      this.on("beforeload", function() {
         this.synchronizer = new wysihtml5.views.Synchronizer(this, this.textarea, this.composer);
         if (this.config.toolbar) {
           this.toolbar = new wysihtml5.toolbar.Toolbar(this, this.config.toolbar);
@@ -162,7 +162,7 @@
      *  - Observes for paste and drop
      */
     _initParser: function() {
-      this.observe("paste:composer", function() {
+      this.on("paste:composer", function() {
         var keepScrollPosition  = true,
             that                = this;
         that.composer.selection.executeAndRestore(function() {
