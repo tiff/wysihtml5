@@ -170,13 +170,6 @@
           that.parse(that.composer.element);
         }, keepScrollPosition);
       });
-      
-      this.observe("paste:textarea", function() {
-        var value   = this.textarea.getValue(),
-            newValue;
-        newValue = this.parse(value);
-        this.textarea.setValue(newValue);
-      });
     }
   });
 })(wysihtml5);
