@@ -101,14 +101,12 @@
     },
 
     isEmpty: function() {
-      var innerHTML               = this.element.innerHTML.toLowerCase(),
-          elementsWithVisualValue = "blockquote, ul, ol, img, embed, object, table, iframe, video, audio, button";
+      var innerHTML = this.element.innerHTML.toLowerCase();
       return innerHTML === ""                               ||
-             innerHTML === this.CARET_HACK                  ||
+             innerHTML === "<br>"                           ||
              innerHTML === "<p></p>"                        ||
-             innerHTML === "<p>" + this.CARET_HACK + "</p>" ||
-             this.hasPlaceholderSet()                       ||
-             (this.getTextContent() === "" && !this.element.querySelector(elementsWithVisualValue));
+             innerHTML === "<p><br></p>"                    ||
+             this.hasPlaceholderSet();
     },
 
     _initSandbox: function() {
@@ -348,7 +346,8 @@
           var paragraph = that.doc.createElement("P");
           that.element.innerHTML = "";
           that.element.appendChild(paragraph);
-          that.selection.selectNode(paragraph);
+          paragraph.innerHTML = "<br>";
+          that.selection.setBefore(paragraph.firstChild);
           return;
         }
         
@@ -360,9 +359,11 @@
           return;
         }
         
-        var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4);
+        var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4),
+            isHeadline   = blockElement && blockElement.nodeName.match(/^H[1-6]$/);
         if (blockElement && that.config.useLineBreaks) {
           setTimeout(function() {
+            // Unwrap paragraph after leaving a list or a H1-6
             var selectedNode = composer.selection.getSelectedNode(),
                 list;
             if (blockElement.nodeName === "LI") {
@@ -377,7 +378,7 @@
               }
             }
 
-            if (keyCode === wysihtml5.ENTER_KEY && blockElement.nodeName.match(/^H[1-6]$/)) {
+            if (keyCode === wysihtml5.ENTER_KEY && isHeadline) {
               unwrap(selectedNode);
             }
           }, 0);
