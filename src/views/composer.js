@@ -182,7 +182,8 @@
       this._initUndoManager();
 
       // Simulate html5 autofocus on contentEditable element
-      if (this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) {
+      // This doesn't work on IOS (5.1.1)
+      if ((this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) && !browser.isIos()) {
         setTimeout(function() { that.focus(true); }, 100);
       }
 

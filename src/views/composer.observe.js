@@ -56,26 +56,6 @@
       }
       that.parent.fire("blur").fire("blur:composer");
     });
-    
-    if (browser.isIos()) {
-      // When on iPad/iPhone/IPod after clicking outside of editor, the editor loses focus
-      // but the UI still acts as if the editor has focus (blinking caret and onscreen keyboard visible)
-      // We prevent that by focusing a temporary input element which immediately loses focus
-      dom.observe(element, "blur", function() {
-        var input = element.ownerDocument.createElement("input"),
-            originalScrollTop = document.documentElement.scrollTop || document.body.scrollTop,
-            originalScrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
-        try {
-          that.selection.insertNode(input);
-        } catch(e) {
-          element.appendChild(input);
-        }
-        input.focus();
-        input.parentNode.removeChild(input);
-        
-        window.scrollTo(originalScrollLeft, originalScrollTop);
-      });
-    }
 
     // --------- Drag & Drop logic ---------
     dom.observe(element, "dragenter", function() {
