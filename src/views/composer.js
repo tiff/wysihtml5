@@ -224,9 +224,11 @@
       // OR when he supports auto linking but we were able to turn it off (IE9+)
       if (!supportsAutoLinking || (supportsAutoLinking && supportsDisablingOfAutoLinking)) {
         this.parent.on("newword:composer", function() {
-          that.selection.executeAndRestore(function(startContainer, endContainer) {
-            dom.autoLink(endContainer.parentNode);
-          });
+          if (dom.getTextContent(that.element).match(dom.autoLink.URL_REG_EXP)) {
+            that.selection.executeAndRestore(function(startContainer, endContainer) {
+              dom.autoLink(endContainer.parentNode);
+            });
+          }
         });
         
         dom.observe(this.element, "blur", function() {
@@ -352,7 +354,6 @@
           return;
         }
         
-        // TODO: Opera makes problems with shift + Enter
         if (event.shiftKey) {
           return;
         }

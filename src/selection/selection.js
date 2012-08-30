@@ -169,12 +169,15 @@
       } catch(e3) {
         setTimeout(function() { throw e3; }, 0);
       }
-      
       caretPlaceholder = this.doc.querySelector("." + className);
       if (caretPlaceholder) {
         newRange = rangy.createRange(this.doc);
-        newRange.selectNode(caretPlaceholder);
-        newRange.deleteContents();
+        if (wysihtml5.browser.hasCaretPlaceholderIssue()) {
+          newRange.setAfter(caretPlaceholder);
+        } else {
+          newRange.selectNode(caretPlaceholder);
+          newRange.deleteContents();
+        }
         this.setSelection(newRange);
       } else {
         // fallback for when all hell breaks loose

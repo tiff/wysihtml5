@@ -335,6 +335,13 @@ wysihtml5.browser = (function() {
     
     hasUndoInContextMenu: function() {
       return isGecko || isChrome || isOpera;
+    },
+    
+    /**
+     * Opera doesn't behave properly when selecting a node and then deleting its contents
+     */
+    hasCaretPlaceholderIssue: function() {
+      return isOpera;
     }
   };
 })();
