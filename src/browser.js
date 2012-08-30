@@ -338,9 +338,12 @@ wysihtml5.browser = (function() {
     },
     
     /**
-     * Opera doesn't behave properly when selecting a node and then deleting its contents
+     * Opera sometimes doesn't insert the node at the right position when range.insertNode(someNode)
+     * is used (regardless if rangy or native)
+     * This especially happens when the caret is positioned right after a <br> because then
+     * insertNode() will insert the node right before the <br>
      */
-    hasCaretPlaceholderIssue: function() {
+    hasInsertNodeIssue: function() {
       return isOpera;
     }
   };
