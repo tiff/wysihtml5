@@ -327,16 +327,19 @@
           USE_NATIVE_LINE_BREAK_INSIDE_TAGS = ["LI", "P", "H1", "H2", "H3", "H4", "H5", "H6"],
           LIST_TAGS                         = ["UL", "OL", "MENU"];
       
-      function unwrap(selectedNode) {
+      function adjust(selectedNode) {
         var parentElement = dom.getParentElement(selectedNode, { nodeName: ["P", "DIV"] }, 2);
         if (!parentElement) {
           return;
         }
-
-        var invisibleSpace = parentElement.ownerDocument.createTextNode(wysihtml5.INVISIBLE_SPACE);
-        dom.insert(invisibleSpace).before(parentElement);
-        dom.replaceWithChildNodes(parentElement);
-        composer.selection.selectNode(invisibleSpace);
+        
+        that.selection.executeAndRestore(function() {
+          if (that.config.useLineBreaks) {
+            dom.replaceWithChildNodes(parentElement);
+          } else if  (parentElement.nodeName !== "P") {
+            dom.renameElement(parentElement, "p");
+          }
+        });
       }
       
       dom.observe(this.doc, "keydown", function(event) {
@@ -351,6 +354,7 @@
           return;
         }
         
+        // TODO: Opera makes problems with shift + Enter
         if (event.shiftKey) {
           return;
         }
@@ -361,10 +365,10 @@
         
         var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4),
             isHeadline   = blockElement && blockElement.nodeName.match(/^H[1-6]$/);
-        if (blockElement && that.config.useLineBreaks) {
+        if (blockElement) {
           setTimeout(function() {
             // Unwrap paragraph after leaving a list or a H1-6
-            var selectedNode = composer.selection.getSelectedNode(),
+            var selectedNode = that.selection.getSelectedNode(),
                 list;
             if (blockElement.nodeName === "LI") {
               if (!selectedNode) {
@@ -374,12 +378,12 @@
               list = dom.getParentElement(selectedNode, { nodeName: LIST_TAGS }, 2);
 
               if (!list) {
-                unwrap(selectedNode);
+                adjust(selectedNode);
               }
             }
 
             if (keyCode === wysihtml5.ENTER_KEY && isHeadline) {
-              unwrap(selectedNode);
+              adjust(selectedNode);
             }
           }, 0);
         }

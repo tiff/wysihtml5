@@ -38,7 +38,7 @@ wysihtml5.commands.insertOrderedList = {
         list = wysihtml5.dom.convertToList(tempElement, "ol");
       });
       if (isEmpty) {
-        composer.selection.selectNode(list.querySelector("li"));
+        composer.selection.selectNode(list.querySelector("li"), true);
       }
     }
   },
