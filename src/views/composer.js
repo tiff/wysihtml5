@@ -335,7 +335,7 @@
           that.selection.executeAndRestore(function() {
             if (that.config.useLineBreaks) {
               dom.replaceWithChildNodes(parentElement);
-            } else if  (parentElement.nodeName !== "P") {
+            } else if (parentElement.nodeName !== "P") {
               dom.renameElement(parentElement, "p");
             }
           });
@@ -349,8 +349,12 @@
           var paragraph = that.doc.createElement("P");
           that.element.innerHTML = "";
           that.element.appendChild(paragraph);
-          paragraph.innerHTML = "<br>";
-          that.selection.setBefore(paragraph.firstChild);
+          if (!browser.displaysCaretInEmptyContentEditableCorrectly()) {
+            paragraph.innerHTML = "<br>";
+            that.selection.setBefore(paragraph.firstChild);
+          } else {
+            that.selection.selectNode(paragraph);
+          }
           return;
         }
         
