@@ -329,7 +329,7 @@
       
       function adjust(selectedNode) {
         var parentElement = dom.getParentElement(selectedNode, { nodeName: ["P", "DIV"] }, 2);
-        if (!parentElement) {
+        if (parentElement) {
           that.selection.executeAndRestore(function() {
             if (that.config.useLineBreaks) {
               dom.replaceWithChildNodes(parentElement);
