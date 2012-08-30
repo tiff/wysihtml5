@@ -141,7 +141,7 @@
     composer.selection.surround(element);
     _removeLineBreakBeforeAndAfter(element);
     _removeLastChildIfLineBreak(element);
-    composer.selection.selectNode(element);
+    composer.selection.selectNode(element, wysihtml5.browser.displaysCaretInEmptyContentEditableCorrectly());
   }
 
   function _hasClasses(element) {
@@ -183,7 +183,7 @@
         });
 
         if (blockElement) {
-          composer.selection.executeAndRestoreSimple(function() {
+          composer.selection.executeAndRestore(function() {
             // Rename current block element to new block element and add class
             if (nodeName) {
               blockElement = dom.renameElement(blockElement, nodeName);

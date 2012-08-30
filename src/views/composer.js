@@ -353,7 +353,7 @@
             paragraph.innerHTML = "<br>";
             that.selection.setBefore(paragraph.firstChild);
           } else {
-            that.selection.selectNode(paragraph);
+            that.selection.selectNode(paragraph, true);
           }
           return;
         }

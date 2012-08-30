@@ -88,7 +88,7 @@ wysihtml5.browser = (function() {
      * Firefox sometimes shows a huge caret in the beginning after focusing
      */
     displaysCaretInEmptyContentEditableCorrectly: function() {
-      return !isGecko;
+      return isIE;
     },
 
     /**
