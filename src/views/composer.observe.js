@@ -40,7 +40,6 @@
       }
     }, 250);
 
-
     // --------- Focus & blur logic ---------
     dom.observe(focusBlurElement, "focus", function() {
       that.parent.fire("focus").fire("focus:composer");

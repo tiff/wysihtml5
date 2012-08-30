@@ -52,7 +52,6 @@
         wysihtml5.browser.isGecko ?
           "body.placeholder { color: graytext !important; }" : 
           "body.placeholder { color: #a9a9a9 !important; }",
-        "body[disabled]   { background-color: #eee !important; color: #999 !important; cursor: default !important; }",
         // Ensure that user see's broken images and can delete them
         "img:-moz-broken  { -moz-force-broken-image-icon: 1; height: 24px; width: 24px; }"
       ];
@@ -109,10 +108,12 @@
         textareaElement       = this.textarea.element,
         hasPlaceholder        = textareaElement.hasAttribute("placeholder"),
         originalPlaceholder   = hasPlaceholder && textareaElement.getAttribute("placeholder"),
-        originalDisplayValue  = textareaElement.style.display;
+        originalDisplayValue  = textareaElement.style.display,
+        originalDisabled      = textareaElement.disabled;
     
-    this.focusStylesHost      = this.focusStylesHost  || HOST_TEMPLATE.cloneNode(false);
-    this.blurStylesHost       = this.blurStylesHost   || HOST_TEMPLATE.cloneNode(false);
+    this.focusStylesHost      = HOST_TEMPLATE.cloneNode(false);
+    this.blurStylesHost       = HOST_TEMPLATE.cloneNode(false);
+    this.disabledStylesHost   = HOST_TEMPLATE.cloneNode(false);
   
     // Remove placeholder before copying (as the placeholder has an affect on the computed style)
     if (hasPlaceholder) {
@@ -123,6 +124,8 @@
       textareaElement.blur();
     }
     
+    // enable for copying styles
+    textareaElement.disabled = false;
     
     // set textarea to display="none" to get cascaded styles via getComputedStyle
     textareaElement.style.display = "none";
@@ -135,6 +138,12 @@
     
     // --------- apply standard rules ---------
     dom.insertCSS(ADDITIONAL_CSS_RULES).into(this.element.ownerDocument);
+    
+    // --------- :disabled styles ---------
+    textareaElement.disabled = true;
+    dom.copyStyles(BOX_FORMATTING).from(textareaElement).to(this.disabledStylesHost);
+    dom.copyStyles(TEXT_FORMATTING).from(textareaElement).to(this.disabledStylesHost);
+    textareaElement.disabled = originalDisabled;
     
     // --------- :focus styles ---------
     focusWithoutScrolling(textareaElement);
@@ -170,6 +179,16 @@
     });
     
     this.parent.observe("blur:composer", function() {
+      dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
+      dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
+    });
+    
+    this.parent.observe("disable:composer", function() {
+      dom.copyStyles(boxFormattingStyles) .from(that.disabledStylesHost).to(that.iframe);
+      dom.copyStyles(TEXT_FORMATTING)     .from(that.disabledStylesHost).to(that.element);
+    });
+    
+    this.parent.observe("enable:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
     });
