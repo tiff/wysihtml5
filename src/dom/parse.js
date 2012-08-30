@@ -110,9 +110,10 @@ wysihtml5.dom.parse = (function() {
     var oldNodeType     = oldNode.nodeType,
         oldChilds       = oldNode.childNodes,
         oldChildsLength = oldChilds.length,
-        newNode,
         method          = NODE_TYPE_MAPPING[oldNodeType],
-        i               = 0;
+        i               = 0,
+        newNode,
+        newChild;
     
     newNode = method && method(oldNode);
     
