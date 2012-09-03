@@ -37,10 +37,11 @@ header {
   display: block;
   border-radius: 4px;
   width: 810px;
-  background: #eee;
+  background: #f6f6f6;
   position: relative;
   z-index: 1;
   text-align: center;
+  border: 1px solid #ddd\9; /* IE 8 and below */
   background-image: linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
   background-image: -o-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
   background-image: -moz-linear-gradient(bottom, rgb(238,238,238) 0%, rgb(255,255,255) 100%);
@@ -70,9 +71,9 @@ header {
   width: 68px;
 }
 
-[data-wysihtml5-command]::after,
-[data-wysihtml5-action]::after,
-.fore-color::after {
+[data-wysihtml5-command]:after,
+[data-wysihtml5-action]:after,
+.fore-color:after {
   content: "";
   background-image: url(../img/spr_toolbar_icons_r1.png);
   background-repeat: no-repeat;
@@ -93,47 +94,47 @@ header {
   background-image: -ms-linear-gradient(bottom, rgb(229,240,226) 0%, rgb(255,255,255) 100%);
 }
 
-[data-wysihtml5-command="bold"]::after {
+[data-wysihtml5-command="bold"]:after {
   background-position: 24px center;
 }
 
-[data-wysihtml5-command="italic"]::after {
+[data-wysihtml5-command="italic"]:after {
   background-position: -48px center;
 }
 
-[data-wysihtml5-command="insertUnorderedList"]::after {
+[data-wysihtml5-command="insertUnorderedList"]:after {
   background-position: -115px center;
 }
 
-[data-wysihtml5-command="insertOrderedList"]::after {
+[data-wysihtml5-command="insertOrderedList"]:after {
   background-position: -197px center;
 }
 
-[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]::after {
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h1"]:after {
   background-position: -344px center;
 }
 
-[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]::after {
+[data-wysihtml5-command="formatBlock"][data-wysihtml5-command-value="h2"]:after {
   background-position: -428px center;
 }
 
-[data-wysihtml5-command="createLink"]::after {
+[data-wysihtml5-command="createLink"]:after {
   background-position: -271px center;
 }
 
-[data-wysihtml5-command="insertImage"]::after {
+[data-wysihtml5-command="insertImage"]:after {
   background-position: -513px center;
 }
 
-.fore-color::after {
+.fore-color:after {
   background-position: -741px center;
 }
 
-[data-wysihtml5-command="insertSpeech"]::after {
+[data-wysihtml5-command="insertSpeech"]:after {
   background-position: -596px center;
 }
 
-[data-wysihtml5-action="change_view"]::after {
+[data-wysihtml5-action="change_view"]:after {
   background-position: -670px center;
 }
 
@@ -158,7 +159,7 @@ header {
   height: 15px;
 }
 
-.fore-color li::after {
+.fore-color li:after {
   display: none;
 }
 
