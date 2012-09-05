@@ -366,13 +366,14 @@
           return;
         }
         
-        var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4),
-            isHeadline   = blockElement && blockElement.nodeName.match(/^H[1-6]$/);
+        var blockElement = dom.getParentElement(that.selection.getSelectedNode(), { nodeName: USE_NATIVE_LINE_BREAK_INSIDE_TAGS }, 4);
         if (blockElement) {
           setTimeout(function() {
             // Unwrap paragraph after leaving a list or a H1-6
             var selectedNode = that.selection.getSelectedNode(),
+                isHeadline,
                 list;
+            
             if (blockElement.nodeName === "LI") {
               if (!selectedNode) {
                 return;
@@ -385,7 +386,7 @@
               }
             }
 
-            if (keyCode === wysihtml5.ENTER_KEY && isHeadline) {
+            if (keyCode === wysihtml5.ENTER_KEY && blockElement.nodeName.match(/^H[1-6]$/)) {
               adjust(selectedNode);
             }
           }, 0);
