@@ -19,7 +19,7 @@ wysihtml5.commands.insertUnorderedList = {
       // becomes:
       // foo<br>bar<br>
       composer.selection.executeAndRestoreSimple(function() {
-        wysihtml5.dom.resolveList(list);
+        wysihtml5.dom.resolveList(list, composer.config.useLineBreaks);
       });
     } else if (otherList) {
       // Turn an ordered list into an unordered list

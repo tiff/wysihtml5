@@ -102,10 +102,10 @@
 
     isEmpty: function() {
       var innerHTML = this.element.innerHTML.toLowerCase();
-      return innerHTML === ""                               ||
-             innerHTML === "<br>"                           ||
-             innerHTML === "<p></p>"                        ||
-             innerHTML === "<p><br></p>"                    ||
+      return innerHTML === ""            ||
+             innerHTML === "<br>"        ||
+             innerHTML === "<p></p>"     ||
+             innerHTML === "<p><br></p>" ||
              this.hasPlaceholderSet();
     },
 
@@ -190,10 +190,6 @@
       // IE sometimes leaves a single paragraph, which can't be removed by the user
       if (!browser.clearsContentEditableCorrectly()) {
         wysihtml5.quirks.ensureProperClearing(this);
-      }
-
-      if (!browser.clearsListsInContentEditableCorrectly()) {
-        wysihtml5.quirks.ensureProperClearingOfLists(this);
       }
 
       // Set up a sync that makes sure that textarea and editor have the same content
