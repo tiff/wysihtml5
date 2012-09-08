@@ -8,7 +8,7 @@ wysihtml5.commands.insertOrderedList = {
         isEmpty,
         tempElement;
     
-    if (composer.commands.support(command)) {
+    if (!list && !otherList && composer.commands.support(command)) {
       doc.execCommand(command, false, null);
       return;
     }
@@ -18,7 +18,7 @@ wysihtml5.commands.insertOrderedList = {
       // <ol><li>foo</li><li>bar</li></ol>
       // becomes:
       // foo<br>bar<br>
-      composer.selection.executeAndRestoreSimple(function() {
+      composer.selection.executeAndRestore(function() {
         wysihtml5.dom.resolveList(list, composer.config.useLineBreaks);
       });
     } else if (otherList) {
@@ -26,7 +26,7 @@ wysihtml5.commands.insertOrderedList = {
       // <ul><li>foo</li><li>bar</li></ul>
       // becomes:
       // <ol><li>foo</li><li>bar</li></ol>
-      composer.selection.executeAndRestoreSimple(function() {
+      composer.selection.executeAndRestore(function() {
         wysihtml5.dom.renameElement(otherList, "ol");
       });
     } else {
@@ -34,7 +34,7 @@ wysihtml5.commands.insertOrderedList = {
       composer.commands.exec("formatBlock", "div", tempClassName);
       tempElement = doc.querySelector("." + tempClassName);
       isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE || tempElement.innerHTML === "<br>";
-      composer.selection.executeAndRestoreSimple(function() {
+      composer.selection.executeAndRestore(function() {
         list = wysihtml5.dom.convertToList(tempElement, "ol");
       });
       if (isEmpty) {
