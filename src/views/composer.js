@@ -342,21 +342,24 @@
         }
       }
       
+      if (!this.config.useLineBreaks) {
+        dom.observe(this.element, ["focus", "keydown"], function() {
+          if (that.isEmpty()) {
+            var paragraph = that.doc.createElement("P");
+            that.element.innerHTML = "";
+            that.element.appendChild(paragraph);
+            if (!browser.displaysCaretInEmptyContentEditableCorrectly()) {
+              paragraph.innerHTML = "<br>";
+              that.selection.setBefore(paragraph.firstChild);
+            } else {
+              that.selection.selectNode(paragraph, true);
+            }
+          }
+        });
+      }
+      
       dom.observe(this.doc, "keydown", function(event) {
         var keyCode = event.keyCode;
-        
-        if (!that.config.useLineBreaks && that.isEmpty()) {
-          var paragraph = that.doc.createElement("P");
-          that.element.innerHTML = "";
-          that.element.appendChild(paragraph);
-          if (!browser.displaysCaretInEmptyContentEditableCorrectly()) {
-            paragraph.innerHTML = "<br>";
-            that.selection.setBefore(paragraph.firstChild);
-          } else {
-            that.selection.selectNode(paragraph, true);
-          }
-          return;
-        }
         
         if (event.shiftKey) {
           return;
@@ -390,6 +393,12 @@
               adjust(selectedNode);
             }
           }, 0);
+          return;
+        }
+        
+        if (that.config.useLineBreaks && keyCode === wysihtml5.ENTER_KEY && !wysihtml5.browser.insertsLineBreaksOnReturn()) {
+          that.commands.exec("insertLineBreak");
+          event.preventDefault();
         }
       });
     }
