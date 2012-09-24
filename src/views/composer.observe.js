@@ -146,7 +146,24 @@
         event.preventDefault();
       }
     });
+    
+    // --------- IE 8+9 focus the editor when the iframe is clicked (without actually firing the 'focus' event on the <body>) ---------
+    if (browser.hasIframeFocusIssue()) {
+      dom.observe(this.iframe, "focus", function() {
+        setTimeout(function() {
+          if (that.doc.querySelector(":focus") !== that.element) {
+            that.focus();
+          }
+        }, 0);
+      });
 
+      dom.observe(this.element, "blur", function() {
+        setTimeout(function() {
+          that.selection.getSelection().removeAllRanges();
+        }, 0);
+      });
+    }
+    
     // --------- Show url in tooltip when hovering links or images ---------
     var titlePrefixes = {
       IMG: "Image: ",

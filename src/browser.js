@@ -337,6 +337,13 @@ wysihtml5.browser = (function() {
      */
     hasInsertNodeIssue: function() {
       return isOpera;
+    },
+    
+    /**
+     * IE 8+9 don't fire the focus event of the <body> when the iframe gets focused (even though the caret gets set into the <body>)
+     */
+    hasIframeFocusIssue: function() {
+      return isIE;
     }
   };
 })();
