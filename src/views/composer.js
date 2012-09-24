@@ -141,32 +141,33 @@
       this.element            = this.doc.body;
       this.textarea           = this.parent.textarea;
       this.element.innerHTML  = this.textarea.getValue(true);
-      this.enable();
       
       // Make sure our selection handler is ready
       this.selection = new wysihtml5.Selection(this.parent);
       
       // Make sure commands dispatcher is ready
       this.commands  = new wysihtml5.Commands(this.parent);
-
+      
       dom.copyAttributes([
         "className", "spellcheck", "title", "lang", "dir", "accessKey"
       ]).from(this.textarea.element).to(this.element);
       
       dom.addClass(this.element, this.config.composerClassName);
-
-      // Make the editor look like the original textarea, by syncing styles
+      // 
+      // // Make the editor look like the original textarea, by syncing styles
       if (this.config.style) {
         this.style();
       }
-
+      
       this.observe();
-
+      
       var name = this.config.name;
       if (name) {
         dom.addClass(this.element, name);
         dom.addClass(this.iframe, name);
       }
+      
+      this.enable();
       
       if (this.textarea.element.disabled) {
         this.disable();
@@ -182,33 +183,33 @@
       
       // Make sure that the browser avoids using inline styles whenever possible
       this.commands.exec("styleWithCSS", false);
-
+      
       this._initAutoLinking();
       this._initObjectResizing();
       this._initUndoManager();
-
+      
       // Simulate html5 autofocus on contentEditable element
       // This doesn't work on IOS (5.1.1)
       if ((this.textarea.element.hasAttribute("autofocus") || document.querySelector(":focus") == this.textarea.element) && !browser.isIos()) {
         setTimeout(function() { that.focus(true); }, 100);
       }
-
+      
       wysihtml5.quirks.insertLineBreakOnReturn(this);
-
+      
       // IE sometimes leaves a single paragraph, which can't be removed by the user
       if (!browser.clearsContentEditableCorrectly()) {
         wysihtml5.quirks.ensureProperClearing(this);
       }
-
+      
       if (!browser.clearsListsInContentEditableCorrectly()) {
         wysihtml5.quirks.ensureProperClearingOfLists(this);
       }
-
+      
       // Set up a sync that makes sure that textarea and editor have the same content
       if (this.initSync && this.config.sync) {
         this.initSync();
       }
-
+      
       // Okay hide the textarea, we are ready to go
       this.textarea.hide();
 
@@ -289,40 +290,37 @@
     },
 
     _initObjectResizing: function() {
-      var properties        = ["width", "height"],
-          propertiesLength  = properties.length,
-          element           = this.element,
-          adoptStyles       = function(event) {
-            var target = event.target || event.srcElement,
-                style  = target.style,
-                i      = 0,
-                property;
-            
-            if (target.nodeName !== "IMG") {
-              return;
-            }
-            
-            for (; i<propertiesLength; i++) {
-              property = properties[i];
-              if (style[property]) {
-                target.setAttribute(property, parseInt(style[property], 10));
-                style[property] = "";
-              }
-            }
-            
-            // After resizing IE sometimes forgets to remove the old resize handles
-            wysihtml5.quirks.redraw(element);
-          };
-      
       this.commands.exec("enableObjectResizing", true);
       
       // IE sets inline styles after resizing objects
       // The following lines make sure that the width/height css properties
       // are copied over to the width/height attributes
       if (browser.supportsEvent("resizeend")) {
-        dom.observe(element, "resizeend", adoptStyles);
-      } else {
-        dom.observe(element, "DOMAttrModified", adoptStyles);
+        var properties        = ["width", "height"],
+            propertiesLength  = properties.length,
+            element           = this.element;
+        
+        dom.observe(element, "resizeend", function(event) {
+          var target = event.target || event.srcElement,
+              style  = target.style,
+              i      = 0,
+              property;
+          
+          if (target.nodeName !== "IMG") {
+            return;
+          }
+          
+          for (; i<propertiesLength; i++) {
+            property = properties[i];
+            if (style[property]) {
+              target.setAttribute(property, parseInt(style[property], 10));
+              style[property] = "";
+            }
+          }
+          
+          // After resizing IE sometimes forgets to remove the old resize handles
+          wysihtml5.quirks.redraw(element);
+        });
       }
     },
     
