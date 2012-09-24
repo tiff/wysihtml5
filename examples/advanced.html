@@ -91,7 +91,6 @@
     <a data-wysihtml5-command="insertImage">insert image</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1">h1</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2">h2</a> |
-    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p">p</a> |
     <a data-wysihtml5-command="insertUnorderedList">insertUnorderedList</a> |
     <a data-wysihtml5-command="insertOrderedList">insertOrderedList</a> |
     <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a> |
@@ -142,8 +141,7 @@
   var editor = new wysihtml5.Editor("textarea", {
     toolbar:        "toolbar",
     stylesheets:    "css/stylesheet.css",
-    parserRules:    wysihtml5ParserRules,
-    useLineBreaks:  false
+    parserRules:    wysihtml5ParserRules
   });
   
   var log = document.getElementById("log");
