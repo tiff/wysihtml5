@@ -21,7 +21,7 @@ test("Basic tests for UL", function() {
   
   this.equal(
     this.convertToList("<span></span>", "ul"),
-    "<ul></ul>"
+    "<ul><li></li></ul>"
   );
   
   this.equal(
@@ -63,7 +63,7 @@ test("Basic tests for OL", function() {
   
   this.equal(
     this.convertToList("<span></span>", "ol"),
-    "<ol></ol>"
+    "<ol><li></li></ol>"
   );
   
   this.equal(
