@@ -93,6 +93,10 @@ wysihtml5.dom.convertToList = (function() {
       currentListItem.appendChild(childNode);
     }
     
+    if (childNodes.length === 0) {
+      _createListItem(doc, list);
+    }
+    
     element.parentNode.replaceChild(list, element);
     return list;
   }

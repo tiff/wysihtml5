@@ -75,7 +75,7 @@
       }
     });
 
-    this.parent.observe("paste:composer", function() {
+    this.parent.on("paste:composer", function() {
       setTimeout(function() { that.parent.fire("newword:composer"); }, 0);
     });
 

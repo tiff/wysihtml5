@@ -34,8 +34,8 @@
     element.appendChild(lineBreak);
   }
   
-  function resolveList(list) {
-    if (list.nodeName !== "MENU" && list.nodeName !== "UL" && list.nodeName !== "OL") {
+  function resolveList(list, useLineBreaks) {
+    if (!list.nodeName.match(/^(MENU|UL|OL)$/)) {
       return;
     }
     
@@ -46,26 +46,46 @@
         lastChild,
         isLastChild,
         shouldAppendLineBreak,
+        paragraph,
         listItem;
     
-    if (previousSibling && !_isBlockElement(previousSibling)) {
-      _appendLineBreak(fragment);
-    }
-    
-    while (listItem = list.firstChild) {
-      lastChild = listItem.lastChild;
-      while (firstChild = listItem.firstChild) {
-        isLastChild           = firstChild === lastChild;
-        // This needs to be done before appending it to the fragment, as it otherwise will loose style information
-        shouldAppendLineBreak = isLastChild && !_isBlockElement(firstChild) && !_isLineBreak(firstChild);
-        fragment.appendChild(firstChild);
-        if (shouldAppendLineBreak) {
-          _appendLineBreak(fragment);
-        }
+    if (useLineBreaks) {
+      // Insert line break if list is after a non-block element
+      if (previousSibling && !_isBlockElement(previousSibling)) {
+        _appendLineBreak(fragment);
       }
-      
-      listItem.parentNode.removeChild(listItem);
+
+      while (listItem = (list.firstElementChild || list.firstChild)) {
+        lastChild = listItem.lastChild;
+        while (firstChild = listItem.firstChild) {
+          isLastChild           = firstChild === lastChild;
+          // This needs to be done before appending it to the fragment, as it otherwise will lose style information
+          shouldAppendLineBreak = isLastChild && !_isBlockElement(firstChild) && !_isLineBreak(firstChild);
+          fragment.appendChild(firstChild);
+          if (shouldAppendLineBreak) {
+            _appendLineBreak(fragment);
+          }
+        }
+        
+        listItem.parentNode.removeChild(listItem);
+      }
+    } else {
+      while (listItem = (list.firstElementChild || list.firstChild)) {
+        if (listItem.querySelector && listItem.querySelector("div, p, ul, ol, menu, blockquote, h1, h2, h3, h4, h5, h6")) {
+          while (firstChild = listItem.firstChild) {
+            fragment.appendChild(firstChild);
+          }
+        } else {
+          paragraph = doc.createElement("p");
+          while (firstChild = listItem.firstChild) {
+            paragraph.appendChild(firstChild);
+          }
+          fragment.appendChild(paragraph);
+        }
+        listItem.parentNode.removeChild(listItem);
+      }
     }
+
     list.parentNode.replaceChild(fragment, list);
   }
   

@@ -88,7 +88,7 @@ wysihtml5.browser = (function() {
      * Firefox sometimes shows a huge caret in the beginning after focusing
      */
     displaysCaretInEmptyContentEditableCorrectly: function() {
-      return !isGecko;
+      return isIE;
     },
 
     /**
@@ -167,8 +167,8 @@ wysihtml5.browser = (function() {
          // When inserting unordered or ordered lists in Firefox, Chrome or Safari, the current selection or line gets
          // converted into a list (<ul><li>...</li></ul>, <ol><li>...</li></ol>)
          // IE and Opera act a bit different here as they convert the entire content of the current block element into a list
-        "insertUnorderedList":  isIE || isOpera || isWebKit,
-        "insertOrderedList":    isIE || isOpera || isWebKit
+        "insertUnorderedList":  isIE || isWebKit,
+        "insertOrderedList":    isIE || isWebKit
       };
       
       // Firefox throws errors for queryCommandSupported, so we have to build up our own object of supported commands
@@ -238,14 +238,6 @@ wysihtml5.browser = (function() {
      */
     canSelectImagesInContentEditable: function() {
       return isGecko || isIE || isOpera;
-    },
-
-    /**
-     * When the caret is in an empty list (<ul><li>|</li></ul>) which is the first child in an contentEditable container
-     * pressing backspace doesn't remove the entire list as done in other browsers
-     */
-    clearsListsInContentEditableCorrectly: function() {
-      return isGecko || isIE || isWebKit;
     },
 
     /**
@@ -335,6 +327,16 @@ wysihtml5.browser = (function() {
     
     hasUndoInContextMenu: function() {
       return isGecko || isChrome || isOpera;
+    },
+    
+    /**
+     * Opera sometimes doesn't insert the node at the right position when range.insertNode(someNode)
+     * is used (regardless if rangy or native)
+     * This especially happens when the caret is positioned right after a <br> because then
+     * insertNode() will insert the node right before the <br>
+     */
+    hasInsertNodeIssue: function() {
+      return isOpera;
     }
   };
 })();

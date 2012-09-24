@@ -38,7 +38,7 @@
   
   #toolbar,
   textarea {
-    width: 900px;
+    width: 920px;
     padding: 5px;
     -webkit-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -91,6 +91,7 @@
     <a data-wysihtml5-command="insertImage">insert image</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1">h1</a> |
     <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2">h2</a> |
+    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p">p</a> |
     <a data-wysihtml5-command="insertUnorderedList">insertUnorderedList</a> |
     <a data-wysihtml5-command="insertOrderedList">insertOrderedList</a> |
     <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a> |
@@ -139,9 +140,10 @@
 <script src="../dist/wysihtml5-0.3.0.js"></script>
 <script>
   var editor = new wysihtml5.Editor("textarea", {
-    toolbar:      "toolbar",
-    stylesheets:  "css/stylesheet.css",
-    parserRules:  wysihtml5ParserRules
+    toolbar:        "toolbar",
+    stylesheets:    "css/stylesheet.css",
+    parserRules:    wysihtml5ParserRules,
+    useLineBreaks:  false
   });
   
   var log = document.getElementById("log");

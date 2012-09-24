@@ -46,14 +46,15 @@
         "top", "left", "right", "bottom"
       ],
       ADDITIONAL_CSS_RULES = [
-        "html             { height: 100%; }",
-        "body             { min-height: 100%; padding: 0; margin: 0; margin-top: -1px; padding-top: 1px; }",
-        "._wysihtml5-temp { display: none; }",
+        "html                 { height: 100%; }",
+        "body                 { min-height: 100%; padding: 0; margin: 0; margin-top: -1px; padding-top: 1px; }",
+        "body > p:first-child { margin-top: 0; }",
+        "._wysihtml5-temp     { display: none; }",
         wysihtml5.browser.isGecko ?
           "body.placeholder { color: graytext !important; }" : 
           "body.placeholder { color: #a9a9a9 !important; }",
         // Ensure that user see's broken images and can delete them
-        "img:-moz-broken  { -moz-force-broken-image-icon: 1; height: 24px; width: 24px; }"
+        "img:-moz-broken      { -moz-force-broken-image-icon: 1; height: 24px; width: 24px; }"
       ];
   
   /**
@@ -173,12 +174,12 @@
     }
     
     // --------- Sync focus/blur styles ---------
-    this.parent.observe("focus:composer", function() {
+    this.parent.on("focus:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.focusStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.focusStylesHost).to(that.element);
     });
     
-    this.parent.observe("blur:composer", function() {
+    this.parent.on("blur:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
     });

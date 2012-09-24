@@ -79,13 +79,13 @@
       if (dialogElement) {
         dialog = new wysihtml5.toolbar.Dialog(link, dialogElement);
 
-        dialog.observe("show", function() {
+        dialog.on("show", function() {
           caretBookmark = that.composer.selection.getBookmark();
 
           that.editor.fire("show:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
         });
 
-        dialog.observe("save", function(attributes) {
+        dialog.on("save", function(attributes) {
           if (caretBookmark) {
             that.composer.selection.setBookmark(caretBookmark);
           }
@@ -94,7 +94,7 @@
           that.editor.fire("save:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
         });
 
-        dialog.observe("cancel", function() {
+        dialog.on("cancel", function() {
           that.editor.focus(false);
           that.editor.fire("cancel:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
         });
@@ -178,21 +178,21 @@
         event.preventDefault();
       });
 
-      editor.observe("focus:composer", function() {
+      editor.on("focus:composer", function() {
         that.bookmark = null;
         clearInterval(that.interval);
         that.interval = setInterval(function() { that._updateLinkStates(); }, 500);
       });
 
-      editor.observe("blur:composer", function() {
+      editor.on("blur:composer", function() {
         clearInterval(that.interval);
       });
 
-      editor.observe("destroy:composer", function() {
+      editor.on("destroy:composer", function() {
         clearInterval(that.interval);
       });
 
-      editor.observe("change_view", function(currentView) {
+      editor.on("change_view", function(currentView) {
         // Set timeout needed in order to let the blur event fire first
         setTimeout(function() {
           that.commandsDisabled = (currentView !== "composer");

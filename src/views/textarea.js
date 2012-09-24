@@ -52,7 +52,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
          */
         events = wysihtml5.browser.supportsEvent("focusin") ? ["focusin", "focusout", "change"] : ["focus", "blur", "change"];
     
-    parent.observe("beforeload", function() {
+    parent.on("beforeload", function() {
       wysihtml5.dom.observe(element, events, function(event) {
         var eventName = eventMapping[event.type] || event.type;
         parent.fire(eventName).fire(eventName + ":textarea");
