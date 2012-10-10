@@ -142,7 +142,6 @@ wysihtml5.dom.parse = (function() {
   function _handleElement(oldNode) {
     var rule,
         newNode,
-        endTag,
         tagRules    = currentRules.tags,
         nodeName    = oldNode.nodeName.toLowerCase(),
         scopeName   = oldNode.scopeName;

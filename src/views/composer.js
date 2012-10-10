@@ -375,7 +375,6 @@
           setTimeout(function() {
             // Unwrap paragraph after leaving a list or a H1-6
             var selectedNode = that.selection.getSelectedNode(),
-                isHeadline,
                 list;
             
             if (blockElement.nodeName === "LI") {

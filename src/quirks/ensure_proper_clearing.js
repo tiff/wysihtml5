@@ -6,7 +6,7 @@
  *    wysihtml5.quirks.ensureProperClearing(myContentEditableElement);
  */
 wysihtml5.quirks.ensureProperClearing = (function() {
-  var clearIfNecessary = function(event) {
+  var clearIfNecessary = function() {
     var element = this;
     setTimeout(function() {
       var innerHTML = element.innerHTML.toLowerCase();

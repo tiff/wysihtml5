@@ -364,7 +364,6 @@
     _selectLine_MSIE: function() {
       var range       = this.doc.selection.createRange(),
           rangeTop    = range.boundingTop,
-          rangeHeight = range.boundingHeight,
           scrollWidth = this.doc.body.scrollWidth,
           rangeBottom,
           rangeEnd,

@@ -61,7 +61,7 @@
             event.stopPropagation();
           };
 
-      dom.observe(that.link, "click", function(event) {
+      dom.observe(that.link, "click", function() {
         if (dom.hasClass(that.link, CLASS_NAME_OPENED)) {
           setTimeout(function() { that.hide(); }, 0);
         }

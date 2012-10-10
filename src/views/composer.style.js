@@ -38,13 +38,6 @@
         "-webkit-border-top-left-radius", "-moz-border-radius-topleft", "border-top-left-radius",
         "width", "height"
       ],
-      /**
-       * Styles to sync while the window gets resized
-       */
-      RESIZE_STYLE = [
-        "width", "height",
-        "top", "left", "right", "bottom"
-      ],
       ADDITIONAL_CSS_RULES = [
         "html                 { height: 100%; }",
         "body                 { height: 100%; padding: 1px 0 0 0; margin: -1px 0 0 0; }",

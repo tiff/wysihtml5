@@ -61,7 +61,7 @@
       that.parent.fire("unset_placeholder");
     });
 
-    dom.observe(element, pasteEvents, function(event) {
+    dom.observe(element, pasteEvents, function() {
       setTimeout(function() {
         that.parent.fire("paste").fire("paste:composer");
       }, 0);

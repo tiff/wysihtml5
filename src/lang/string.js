@@ -35,7 +35,7 @@
           by: function(replace) {
             return str.split(search).join(replace);
           }
-        }
+        };
       }
     };
   };

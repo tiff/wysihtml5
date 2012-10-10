@@ -133,14 +133,12 @@
 
     execAction: function(action) {
       var editor = this.editor;
-      switch(action) {
-        case "change_view":
-          if (editor.currentView === editor.textarea) {
-            editor.fire("change_view", "composer");
-          } else {
-            editor.fire("change_view", "textarea");
-          }
-          break;
+      if (action === "change_view") {
+        if (editor.currentView === editor.textarea) {
+          editor.fire("change_view", "composer");
+        } else {
+          editor.fire("change_view", "textarea");
+        }
       }
     },
 
@@ -207,8 +205,7 @@
     },
 
     _updateLinkStates: function() {
-      var element           = this.composer.element,
-          commandMapping    = this.commandMapping,
+      var commandMapping    = this.commandMapping,
           actionMapping     = this.actionMapping,
           i,
           state,

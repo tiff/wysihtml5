@@ -9,6 +9,6 @@
           element.setAttribute(mapping[i] || i, attributes[i]);
         }
       }
-    }
+    };
   };
 })();

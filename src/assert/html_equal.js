@@ -35,27 +35,6 @@ wysihtml5.assert.htmlEqual = (function() {
   })();
   
   /**
-   * When setting attributes via DOM API (setAttribute, etc.)
-   * Firefox reorders them randomly when read via innerHTML, which makes comparing such strings
-   * with expected strings a pain in the arse
-   * Issue: https://bugzilla.mozilla.org/show_bug.cgi?id=238686
-   */
-  var REORDERS_ATTRIBUTES = (function() {
-    var img = document.createElement("img"),
-        parsedActualHtml,
-        parsedExpectedHtml;
-    img.setAttribute("alt", "foo");
-    img.setAttribute("border", "1");
-    img.setAttribute("src", "foo.gif");
-    htmlHost.innerHTML = "";
-    htmlHost.appendChild(img);
-    parsedActualHtml = htmlHost.innerHTML;
-    htmlHost.innerHTML = '<img alt="foo" border="1" src="foo.gif">';
-    parsedExpectedHtml = htmlHost.innerHTML;
-    return parsedExpectedHtml != parsedActualHtml;
-  })();
-  
-  /**
    * Browsers don't preserve original attribute order
    * In order to be able to compare html we simply split both, the expected and actual html at spaces and element-ends,
    * sort them alphabetically and put them back together
