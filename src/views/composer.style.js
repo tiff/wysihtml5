@@ -103,7 +103,8 @@
         hasPlaceholder        = textareaElement.hasAttribute("placeholder"),
         originalPlaceholder   = hasPlaceholder && textareaElement.getAttribute("placeholder"),
         originalDisplayValue  = textareaElement.style.display,
-        originalDisabled      = textareaElement.disabled;
+        originalDisabled      = textareaElement.disabled,
+        displayValueForCopying;
     
     this.focusStylesHost      = HOST_TEMPLATE.cloneNode(false);
     this.blurStylesHost       = HOST_TEMPLATE.cloneNode(false);
@@ -122,7 +123,12 @@
     textareaElement.disabled = false;
     
     // set textarea to display="none" to get cascaded styles via getComputedStyle
-    textareaElement.style.display = "none";
+    textareaElement.style.display = displayValueForCopying = "none";
+    
+    if ((textareaElement.getAttribute("rows") && dom.getStyle("height").from(textareaElement) === "auto") ||
+        (textareaElement.getAttribute("cols") && dom.getStyle("width").from(textareaElement) === "auto")) {
+      textareaElement.style.display = displayValueForCopying = originalDisplayValue;
+    }
     
     // --------- iframe styles (has to be set before editor styles, otherwise IE9 sets wrong fontFamily on blurStylesHost) ---------
     dom.copyStyles(BOX_FORMATTING).from(textareaElement).to(this.iframe).andTo(this.blurStylesHost);
@@ -140,7 +146,10 @@
     textareaElement.disabled = originalDisabled;
     
     // --------- :focus styles ---------
+    textareaElement.style.display = originalDisplayValue;
     focusWithoutScrolling(textareaElement);
+    textareaElement.style.display = displayValueForCopying;
+    
     dom.copyStyles(BOX_FORMATTING).from(textareaElement).to(this.focusStylesHost);
     dom.copyStyles(TEXT_FORMATTING).from(textareaElement).to(this.focusStylesHost);
     

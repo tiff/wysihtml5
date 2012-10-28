@@ -43,7 +43,7 @@ wysihtml5.dom.getStyle = (function() {
         // Opera supports both, currentStyle and window.getComputedStyle, that's why checking for currentStyle should have higher prio
         if (currentStyle) {
           try {
-                return currentStyle[camelizedProperty];
+            return currentStyle[camelizedProperty];
           } catch(e) {
             //ie will occasionally fail for unknown reasons. swallowing exception
           }

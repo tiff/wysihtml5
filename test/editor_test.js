@@ -74,8 +74,8 @@ if (wysihtml5.browser.supported()) {
       equal(editor.textarea.element, textareaElement, "Textarea correctly available on editor instance");
       equal(editor.composer.element, composerElement, "contentEditable element available on editor instance");
       equal(wysihtml5.dom.getStyle("font-style").from(composerElement), "italic", "Correct font-style applied to editor element");
-      equal(wysihtml5.dom.getStyle("width").from(iframeElement), "50%", "Correct width applied to iframe")
-      equal(wysihtml5.dom.getStyle("height").from(iframeElement), "100px", "Correct height applied to iframe")
+      equal(wysihtml5.dom.getStyle("width").from(iframeElement), "50%", "Correct width applied to iframe");
+      equal(wysihtml5.dom.getStyle("height").from(iframeElement), "100px", "Correct height applied to iframe");
       
       if ("borderRadius" in document.createElement("div").style) {
         expect(19);
@@ -138,7 +138,26 @@ if (wysihtml5.browser.supported()) {
       start();
     });
   });
-
+  
+  asyncTest("Check whether cols and rows attribute is correctly handled", function() {
+    expect(2);
+    
+    var that = this;
+    
+    // Remove styles
+    this.textareaElement.removeAttribute("id");
+    
+    // And set dimensions of <textarea> via rows/cols attribute
+    this.textareaElement.setAttribute("rows", 20);
+    this.textareaElement.setAttribute("cols", 50);
+    
+    var editor = new wysihtml5.Editor(this.textareaElement);
+    editor.on("load", function() {
+      ok(that.getIframeElement().style.height.match(/\d+px/), "Rows attribute is correctly converted into a css height");
+      ok(that.getIframeElement().style.width.match(/\d+px/), "Cols attribute is correctly converted into a css width");
+      start();
+    });
+  });
 
   asyncTest("Check whether attributes are copied", function() {
     expect(1);
