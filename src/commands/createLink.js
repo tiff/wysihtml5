@@ -59,7 +59,7 @@
         dom.setTextContent(anchor, attributes.text || anchor.href);
         whiteSpace = doc.createTextNode(" ");
         composer.selection.setAfter(anchor);
-        composer.selection.insertNode(whiteSpace);
+        dom.insert(whiteSpace).after(anchor);
         elementToSetCaretAfter = whiteSpace;
       }
     }
