@@ -57,7 +57,9 @@
     // Placeholder text to use, defaults to the placeholder attribute on the textarea element
     placeholderText:      undef,
     // Whether the rich text editor should be rendered on touch devices (wysihtml5 >= 0.3.0 comes with basic support for iOS 5)
-    supportTouchDevices:  true
+    supportTouchDevices:  true,
+    // Whether senseless <span> elements (empty or without attributes) should be removed/replaced with their content
+    cleanUp:              true
   };
   
   wysihtml5.Editor = wysihtml5.lang.Dispatcher.extend(
@@ -152,7 +154,7 @@
     },
     
     parse: function(htmlOrElement) {
-      var returnValue = this.config.parser(htmlOrElement, this.config.parserRules, this.composer.sandbox.getDocument(), true);
+      var returnValue = this.config.parser(htmlOrElement, this.config.parserRules, this.composer.sandbox.getDocument(), this.config.cleanUp);
       if (typeof(htmlOrElement) === "object") {
         wysihtml5.quirks.redraw(htmlOrElement);
       }

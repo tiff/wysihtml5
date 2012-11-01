@@ -211,6 +211,7 @@ if (wysihtml5.browser.supported()) {
   
   test("Test cleanup mode", function() {
     var rules = {
+      classes: { a: 1, c: 1 },
       tags: { span: true, div: true }
     };
     
@@ -222,6 +223,18 @@ if (wysihtml5.browser.supported()) {
     this.equal(
       this.sanitize("<span><p>foo</p></span>", rules, null, true),
       "foo"
+    );
+    
+    this.equal(
+      this.sanitize('<span class="a"></span><span class="a">foo</span>', rules, null, true),
+      '<span class="a">foo</span>',
+      "Empty 'span' is correctly removed"
+    );
+    
+    this.equal(
+      this.sanitize('<span><span class="a">1</span> <span class="b">2</span> <span class="c">3</span></span>', rules, null, true),
+      '<span class="a">1</span> 2 <span class="c">3</span>',
+      "Senseless 'span' is correctly removed"
     );
   });
   

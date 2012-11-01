@@ -112,6 +112,7 @@ wysihtml5.dom.parse = (function() {
         oldChildsLength = oldChilds.length,
         method          = NODE_TYPE_MAPPING[oldNodeType],
         i               = 0,
+        fragment,
         newNode,
         newChild;
     
@@ -130,10 +131,13 @@ wysihtml5.dom.parse = (function() {
     
     // Cleanup senseless <span> elements
     if (cleanUp &&
-        newNode.childNodes.length <= 1 &&
         newNode.nodeName.toLowerCase() === DEFAULT_NODE_NAME &&
-        !newNode.attributes.length) {
-      return newNode.firstChild;
+        (!newNode.childNodes.length || !newNode.attributes.length)) {
+      fragment = newNode.ownerDocument.createDocumentFragment();
+      while (newNode.firstChild) {
+        fragment.appendChild(newNode.firstChild);
+      }
+      return fragment;
     }
     
     return newNode;
