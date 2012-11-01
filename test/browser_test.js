@@ -45,7 +45,7 @@ test("Check mobile contentEditable support", function() {
   ok(!wysihtml5.browser.supported(), "Android 2 is correctly unsupported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.Android4;
-  ok(!wysihtml5.browser.supported(), "Android 4 is correctly supported");
+  ok(wysihtml5.browser.supported(), "Android 4 is correctly supported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.OperaMobile;
   ok(!wysihtml5.browser.supported(), "Opera Mobile is correctly unsupported");
