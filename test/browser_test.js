@@ -33,13 +33,13 @@ test("Check mobile contentEditable support", function() {
   document.querySelector = document.querySelectorAll = function() {};
   
   wysihtml5.browser.USER_AGENT = this.userAgents.iPad_iOS3;
-  ok(!wysihtml5.browser.supported(), "iPad is correctly unsupported");
+  ok(!wysihtml5.browser.supported(), "iPad iOS 3 is correctly unsupported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.iPhone_iOS3;
-  ok(!wysihtml5.browser.supported(), "iPhone is correctly unsupported");
+  ok(!wysihtml5.browser.supported(), "iPhone iOS 3 is correctly unsupported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.iPad_iOS5;
-  ok(wysihtml5.browser.supported(), "iOS 5 is correctly supported");
+  ok(wysihtml5.browser.supported(), "iPad iOS 5 is correctly supported");
   
   wysihtml5.browser.USER_AGENT = this.userAgents.Android2;
   ok(!wysihtml5.browser.supported(), "Android 2 is correctly unsupported");
