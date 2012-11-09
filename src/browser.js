@@ -342,6 +342,18 @@ wysihtml5.browser = (function() {
      */
     hasIframeFocusIssue: function() {
       return isIE;
+    },
+    
+    /**
+     * Chrome + Safari create invalid nested markup after paste
+     * 
+     *  <p>
+     *    foo
+     *    <p>bar</p> <!-- BOO! -->
+     *  </p>
+     */
+    createsNestedInvalidMarkupAfterPaste: function() {
+      return isWebKit;
     }
   };
 })();
