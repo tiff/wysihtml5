@@ -624,4 +624,23 @@ if (wysihtml5.browser.supported()) {
       this.sanitize('<a href="http://google.com/~foo"></a>', rules).indexOf("~") !== -1
     );
   });
+  
+  test("Check concatenation of text nodes", function() {
+    var rules = {
+      tags: { span: 1, div: 1 }
+    };
+    
+    var tree = document.createElement("div");
+    tree.appendChild(document.createTextNode("foo "));
+    tree.appendChild(document.createTextNode("bar baz "));
+    tree.appendChild(document.createTextNode("bam! "));
+    
+    var span = document.createElement("span");
+    span.innerHTML = "boobs! hihihi ...";
+    tree.appendChild(span);
+    
+    var result = this.sanitize(tree, rules);
+    equal(result.childNodes.length, 2);
+    equal(result.innerHTML, "foo bar baz bam! <span>boobs! hihihi ...</span>");
+  });
 }
