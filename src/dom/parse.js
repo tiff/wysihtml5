@@ -355,8 +355,11 @@ wysihtml5.dom.parse = (function() {
     }
   }
   
+  var INVISIBLE_SPACE_REG_EXP = /\uFEFF/g;
   function _handleText(oldNode) {
-    return oldNode.ownerDocument.createTextNode(oldNode.data);
+    // \uFEFF = wysihtml5.INVISIBLE_SPACE (used as a hack in certain rich text editing situations)
+    var data = oldNode.data.replace(INVISIBLE_SPACE_REG_EXP, "");
+    return oldNode.ownerDocument.createTextNode(data);
   }
   
   

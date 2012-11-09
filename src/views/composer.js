@@ -26,11 +26,6 @@
         value = this.parent.parse(value);
       }
 
-      // Replace all "zero width no breaking space" chars
-      // which are used as hacks to enable some functionalities
-      // Also remove all CARET hacks that somehow got left
-      value = wysihtml5.lang.string(value).replace(wysihtml5.INVISIBLE_SPACE).by("");
-
       return value;
     },
 
