@@ -102,4 +102,10 @@ test("Basic test", function() {
     " <a href=\"http://www.google.de\">http://www.google.de</a>",
     "Check if white space in front of url is preserved"
   );
+  
+  this.equal(
+    this.autoLink("&lt;b&gt;foo&lt;/b&gt; http://www.google.de"),
+    "&lt;b&gt;foo&lt;/b&gt; <a href=\"http://www.google.de\">http://www.google.de</a>",
+    "Check if plain HTML markup isn't evaluated"
+  );
 });
