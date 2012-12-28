@@ -153,7 +153,7 @@
       for (; i<length; i++) {
         // 'javascript:;' and unselectable=on Needed for IE, but done in all browsers to make sure that all get the same css applied
         // (you know, a:link { ... } doesn't match anchors with missing href attribute)
-        if (links[i].tagName === "A") {
+        if (links[i].nodeName === "A") {
           dom.setAttributes({
             href:         "javascript:;",
             unselectable: "on"
