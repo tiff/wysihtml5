@@ -1,6 +1,6 @@
 h1. This project isn't maintained anymore
 
-Please check out this [fork](http://wysihtml.com).
+Please check out this "fork":http://wysihtml.com.
 
 h1. wysihtml5 0.3.0
 
